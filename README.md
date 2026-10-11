@@ -1,7 +1,7 @@
-# wu? — what’s under?
+# wu? interactive 3D skirt
 
-Futuristic product-minimalist static website inspired by the supplied poster and denim references. The central image is an AI-generated 3D-style product render, not an interactive 3D mesh. View controls zoom the image and pause its floating animation; archive cards open design notes.
+Static Three.js application. Serve the root: `python3 -m http.server 3001`. No install/build required. Three.js is vendored under vendor with its MIT license.
 
-Run: `cd /workspace/wuweb && python3 -m http.server 3000 --bind 0.0.0.0`
+The skirt is procedural mesh geometry, not video or image frames. Edit design dimensions, surface(), mesh parts and materials in script.js. Reconstructed from supplied visual references; not a dimensionally verified copy of an original garment model.
 
-No dependencies or external fonts. Publish the checkout as a static site. No commerce or mailing-list backend.
+Drag to orbit, wheel/pinch to zoom. Automatic axial rotation pauses during interaction and eases back after 1.3 seconds. Reduced motion disables initial auto-rotation. No floor or cast shadows.
