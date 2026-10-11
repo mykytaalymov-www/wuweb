@@ -1,7 +1,7 @@
 const video=document.getElementById('source'),canvas=document.getElementById('skirt'),ctx=canvas.getContext('2d',{willReadFrequently:true}),viewer=document.getElementById('viewer'),status=document.getElementById('status');
 let target=0,zoom=1,ready=false,seeking=false;const pointers=new Map();let pinch=0;
 function render(){ctx.drawImage(video,0,0,canvas.width,canvas.height);const frame=ctx.getImageData(0,0,canvas.width,canvas.height),d=frame.data;for(let i=0;i<d.length;i+=4){if(Math.min(d[i],d[i+1],d[i+2])>238){d[i]=d[i+1]=d[i+2]=255;}}ctx.putImageData(frame,0,0);}
-function seek(){if(!ready||seeking)return;seeking=true;video.currentTime=target;}
+function seek(){if(!ready)return;const image=new Image();image.onload=()=>{ctx.drawImage(image,0,0,canvas.width,canvas.height);const frame=ctx.getImageData(0,0,canvas.width,canvas.height),d=frame.data;for(let i=0;i<d.length;i+=4){if(Math.min(d[i],d[i+1],d[i+2])>238)d[i]=d[i+1]=d[i+2]=255;}ctx.putImageData(frame,0,0);};image.src='assets/turn/frame-'+String(Math.min(60,1+Math.floor(target/video.duration*60))).padStart(3,'0')+'.jpg';}
 function turn(delta){if(!ready)return;target=(target+delta+video.duration*100)%video.duration;seek();}
 function scale(value){zoom=Math.max(.6,Math.min(2.5,value));canvas.style.setProperty('--zoom',zoom);}
 video.addEventListener('loadeddata',()=>{canvas.width=540;canvas.height=960;ready=true;render();});
