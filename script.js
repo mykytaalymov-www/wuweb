@@ -1,14 +1,16 @@
-const video=document.getElementById('source'),canvas=document.getElementById('skirt'),ctx=canvas.getContext('2d',{willReadFrequently:true}),viewer=document.getElementById('viewer'),status=document.getElementById('status');
-let target=0,zoom=1,ready=false,seeking=false;const pointers=new Map();let pinch=0;
-const frames=new Map();let requestedFrame=1;
-function seek(){const index=1+Math.floor(target*60)%60;requestedFrame=index;let image=frames.get(index);if(!image){image=new Image();frames.set(index,image);image.onload=()=>{if(requestedFrame===index)draw(image);};image.onerror=()=>status.textContent='Не удалось загрузить юбку. Обновите страницу.';image.src='assets/turn/frame-'+String(index).padStart(3,'0')+'.jpg';}if(image.complete&&image.naturalWidth)draw(image);}
-function draw(image){ctx.drawImage(image,0,0,540,960);const frame=ctx.getImageData(0,0,540,960),d=frame.data;for(let i=0;i<d.length;i+=4){if(Math.min(d[i],d[i+1],d[i+2])>210)d[i]=d[i+1]=d[i+2]=255;}ctx.putImageData(frame,0,0);status.textContent='';ready=true;}
-function turn(delta){if(!ready)return;target=(target+delta+1*100)%1;seek();}
-function scale(value){zoom=Math.max(.6,Math.min(2.5,value));canvas.style.setProperty('--zoom',zoom);}
-canvas.width=540;canvas.height=960;seek();
-viewer.addEventListener('pointerdown',e=>{viewer.setPointerCapture(e.pointerId);pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});if(pointers.size===2){const [a,b]=[...pointers.values()];pinch=Math.hypot(a.x-b.x,a.y-b.y);}});
-viewer.addEventListener('pointermove',e=>{const old=pointers.get(e.pointerId);if(!old)return;pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});if(pointers.size===1)turn((e.clientX-old.x)/Math.max(viewer.clientWidth,300)*1*1.5);else if(pointers.size===2){const [a,b]=[...pointers.values()],distance=Math.hypot(a.x-b.x,a.y-b.y);if(pinch)scale(zoom*distance/pinch);pinch=distance;}});
+const canvas=document.getElementById('skirt'),ctx=canvas.getContext('2d'),viewer=document.getElementById('viewer'),status=document.getElementById('status');
+const frames=Array.from({length:60},(_,i)=>{const image=new Image();image.src=`assets/object/frame-${String(i+1).padStart(3,'0')}.webp`;return image;});
+let angle=0,desiredAngle=0,velocity=0,zoom=1,desiredZoom=1,lastTime=0;const pointers=new Map();let pinch=0;
+function resize(){const ratio=Math.min(devicePixelRatio,2);canvas.width=Math.round(innerWidth*ratio);canvas.height=Math.round(innerHeight*ratio);ctx.setTransform(ratio,0,0,ratio,0,0);}
+function setZoom(value){desiredZoom=Math.max(.5,Math.min(2.2,value));}
+function loop(time){const dt=Math.min((time-lastTime)/1000||.016,.04);lastTime=time;if(!pointers.size){desiredAngle+=velocity*dt;velocity*=Math.exp(-5*dt);}angle+=(desiredAngle-angle)*(1-Math.exp(-16*dt));zoom+=(desiredZoom-zoom)*(1-Math.exp(-12*dt));
+const w=innerWidth,h=innerHeight;ctx.clearRect(0,0,w,h);const image=frames[((Math.round(angle*60)%60)+60)%60];if(image.complete&&image.naturalWidth){const height=Math.min(h*.91,w*1.7)*zoom,width=height*540/960,x=(w-width)/2,y=(h-height)/2;ctx.save();ctx.translate(w/2,y+height*.885);ctx.scale(width*.18,height*.018);const gradient=ctx.createRadialGradient(0,0,0,0,0,1);gradient.addColorStop(0,'rgba(0,0,0,.17)');gradient.addColorStop(1,'rgba(0,0,0,0)');ctx.fillStyle=gradient;ctx.beginPath();ctx.arc(0,0,1,0,Math.PI*2);ctx.fill();ctx.restore();ctx.drawImage(image,x,y,width,height);}requestAnimationFrame(loop);}
+viewer.addEventListener('pointerdown',e=>{if(e.target.closest('button'))return;viewer.setPointerCapture(e.pointerId);pointers.set(e.pointerId,{x:e.clientX,y:e.clientY,time:performance.now()});velocity=0;if(pointers.size===2){const[a,b]=[...pointers.values()];pinch=Math.hypot(a.x-b.x,a.y-b.y);}});
+viewer.addEventListener('pointermove',e=>{const old=pointers.get(e.pointerId);if(!old)return;const now=performance.now();pointers.set(e.pointerId,{x:e.clientX,y:e.clientY,time:now});if(pointers.size===1){const delta=(e.clientX-old.x)/Math.max(innerWidth,500);desiredAngle+=delta;velocity=velocity*.65+delta/Math.max((now-old.time)/1000,.016)*.35;}else{const[a,b]=[...pointers.values()],distance=Math.hypot(a.x-b.x,a.y-b.y);if(pinch)setZoom(desiredZoom*distance/pinch);pinch=distance;}});
 for(const event of ['pointerup','pointercancel','lostpointercapture'])viewer.addEventListener(event,e=>{pointers.delete(e.pointerId);pinch=0;});
-viewer.addEventListener('wheel',e=>{e.preventDefault();scale(zoom*Math.exp(-e.deltaY*.001));},{passive:false});
-viewer.addEventListener('dblclick',()=>{target=0;scale(1);seek();});
-canvas.addEventListener('keydown',e=>{if(['ArrowLeft','ArrowRight','+','=','-','0'].includes(e.key))e.preventDefault();if(e.key==='ArrowLeft')turn(-1/36);if(e.key==='ArrowRight')turn(1/36);if(e.key==='+'||e.key==='=')scale(zoom*1.1);if(e.key==='-')scale(zoom/1.1);if(e.key==='0'){target=0;scale(1);seek();}});
+viewer.addEventListener('wheel',e=>{e.preventDefault();setZoom(desiredZoom*Math.exp(-e.deltaY*.001));},{passive:false});
+function reset(){desiredZoom=1;desiredAngle=0;velocity=0;}
+viewer.addEventListener('dblclick',reset);
+canvas.addEventListener('keydown',e=>{if(['ArrowLeft','ArrowRight','+','=','-','0'].includes(e.key))e.preventDefault();if(e.key==='ArrowLeft')desiredAngle-=1/60;if(e.key==='ArrowRight')desiredAngle+=1/60;if(e.key==='+'||e.key==='=')setZoom(desiredZoom*1.15);if(e.key==='-')setZoom(desiredZoom/1.15);if(e.key==='0')reset();});
+document.getElementById('zoom-in').onclick=()=>setZoom(desiredZoom*1.2);document.getElementById('zoom-out').onclick=()=>setZoom(desiredZoom/1.2);document.getElementById('reset').onclick=reset;
+frames[0].onerror=()=>status.textContent='Не удалось загрузить юбку. Обновите страницу.';resize();addEventListener('resize',resize);requestAnimationFrame(loop);
