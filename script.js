@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { createGarment } from './garment.js?v=9';
 import { OrbitControls } from './vendor/OrbitControls.js';
 const viewer=document.getElementById('viewer');
 let renderer;
@@ -9,28 +10,7 @@ const controls=new OrbitControls(camera,renderer.domElement);controls.enableDamp
 scene.add(new THREE.HemisphereLight(0xfff0df,0x5d5963,1.8));
 function light(color,intensity,x,y,z){const l=new THREE.DirectionalLight(color,intensity);l.position.set(x,y,z);scene.add(l);}
 light(0xffe0bf,4,-3,4,4);light(0xffead8,3,3,2,-3);light(0xfff4e7,2.5,1,-1,4);
-const skirt=new THREE.Group();scene.add(skirt);
-// Parametric garment dimensions and materials. All parts are editable meshes.
-const design={height:2.75,waistX:.43,waistZ:.30,hemX:.72,hemZ:.45,foldDepth:.026,panels:12};
-const texCanvas=document.createElement('canvas');texCanvas.width=texCanvas.height=512;const tc=texCanvas.getContext('2d');const pixels=tc.createImageData(512,512),colorCanvas=document.createElement('canvas');colorCanvas.width=colorCanvas.height=512;const cc=colorCanvas.getContext('2d'),colors=cc.createImageData(512,512);let seed=177;for(let y=0;y<512;y++)for(let x=0;x<512;x++){seed=(seed*1664525+1013904223)>>>0;const noise=(seed/4294967296-.5)*12;const diagonal=Math.sin((x+y)*Math.PI/8),thread=Math.sin(x*Math.PI/2)*Math.sin(y*Math.PI/2);let i=(y*512+x)*4,v=128+diagonal*45+thread*15+noise,c=225+diagonal*10+noise;pixels.data[i]=pixels.data[i+1]=pixels.data[i+2]=v;pixels.data[i+3]=255;colors.data[i]=colors.data[i+1]=colors.data[i+2]=c;colors.data[i+3]=255;}tc.putImageData(pixels,0,0);cc.putImageData(colors,0,0);const weave=new THREE.CanvasTexture(texCanvas),fabricColor=new THREE.CanvasTexture(colorCanvas);fabricColor.colorSpace=THREE.SRGBColorSpace;for(const texture of [weave,fabricColor]){texture.wrapS=texture.wrapT=THREE.RepeatWrapping;texture.repeat.set(4,9);texture.anisotropy=renderer.capabilities.getMaxAnisotropy();}
-const cloth=new THREE.MeshStandardMaterial({color:0x505055,roughness:.87,metalness:0,map:fabricColor,bumpMap:weave,bumpScale:.008,side:THREE.DoubleSide});const edgeMat=new THREE.MeshStandardMaterial({color:0x737176,roughness:1});const silver=new THREE.MeshStandardMaterial({color:0xbdbab4,metalness:.82,roughness:.31});const ropeMat=new THREE.MeshStandardMaterial({color:0xc1bdb4,roughness:.8,metalness:.05});
-function surface(theta,t,offset=0){const hip=.11*Math.exp(-Math.pow((t-.20)/.17,2));const rx=THREE.MathUtils.lerp(design.waistX,design.hemX,t)+hip,rz=THREE.MathUtils.lerp(design.waistZ,design.hemZ,t)+hip*.7;const fold=Math.sin(theta*design.panels+.25)*design.foldDepth*Math.pow(t,.7)+Math.sin(theta*3+t*7)*.018*Math.sin(t*Math.PI);return new THREE.Vector3((rx+fold+offset)*Math.cos(theta),design.height/2-design.height*t-.095*t*t*Math.sin(theta+.4),(rz+fold+offset)*Math.sin(theta));}
-function shell(t0,t1,offset=0){const cols=192,rows=72,positions=[],uv=[],indices=[];for(let j=0;j<=rows;j++){let t=THREE.MathUtils.lerp(t0,t1,j/rows);for(let i=0;i<=cols;i++){const v=surface(i/cols*Math.PI*2,t,offset);positions.push(v.x,v.y,v.z);uv.push(i/cols,j/rows);}}for(let j=0;j<rows;j++)for(let i=0;i<cols;i++){let a=j*(cols+1)+i,b=a+cols+1;indices.push(a,b,a+1,b,b+1,a+1);}const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(positions,3));g.setAttribute('uv',new THREE.Float32BufferAttribute(uv,2));g.setIndex(indices);g.computeVertexNormals();const mesh=new THREE.Mesh(g,cloth);skirt.add(mesh);return mesh;}
-shell(0,1);shell(0,.055,.007);
-function tube(points,r,material,segments=128){const curve=new THREE.CatmullRomCurve3(points);const mesh=new THREE.Mesh(new THREE.TubeGeometry(curve,segments,r,8,false),material);skirt.add(mesh);return mesh;}
-for(const t of [.008,.052,.985]){const points=Array.from({length:193},(_,i)=>surface(i/192*Math.PI*2,t,.006));tube(points,.002,edgeMat);}
-for(const theta of [.25,2.9,4.65]){tube(Array.from({length:70},(_,i)=>surface(theta,i/69,.004)),.002,edgeMat);}
-// Overlapping wrap panel with a slightly lower front edge.
-const panelG=new THREE.BufferGeometry(),pos=[],uv=[],ix=[];for(let j=0;j<=60;j++)for(let i=0;i<=48;i++){let theta=.05+i/48*1.65,t=.058+j/60*.96,v=surface(theta,t,.014);pos.push(v.x,v.y-.025*j/60,v.z);uv.push(i/48,j/60);}for(let j=0;j<60;j++)for(let i=0;i<48;i++){let a=j*49+i;ix.push(a,a+49,a+1,a+49,a+50,a+1);}panelG.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));panelG.setAttribute('uv',new THREE.Float32BufferAttribute(uv,2));panelG.setIndex(ix);panelG.computeVertexNormals();skirt.add(new THREE.Mesh(panelG,cloth));
-// Belt loops.
-for(let i=0;i<7;i++){let theta=i/7*Math.PI*2;let v=surface(theta,.024,.018);const loop=new THREE.Mesh(new THREE.BoxGeometry(.035,.14,.015),cloth);loop.position.copy(v);loop.rotation.y=-theta+Math.PI/2;skirt.add(loop);}
-// Three braided waist cords, each made of intertwining strands.
-for(let row=0;row<1;row++)for(let strand=0;strand<2;strand++){const points=[];for(let i=0;i<=400;i++){let theta=i/400*Math.PI*2,phase=theta*88+strand*Math.PI;let v=surface(theta,.016+row*.014,.022+Math.cos(phase)*.0018);v.y+=Math.sin(phase)*.0018;points.push(v);}tube(points,.004,ropeMat,400);}
-const knot=new THREE.Vector3(.08,1.30,.34);for(let strand=0;strand<2;strand++){tube([knot.clone(),new THREE.Vector3(.13,1.2,.38),new THREE.Vector3(.24,.94,.4),new THREE.Vector3(.35,.59,.42),new THREE.Vector3(.38,.30,.44)],.005,ropeMat,70);}
-tube([knot.clone(),new THREE.Vector3(.02,1.22,.37),new THREE.Vector3(-.03,1.16,.38)],.009,ropeMat,25);
-const ring=new THREE.Mesh(new THREE.TorusGeometry(.06,.009,16,64),silver);ring.scale.set(.72,1.45,1);ring.position.set(.38,.22,.445);skirt.add(ring);
-// Side pouch and curved flap.
-const pouch=new THREE.Mesh(new THREE.BoxGeometry(.19,.34,.065,3,6,2),cloth);pouch.position.set(.445,1.13,-.02);pouch.rotation.y=.48;skirt.add(pouch);const flap=new THREE.Mesh(new THREE.BoxGeometry(.195,.095,.074),cloth);flap.position.set(.45,1.27,-.01);flap.rotation.y=.48;skirt.add(flap);
+const {skirt,surface,edgeMat,design}=createGarment(renderer);scene.add(skirt);
 let verticalTarget=0;
 let enabled=true,interacting=false,resumeAt=0,speed=0,last=performance.now(),distanceTarget=null;
 controls.addEventListener('start',()=>{interacting=true;distanceTarget=null;});controls.addEventListener('end',()=>{interacting=false;resumeAt=performance.now()+1300;});
@@ -43,7 +23,7 @@ let lengthValue=1,lengthTarget=1;
 const lengthInput=document.getElementById('length'),lengthOutput=document.getElementById('length-value');
 lengthInput.addEventListener('input',()=>{lengthTarget=Number(lengthInput.value);lengthOutput.textContent=lengthTarget<.66?'КОРОТКАЯ':lengthTarget<.9?'СРЕДНЯЯ':'ДЛИННАЯ';});
 const cutHem=new THREE.Mesh(new THREE.TorusGeometry(.5,.003,8,128),edgeMat);cutHem.rotation.x=Math.PI/2;skirt.add(cutHem);
-function updateLength(dt){lengthValue=THREE.MathUtils.lerp(lengthValue,lengthTarget,1-Math.exp(-12*dt));const y=design.height/2-design.height*lengthValue;cutPlane.constant=-(y+skirt.position.y);if(lengthValue>.994){cutPlane.constant=2-skirt.position.y;cutHem.visible=false;}else{cutHem.visible=true;const p=surface(0,lengthValue),q=surface(Math.PI/2,lengthValue);cutHem.position.y=y+.004;cutHem.scale.set(p.x/.5,q.z/.5,1);}}
+function updateLength(dt){lengthValue=THREE.MathUtils.lerp(lengthValue,lengthTarget,1-Math.exp(-12*dt));const y=design.height/2-2.48*lengthValue;cutPlane.constant=-(y+skirt.position.y);if(lengthValue>.994){cutPlane.constant=2-skirt.position.y;cutHem.visible=false;}else{cutHem.visible=true;const p=surface(0,lengthValue),q=surface(Math.PI/2,lengthValue);cutHem.position.y=y+.004;cutHem.scale.set(p.x/.5,q.z/.5,1);}}
 
 function animate(now){requestAnimationFrame(animate);const dt=Math.min((now-last)/1000,.15);last=now;const target=enabled&&!interacting&&now>resumeAt ? .32 : 0;speed+=(target-speed)*(1-Math.exp(-5*dt));skirt.rotation.y+=speed*dt;skirt.position.y=THREE.MathUtils.lerp(skirt.position.y,verticalTarget,1-Math.exp(-10*dt));if(distanceTarget!==null){const direction=camera.position.clone().sub(controls.target),distance=direction.length(),next=THREE.MathUtils.lerp(distance,distanceTarget,1-Math.exp(-9*dt));camera.position.copy(controls.target).add(direction.normalize().multiplyScalar(next));if(Math.abs(next-distanceTarget)<.001)distanceTarget=null;}updateLength(dt);controls.update();renderer.render(scene,camera);}requestAnimationFrame(animate);
 renderer.domElement.addEventListener('webglcontextlost',e=>{e.preventDefault();document.getElementById('status').textContent='Графический контекст потерян. Обновите страницу.';});
