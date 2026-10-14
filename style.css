@@ -3,3 +3,5 @@
 .size-table{width:100%;border-collapse:collapse;font-size:11px;margin:0 0 15px}.size-table caption{text-align:left;color:#777;font-size:10px;margin-bottom:12px}.size-table th,.size-table td{text-align:left;padding:12px 4px;border-bottom:1px solid var(--line)}.size-table th{font-weight:400}.size-table thead{color:#777}
 
 #hero-photo{height:auto;aspect-ratio:2/3;max-height:none}#main-photo{object-fit:contain} @media(max-width:600px){#hero-photo{height:auto;max-height:none;aspect-ratio:2/3}}
+
+#instagram{display:inline-flex;align-items:center;padding:14px 20px;border:1px solid var(--ink);font-size:12px;letter-spacing:1px;color:var(--paper);background:var(--ink)}#instagram[hidden]{display:none}#instagram:hover{background:#393933} @media(max-width:600px){#instagram{width:100%;justify-content:center;padding:18px;font-size:12px}}
