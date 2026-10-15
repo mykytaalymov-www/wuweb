@@ -209,16 +209,13 @@ header #open-cart .bag-icon{display:block;width:100%;height:100%;object-fit:cont
 .viewfinder>.reset-lens span{all:unset;font:inherit}
 .gallery-open>.reset-lens{visibility:hidden}
 #play-indicator svg{width:24px;height:24px;margin-left:3px;fill:currentColor}
-.camera-photo-view #back-to-video,.camera-photo-view .photo-navigation button,.camera-photo-view #photo-count{padding:8px 12px;border:1px solid #17171512;border-radius:999px;background:#f7f6f2e6;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);color:#171715;font-size:9px;letter-spacing:1px;line-height:1;white-space:nowrap}
-.camera-photo-view #back-to-video{top:14px;left:14px}
-.camera-photo-view .photo-navigation{left:14px;right:14px;bottom:14px;gap:8px}
 .camera-dock .camera-actions{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));width:100%;max-width:none;gap:0;margin:14px 0 0;padding:0 0 34px;align-items:center}
 .camera-dock .camera-actions>*{grid-row:1;justify-self:center;align-self:center}
 .camera-dock .camera-actions>#open-gallery{grid-column:1/3}
 .camera-dock .camera-actions>.shutter-wrap{grid-column:2/4}
 .camera-dock .camera-actions>.size-picker{grid-column:3/5}
 .camera-dock .shutter-wrap{position:relative}
-.camera-dock .shutter-wrap>span{position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%);white-space:nowrap}
+.camera-dock .shutter-wrap>span{position:absolute;top:calc(100% + 16px);left:50%;transform:translateX(-50%);white-space:nowrap}
 .camera-dock .size-picker>label{position:absolute;bottom:calc(100% + 6px);left:2px}
 .camera-dock #open-gallery{position:relative;isolation:isolate;overflow:visible;padding:0;border:2px solid #fff;border-radius:9px;background:none;box-shadow:0 2px 8px #17171526}
 .camera-dock #open-gallery img{border-radius:7px}
@@ -239,3 +236,134 @@ header #open-cart .bag-icon{display:block;width:100%;height:100%;object-fit:cont
 #info-panel .shipping-note{font-style:italic;font-weight:200}
 @media (min-width:901px){#info-panel section{height:min(62%,470px)}}
 @media (max-width:900px){header .header-right #open-cart{top:auto;width:34px;height:34px}.camera-dock .camera-actions{margin-top:22px}.viewfinder .zoom-loupe{width:118px;height:118px}}
+/* All page copy in lower case, including text written by script.js. */
+body *,body *::before,body *::after,select option{text-transform:lowercase!important}
+/* Header: tagline in the display face, drawn toward the logo; the bag hangs off "timeless"; liquid chrome Instagram mark. */
+header{border-bottom:0!important;box-shadow:none;grid-template-columns:minmax(0,1fr) auto auto auto minmax(0,1fr);column-gap:clamp(14px,4.5vw,72px)}
+header:before,header:after{content:none!important}
+header>.header-tagline>span{position:relative;top:auto;left:auto;font-family:"WU Display",sans-serif;font-size:clamp(11px,1.35vw,19px);font-weight:400;letter-spacing:0;line-height:1}
+header>.header-tagline>.tag-genderless{justify-self:end}
+header>.header-tagline>.tag-timeless{justify-self:start}
+header .tag-timeless #open-cart{position:absolute;left:calc(100% - 9px);top:62%;right:auto;margin:0;width:38px;height:38px;transform:rotate(10deg);transform-origin:42% 6%;font-family:"Signal Mono",ui-monospace,monospace}
+header .tag-timeless #open-cart:hover{animation:bag-swing 1.1s ease-in-out}
+@keyframes bag-swing{0%{transform:rotate(10deg)}30%{transform:rotate(-7deg)}55%{transform:rotate(6deg)}78%{transform:rotate(-2deg)}100%{transform:rotate(10deg)}}
+header .instagram-notification{top:9px}
+header #instagram{width:46px;height:46px;padding:0;border:0;border-radius:0;background:none;box-shadow:none;transform:none}
+header #instagram:hover{transform:translateY(-1px) rotate(-4deg)}
+header .instagram-icon{width:44px;height:44px;background:none;box-shadow:none;border-radius:0}
+header .instagram-icon img{width:100%;height:100%;filter:drop-shadow(0 2px 3px #17171530)}
+@media (max-width:900px){header .tag-timeless #open-cart{width:30px;height:30px;left:calc(100% - 7px)}header .instagram-notification{top:6px}header #instagram,header .instagram-icon{width:36px;height:36px}}
+/* Shutter: plain red; in gallery mode it turns into the silver bag. */
+.shutter .shutter-bag{display:none}
+.camera-app.gallery-mode .shutter{background:none;border-color:transparent;outline-color:transparent;box-shadow:none}
+.camera-app.gallery-mode .shutter .shutter-bag{display:block;width:118%;height:118%;margin:-9%;object-fit:contain;filter:drop-shadow(0 4px 6px #17171535);transition:transform .3s}
+.camera-app.gallery-mode .shutter:hover .shutter-bag{transform:translateY(-2px) rotate(-4deg)}
+/* Panels sit on staggered levels on wide screens. */
+@media (min-width:901px){#info-panel section{transition:transform .7s cubic-bezier(.22,.7,.2,1),opacity .5s,top .7s cubic-bezier(.22,.7,.2,1)}}
+#info-panel section[data-info="rrose"] dl{margin-top:22px}
+.page-link{display:inline-flex;align-items:center;margin-top:14px;padding:11px 18px;border:1px solid #171715;border-radius:999px;background:none;color:#171715;font-size:10px;letter-spacing:.6px;transition:background .2s,color .2s}
+.page-link:hover{background:#171715;color:#f7f6f2}
+/* Delivery page. */
+#delivery-page{position:fixed;inset:0;width:100%;height:100%;max-width:none;max-height:none;margin:0;padding:0;border:0;background:#f7f6f2;color:#171715;overflow-y:auto}
+#delivery-page::backdrop{background:#f7f6f2}
+#delivery-page[open]{animation:page-in .35s cubic-bezier(.2,.8,.2,1)}
+@keyframes page-in{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.page-inner{max-width:520px;margin:0 auto;padding:22px 20px 64px}
+.page-header{margin-bottom:36px}
+.page-header button,.photos-bar button{display:inline-flex;align-items:center;gap:2px;padding:8px 2px;border:0;background:none;color:#171715;font-size:11px;letter-spacing:.4px}
+.page-header svg,.photos-bar svg,.viewer-arrow svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+#delivery-title{margin:28px 0 0;font-size:clamp(36px,7vw,58px);font-weight:200;letter-spacing:-1.5px;line-height:1}
+#delivery-page .shipping-calculator label{display:block;margin:0 0 8px;font-size:10px;color:#77776f}
+#delivery-page .shipping-calculator select{width:100%;min-height:46px;padding:0 16px;border:1px solid #d9d9d5;border-radius:13px;background-color:#fff;font-size:12px}
+#delivery-page .shipping-calculator dl{margin:26px 0 18px;font-size:11px}
+#delivery-page .shipping-calculator dl>div{display:grid;grid-template-columns:minmax(110px,max-content) 1fr;gap:16px;padding:4px 0;border:0}
+#delivery-page dt{color:#77776f}#delivery-page dd{margin:0}
+#delivery-page #shipping-cost{font-size:15px}
+#delivery-page .shipping-note{margin:0 0 30px;font-size:9px;line-height:1.7;color:#8a8a84;font-style:italic;font-weight:200}
+#add-delivery{width:100%;padding:18px;border:0;background:#fe1c03;color:#fff;font-size:11px;letter-spacing:.7px}
+#add-delivery:disabled{background:#171715;opacity:1}
+#delivery-status{min-height:20px;margin:12px 0 0;font-size:10px;color:#77776f}
+#cart-dialog .cart-summary>div.cart-delivery-row{display:grid;grid-template-columns:1fr auto;align-items:baseline;row-gap:2px}
+.cart-delivery-row .page-link{grid-column:1;justify-self:start;margin:0;padding:2px 0;border:0;border-radius:0;font-size:9px;text-decoration:underline;text-underline-offset:3px;color:#77776f}
+.cart-delivery-row .page-link:hover{background:none;color:#171715}
+/* Gallery: iCloud Photos library grid on desktop, iPhone Photos on phones. */
+.camera-photo-view{display:flex;flex-direction:column;background:#fff}
+.camera-photo-view[hidden]{display:none}
+.photos-bar{position:relative;z-index:2;flex:none;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 12px;background:#ffffffeb;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.camera-photo-view .photos-bar button{position:static;width:auto;height:auto;border-radius:0}
+.photos-title{display:flex;flex-direction:column;align-items:flex-end;line-height:1.25}
+.photos-title strong{font-size:13px;font-weight:700}
+.photos-title span,#photo-count{font-size:9px;color:#8a8a85}
+.photos-grid{flex:1;min-height:0;overflow-y:auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));align-content:start;gap:3px;padding:0 3px 3px;scrollbar-width:thin}
+.camera-photo-view .photo-tile,.camera-photo-view .strip-thumb{position:relative;display:block;width:auto;height:auto;padding:0;border:0;border-radius:0;background:#efefec;overflow:hidden}
+.camera-photo-view .photo-tile{aspect-ratio:1;cursor:zoom-in}
+.photo-tile img,.strip-thumb img{display:block;width:100%;height:100%;object-fit:cover}
+.photo-tile img{transition:transform .5s cubic-bezier(.2,.8,.2,1),filter .3s}
+.photo-tile:hover img{transform:scale(1.04);filter:brightness(.94)}
+.photo-viewer{position:absolute;inset:0;z-index:3;display:flex;flex-direction:column;background:#fff}
+.photo-viewer[hidden]{display:none}
+.viewer-stage{position:relative;flex:1;min-height:0;overflow:hidden}
+.viewer-stage>#camera-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;touch-action:none}
+.camera-photo-view .viewer-arrow{position:absolute;top:50%;z-index:2;display:grid;place-items:center;width:38px;height:38px;padding:0;border:0;border-radius:50%;background:#f7f6f2d9;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);color:#171715;opacity:0;transform:translateY(-50%);transition:opacity .2s}
+.viewer-stage:hover .viewer-arrow,.viewer-arrow:focus-visible{opacity:1}
+#previous-photo{left:12px}#next-photo{right:12px}
+.viewer-strip{flex:none;display:flex;justify-content:center;gap:2px;overflow-x:auto;padding:8px 10px 10px;scrollbar-width:none}
+.viewer-strip::-webkit-scrollbar{display:none}
+.camera-photo-view .strip-thumb{flex:none;width:28px;height:40px;opacity:.55;transition:width .25s,opacity .2s,margin .25s}
+.camera-photo-view .strip-thumb.active{width:44px;margin:0 4px;opacity:1}
+@media (hover:none){.camera-photo-view .viewer-arrow{display:none}}
+@media (max-width:900px){.photos-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:2px;padding:0}.photos-bar{padding:6px 8px}}
+#back-to-video,#photo-close{position:static;top:auto;left:auto;padding:8px 2px;border:0;background:none}
+/* Bag hooked over the "s" of timeless: the handle apex sits on the letter, the text paints over the handle. */
+header>.header-tagline>.tag-timeless{isolation:isolate}
+header .tag-timeless #open-cart{z-index:-1;font-size:inherit;left:calc(100% - .32em - 19px);top:calc(.2em - 3px);transform:rotate(7deg);transform-origin:50% 2%}
+@keyframes bag-swing{0%{transform:rotate(7deg)}30%{transform:rotate(-9deg)}55%{transform:rotate(6deg)}78%{transform:rotate(-2deg)}100%{transform:rotate(7deg)}}
+@media (max-width:900px){header .tag-timeless #open-cart{left:calc(100% - .32em - 15px)}}
+/* Info panels: scattered on wide screens, delivery set highest. */
+@media (min-width:901px){#info-panel section[data-info="rrose"]{top:44%}#info-panel section[data-info="size"]{top:64%;padding-left:3.5%}#info-panel section[data-info="delivery"]{top:33%;padding-left:7%}}
+.delivery-link{display:inline-flex;align-items:flex-start;gap:6px;padding:0;border:0;background:none;color:#171715;font-family:"WU Display",sans-serif;font-size:clamp(40px,4.3vw,66px);line-height:1;letter-spacing:-.5px;cursor:pointer}
+.delivery-link span{padding:0 .04em .08em 0;background:linear-gradient(105deg,#171715 0 36%,#55585c 42%,#f6f6f4 48%,#9a9da0 52%,#e9eaea 56%,#171715 64% 100%);background-size:300% 100%;background-position:100% 0;-webkit-background-clip:text;background-clip:text;color:transparent;transition:background-position 1.2s cubic-bezier(.2,.8,.2,1)}
+.delivery-link:hover span,.delivery-link:focus-visible span,.delivery-link:active span{background-position:0 0}
+.delivery-link svg{flex:none;width:.34em;height:.34em;margin-top:.12em;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;transition:transform .3s}
+.delivery-link:hover svg{transform:translate(3px,-3px)}
+/* Size guide, compact. */
+#info-panel .size-heading{margin:0 0 16px}
+#size-egg{position:relative;display:inline-block;padding:0;border:0;background:none;color:inherit;font:inherit;letter-spacing:inherit;text-align:left;cursor:pointer}
+#info-panel .size-table{margin:0 0 10px;font-size:11px}
+#info-panel .size-table th,#info-panel .size-table td{padding:3px 18px 3px 0;transition:transform .35s}
+#info-panel .size-table thead th{color:#8a8a85;font-weight:400}
+#info-panel .size-tip{margin:0;font-size:10px;color:#6a6a64;transition:transform .35s}
+/* Size guide easter egg: a marker scrawl in the spirit of street notebooks. */
+.egg{position:absolute;pointer-events:none;opacity:0;overflow:visible;transition:opacity .2s}
+.egg path{fill:none;stroke:#171715;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;vector-effect:non-scaling-stroke;transition:stroke-dashoffset .55s cubic-bezier(.6,0,.3,1)}
+.scrawl .egg{opacity:1}
+.scrawl .egg path{stroke-dashoffset:0}
+.egg-crown{left:4px;top:-40px;width:66px;height:36px;transform:rotate(-8deg)}
+.egg-crown path{stroke-width:2.6}
+.egg-underline{left:-4px;bottom:-9px;width:calc(100% + 12px);height:10px}
+.egg-underline path{stroke:#fe1c03;transition-delay:.15s}
+.egg-ring-cell{position:relative}
+.egg-ring{left:-11px;top:-5px;width:74px;height:30px}
+.egg-ring path{stroke:#fe1c03;stroke-width:2;transition-delay:.25s}
+.egg-strike{position:relative}
+.egg-scratch{left:-3px;top:50%;width:calc(100% + 6px);height:10px;margin-top:-5px}
+.egg-scratch path{stroke-width:2;transition-delay:.35s}
+.egg-tag{right:10%;top:22px;font-family:"WU Display",sans-serif;font-size:15px;color:#fe1c03;transform:rotate(-12deg);transition:opacity .2s .45s}
+.scrawl #size-egg span{font-family:"WU Display",sans-serif;font-weight:400;letter-spacing:0}
+.scrawl .size-table tbody tr:first-child th,.scrawl .size-table tbody tr:first-child td{transform:rotate(-1.5deg)}
+.scrawl .size-table tbody tr:last-child th,.scrawl .size-table tbody tr:last-child td{transform:rotate(1.2deg) translateX(4px)}
+.scrawl .size-tip{transform:rotate(-1deg) translateX(6px)}
+@media (prefers-reduced-motion:reduce){.egg,.egg path,#info-panel .size-table th,#info-panel .size-table td,#info-panel .size-tip,.delivery-link span{transition:none}}
+/* Gallery: grid centred in the window, scrolling when taller. */
+.photos-scroll{flex:1;min-height:0;display:flex;flex-direction:column;overflow-y:auto;scrollbar-width:thin}
+.photos-grid{flex:none;min-height:auto;margin:auto 0;overflow:visible}
+/* In gallery mode the gallery button plays the moving skirt and leads back to it. */
+.camera-dock #open-gallery .thumb-video{display:none;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:7px;background:#fff}
+.camera-app.gallery-mode #open-gallery .thumb-video{display:block}
+.delivery-link{font-size:clamp(28px,2.7vw,44px)}
+@media (min-width:901px){#info-panel section[data-info="delivery"]{padding-left:2.5%}}
+#info-panel section[data-info="size"]{overflow:visible}
+.egg-tag{top:-2px;right:4%}
+header .tag-timeless #open-cart{top:calc(.74em - 4px);left:calc(100% - .3em - 19px)}
+@media (max-width:900px){header .tag-timeless #open-cart{left:calc(100% - .3em - 15px)}}
+@media (max-width:900px){#info-panel section[data-info="size"]{padding-top:48px}}
