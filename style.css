@@ -391,3 +391,10 @@ header .tag-timeless #open-cart{z-index:-1;pointer-events:auto}
 .shutter .shutter-label{color:#111;font-weight:700;font-size:10.5px;text-shadow:0 1px 0 #ffffffc0}
 #cart-dialog .cart-summary #checkout,#simulate-payment,#add-delivery{display:flex;align-items:center;justify-content:center;text-align:center}
 .shutter,#cart-dialog .cart-summary #checkout,#simulate-payment,#add-delivery{background-image:radial-gradient(90% 60% at 28% 8%,#fff 0 20%,#fff0 60%),radial-gradient(70% 45% at 76% 96%,#ffffffd0 0 18%,#fff0 70%),linear-gradient(160deg,#f7f7f5 0%,#b4b6b8 24%,#f2f2f1 42%,#8e9194 58%,#dcdddd 76%,#fcfcfb 100%)}
+/* One-finger control of the skirt on touch screens. */
+.viewfinder #product-film{touch-action:pan-y;-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}
+.touch-hint{position:absolute;left:50%;bottom:22px;z-index:4;padding:8px 14px;border-radius:999px;background:#f7f6f2e0;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);color:#171715;font-size:10px;letter-spacing:.4px;white-space:nowrap;pointer-events:none;opacity:0;transform:translate(-50%,6px);transition:opacity .4s,transform .4s}
+.touch-hint.visible{opacity:1;transform:translate(-50%,0)}
+.gallery-open .touch-hint{display:none}
+.viewfinder{touch-action:pan-y}
+@media (hover:none){.zoom-controls{pointer-events:none}}
