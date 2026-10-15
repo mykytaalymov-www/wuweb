@@ -44,7 +44,8 @@ function renderFilm(){if(video.readyState<2||!filmContext)return;filmContext.dra
 function scheduleFrame(){if(framePending||video.paused)return;framePending=true;const callback=()=>{framePending=false;renderFilm();scheduleFrame();};if(video.requestVideoFrameCallback)video.requestVideoFrameCallback(callback);else setTimeout(callback,42);}
 function syncVideo(){const playing=!video.paused;document.getElementById('play-indicator').classList.toggle('visible',!playing);videoButton.setAttribute('aria-label',playing?'Pause skirt video':'Play skirt video');videoButton.setAttribute('aria-pressed',String(playing));}
 video.addEventListener('loadeddata',()=>{renderFilm();syncVideo();});video.addEventListener('play',()=>{videoStatus.textContent='';syncVideo();scheduleFrame();});video.addEventListener('pause',()=>{syncVideo();renderFilm();});video.addEventListener('seeked',renderFilm);video.addEventListener('error',()=>{videoStatus.textContent='Video could not load. Please refresh.';});
-videoButton.onclick=async()=>{if(!video.paused)video.pause();else{try{await video.play();}catch{videoStatus.textContent='Playback could not start. Try again.';}syncVideo();}};
+async function togglePlayback(){if(!video.paused)video.pause();else{try{await video.play();}catch{videoStatus.textContent='Playback could not start. Try again.';}syncVideo();}}
+
 if(matchMedia('(prefers-reduced-motion: reduce)').matches){video.autoplay=false;video.pause();}else video.play().catch(()=>syncVideo());syncVideo();
 
 const modeNames=['rrose','size','delivery'];let activeMode=0;
@@ -63,7 +64,19 @@ notification.addEventListener('pointerenter',e=>{if(e.pointerType!=='touch')show
 function revealNotice(){notification.classList.add('notice-ready');}if(intro.classList.contains('done'))revealNotice();else{const introObserver=new MutationObserver(()=>{if(intro.classList.contains('done')){revealNotice();introObserver.disconnect();}});introObserver.observe(intro,{attributes:true,attributeFilter:['class']});}
 
 film.addEventListener('pointermove',e=>{if(e.pointerType==='touch')return;const rect=view.getBoundingClientRect();zoomLoupe.style.left=e.clientX-rect.left+'px';zoomLoupe.style.top=e.clientY-rect.top+'px';loupePoint={x:e.clientX,y:e.clientY};renderZoomLoupe();zoomLoupe.classList.add('visible');});film.addEventListener('pointerleave',()=>{zoomLoupe.classList.remove('visible');loupePoint=null;});
-film.addEventListener('keydown',e=>{if(e.key===' '||e.key==='Enter'){e.preventDefault();videoButton.click();}});
+film.addEventListener('keydown',e=>{if(e.key===' '||e.key==='Enter'){e.preventDefault();togglePlayback();}});
+// One finger on touch screens: drag sideways to move the skirt through its motion, tap to pause or play,
+// double tap to zoom, press and hold for the detail loupe. Vertical drags still scroll the page.
+let fingerDrag=null,fingerTap=null,fingerDragEnded=0,seekTarget=null,lastPointerType='mouse';const scrubSeconds=5;
+function placeLoupe(x,y,lift){const rect=view.getBoundingClientRect();zoomLoupe.style.left=x-rect.left+'px';zoomLoupe.style.top=y-rect.top-lift+'px';loupePoint={x,y};renderZoomLoupe();zoomLoupe.classList.add('visible');}
+function hideLoupe(){zoomLoupe.classList.remove('visible');loupePoint=null;}
+function applySeek(){if(seekTarget===null||video.seeking)return;const d=Number.isFinite(video.duration)&&video.duration>0?video.duration:16;video.currentTime=((seekTarget%d)+d)%d;seekTarget=null;}
+video.addEventListener('seeked',applySeek);
+film.addEventListener('pointerdown',e=>{lastPointerType=e.pointerType;if(e.pointerType==='mouse'||!e.isPrimary)return;fingerDrag={id:e.pointerId,x:e.clientX,y:e.clientY,start:video.currentTime,playing:!video.paused,moved:false,loupe:false,timer:setTimeout(()=>{if(fingerDrag&&!fingerDrag.moved&&touches.size<2){fingerDrag.loupe=true;placeLoupe(fingerDrag.x,fingerDrag.y,96);}},380)};});
+film.addEventListener('pointermove',e=>{if(!fingerDrag||e.pointerId!==fingerDrag.id)return;if(touches.size>1){clearTimeout(fingerDrag.timer);hideLoupe();fingerDrag.moved=true;return;}const dx=e.clientX-fingerDrag.x,dy=e.clientY-fingerDrag.y;if(fingerDrag.loupe){placeLoupe(e.clientX,e.clientY,96);return;}if(!fingerDrag.moved&&Math.hypot(dx,dy)>8){clearTimeout(fingerDrag.timer);fingerDrag.moved=true;fingerDrag.scrub=Math.abs(dx)>Math.abs(dy);if(fingerDrag.scrub)video.pause();}if(fingerDrag.scrub){seekTarget=fingerDrag.start-dx/view.clientWidth*scrubSeconds;applySeek();}});
+function endFinger(e){if(!fingerDrag||e.pointerId!==fingerDrag.id)return;const drag=fingerDrag;fingerDrag=null;clearTimeout(drag.timer);if(drag.loupe)hideLoupe();if(drag.moved||drag.loupe){fingerDragEnded=performance.now();if(drag.scrub&&drag.playing)video.play().catch(syncVideo);}}
+film.addEventListener('touchmove',e=>{if(fingerDrag&&(fingerDrag.loupe||fingerDrag.scrub))e.preventDefault();},{passive:false});film.addEventListener('pointerup',endFinger);film.addEventListener('pointercancel',endFinger);
+film.addEventListener('click',()=>{if(lastPointerType==='mouse'){togglePlayback();return;}if(performance.now()-fingerDragEnded<400)return;if(fingerTap){clearTimeout(fingerTap);fingerTap=null;setLens(lens>1.2?1:2);return;}fingerTap=setTimeout(()=>{fingerTap=null;togglePlayback();},260);});
 const cameraPhoto=document.getElementById('camera-photo'),photoViewer=document.getElementById('photo-viewer'),photosGrid=document.getElementById('photos-grid'),viewerStrip=document.getElementById('viewer-strip'),cameraApp=document.querySelector('.camera-app');
 const galleryPhotos=[['rrose-full.jpg','Full-length rrose wrap skirt'],['look-lounge.jpg','rrose worn reclining on stone benches'],['rrose-detail.jpg','rrose twill, cord and fastening detail'],['look-stairs.jpg','rrose worn on granite steps'],['waist.jpg','rrose waistband and silver cord'],['look-studio.jpg','rrose with raw hem in the studio'],['short.jpg','Short length rrose wrap skirt']];let photoIndex=0,wasPlaying=false,photoScale=1,photoTranslateX=0,photoTranslateY=0,photoSwipe=null,photoDrag=null;
 // Library grid and viewer strip, laid out like iCloud Photos on desktop and the Photos app on iPhone.
@@ -87,3 +100,5 @@ const lowerControls=document.querySelector('.camera-actions');lowerControls.prep
 const sizeEgg=document.getElementById('size-egg'),sizeSection=document.querySelector('[data-info="size"]');
 function scrawl(on){sizeSection.classList.toggle('scrawl',on);sizeEgg.setAttribute('aria-pressed',String(on));}
 sizeEgg.addEventListener('pointerenter',e=>{if(e.pointerType==='mouse')scrawl(true);});sizeSection.addEventListener('pointerleave',e=>{if(e.pointerType==='mouse')scrawl(false);});let eggPointer='';sizeEgg.addEventListener('pointerdown',e=>eggPointer=e.pointerType);sizeEgg.addEventListener('click',()=>{if(eggPointer==='mouse'){eggPointer='';scrawl(true);return;}scrawl(!sizeSection.classList.contains('scrawl'));});
+// First visit on a touch screen: a brief hint for the one-finger controls.
+if(matchMedia('(hover: none)').matches){let seen=false;try{seen=!!sessionStorage.getItem('rrose-touch-hint');sessionStorage.setItem('rrose-touch-hint','1');}catch{}if(!seen){const hint=document.getElementById('touch-hint');setTimeout(()=>{hint.classList.add('visible');setTimeout(()=>hint.classList.remove('visible'),3200);},2600);film.addEventListener('pointerdown',()=>hint.classList.remove('visible'),{once:true});}}

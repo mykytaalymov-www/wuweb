@@ -367,3 +367,34 @@ header .tag-timeless #open-cart{z-index:-1;font-size:inherit;left:calc(100% - .3
 header .tag-timeless #open-cart{top:calc(.74em - 4px);left:calc(100% - .3em - 19px)}
 @media (max-width:900px){header .tag-timeless #open-cart{left:calc(100% - .3em - 15px)}}
 @media (max-width:900px){#info-panel section[data-info="size"]{padding-top:48px}}
+/* Liquid chrome replaces every red fill: shutter, checkout, payment, delivery. */
+.shutter,#cart-dialog .cart-summary #checkout,#simulate-payment,#add-delivery{border:0;outline:0;color:#151515;font-weight:700;text-shadow:0 1px 0 #ffffffb0;background:radial-gradient(90% 60% at 28% 8%,#fff 0 20%,#fff0 60%),radial-gradient(70% 45% at 76% 96%,#ffffffd0 0 18%,#fff0 70%),linear-gradient(160deg,#f7f7f5 0%,#a6a8aa 24%,#f0f0ef 42%,#6b6e71 58%,#d6d7d8 76%,#fcfcfb 100%);background-size:100% 100%,100% 100%,100% 220%;background-position:0 0,0 0,0 0;box-shadow:inset 0 1px 1px #fff,inset 0 -3px 8px #23262a40,inset 0 0 0 .5px #ffffffa0,0 0 0 .5px #17171533,0 6px 18px #1717152a;transition:background-position .9s cubic-bezier(.2,.8,.2,1),transform .2s}
+.shutter:hover,#cart-dialog .cart-summary #checkout:hover,#simulate-payment:hover,#add-delivery:hover{background-position:0 0,0 0,0 100%}
+.shutter:active,#cart-dialog .cart-summary #checkout:active,#simulate-payment:active,#add-delivery:active{transform:scale(.97)}
+#cart-dialog .cart-summary #checkout,#simulate-payment,#add-delivery{border-radius:999px;letter-spacing:.6px}
+#cart-dialog .cart-summary #checkout:disabled,#simulate-payment:disabled,#add-delivery:disabled{opacity:.55;transform:none}
+/* Shutter: a chrome disc with its label inside. */
+.camera-dock .shutter{display:grid;place-items:center;width:78px;height:78px;padding:0;border-radius:50%;outline:1px solid #17171522;outline-offset:5px}
+.shutter .shutter-label{font-size:9.5px;line-height:1.25;letter-spacing:.4px;text-align:center}
+.camera-dock .shutter-wrap>span{display:none}
+.camera-app.gallery-mode .shutter{outline-color:transparent}
+.camera-app.gallery-mode .shutter .shutter-label{display:none}
+.camera-app.gallery-mode .camera-dock .shutter-wrap>span{display:block;top:calc(100% + 4px);color:#171715;font-weight:700;font-size:9px}
+@media (max-width:900px){.camera-dock .shutter{width:70px;height:70px}}
+/* Header sits above the viewfinder so the bag hanging below it stays tappable. */
+header{position:relative;z-index:30}
+header .tag-timeless #open-cart{padding:4px;margin:-4px;box-sizing:content-box;touch-action:manipulation}
+/* Gallery tiles: square from the image itself (steadier in Safari than aspect-ratio on a button). */
+.camera-photo-view .photo-tile{aspect-ratio:auto;height:auto}
+.camera-photo-view .photo-tile img{width:100%;height:auto;aspect-ratio:1/1;object-fit:cover}
+header .tag-timeless #open-cart{z-index:-1;pointer-events:auto}
+.shutter .shutter-label{color:#111;font-weight:700;font-size:10.5px;text-shadow:0 1px 0 #ffffffc0}
+#cart-dialog .cart-summary #checkout,#simulate-payment,#add-delivery{display:flex;align-items:center;justify-content:center;text-align:center}
+.shutter,#cart-dialog .cart-summary #checkout,#simulate-payment,#add-delivery{background-image:radial-gradient(90% 60% at 28% 8%,#fff 0 20%,#fff0 60%),radial-gradient(70% 45% at 76% 96%,#ffffffd0 0 18%,#fff0 70%),linear-gradient(160deg,#f7f7f5 0%,#b4b6b8 24%,#f2f2f1 42%,#8e9194 58%,#dcdddd 76%,#fcfcfb 100%)}
+/* One-finger control of the skirt on touch screens. */
+.viewfinder #product-film{touch-action:pan-y;-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}
+.touch-hint{position:absolute;left:50%;bottom:22px;z-index:4;padding:8px 14px;border-radius:999px;background:#f7f6f2e0;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);color:#171715;font-size:10px;letter-spacing:.4px;white-space:nowrap;pointer-events:none;opacity:0;transform:translate(-50%,6px);transition:opacity .4s,transform .4s}
+.touch-hint.visible{opacity:1;transform:translate(-50%,0)}
+.gallery-open .touch-hint{display:none}
+.viewfinder{touch-action:pan-y}
+@media (hover:none){.zoom-controls{pointer-events:none}}
