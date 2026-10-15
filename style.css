@@ -398,3 +398,15 @@ header .tag-timeless #open-cart{z-index:-1;pointer-events:auto}
 .gallery-open .touch-hint{display:none}
 .viewfinder{touch-action:pan-y}
 @media (hover:none){.zoom-controls{pointer-events:none}}
+/* Red liquid glass: every button shares the chrome volume, tinted translucent in the house red. */
+:root{--red-glass:radial-gradient(90% 60% at 28% 8%,#ffffffc0 0 16%,#fff0 55%),radial-gradient(70% 45% at 76% 96%,#ffffff70 0 14%,#fff0 65%),linear-gradient(160deg,#fe1c03b8 0%,#fe1c0366 26%,#ff7a68a0 44%,#c21400c8 60%,#fe1c0373 78%,#ff9282b0 100%)}
+.shutter,#cart-dialog .cart-summary #checkout,#simulate-payment,#add-delivery,.viewfinder>.reset-lens,.camera-photo-view .viewer-arrow{background-image:var(--red-glass);background-color:#fe1c031f;background-size:100% 100%,100% 100%,100% 220%;background-position:0 0,0 0,0 0;backdrop-filter:blur(12px) saturate(1.5);-webkit-backdrop-filter:blur(12px) saturate(1.5);color:#fff;text-shadow:0 1px 2px #7a0a0099;border:0;box-shadow:inset 0 1px 1px #ffffffd8,inset 0 -3px 8px #8a0e0070,inset 0 0 0 .5px #ffffff90,0 0 0 .5px #fe1c0366,0 8px 22px #fe1c0330;transition:background-position .9s cubic-bezier(.2,.8,.2,1),transform .2s,box-shadow .3s}
+.shutter:hover,#cart-dialog .cart-summary #checkout:hover,#simulate-payment:hover,#add-delivery:hover,.viewfinder>.reset-lens:hover,.camera-photo-view .viewer-arrow:hover{background-position:0 0,0 0,0 100%;box-shadow:inset 0 1px 1px #ffffffe8,inset 0 -3px 8px #8a0e0070,inset 0 0 0 .5px #ffffffa0,0 0 0 .5px #fe1c0380,0 10px 26px #fe1c0345}
+.shutter .shutter-label{color:#fff;text-shadow:0 1px 2px #7a0a00a0}
+.camera-dock .shutter{outline-color:#fe1c0333}
+.viewfinder>.reset-lens svg,.camera-photo-view .viewer-arrow svg{filter:drop-shadow(0 1px 1px #7a0a0080)}
+.camera-photo-view .viewer-arrow{background-color:#fe1c0326}
+/* Gallery mode keeps the silver bag as the shutter. */
+.camera-app.gallery-mode .shutter{background:none;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none}
+/* The delivery word catches a red sheen instead of chrome. */
+.delivery-link span{background-image:linear-gradient(105deg,#171715 0 36%,#a3160a 42%,#ffb3a8 48%,#fe1c03 53%,#ffd2cb 57%,#171715 64% 100%)}
