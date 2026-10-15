@@ -28,3 +28,160 @@ body,button,select,input,output,table,caption,th,td,summary,footer,header,.heade
 @media(max-width:1050px){.instagram-notification{right:15%;width:155px}.header-tagline>span:nth-child(2){left:18%}.header-tagline>span:nth-child(3){right:6%}.brand-home{left:43%}#info-panel .mode-lead{font-size:10px}}
 @media(max-width:650px){header{height:100px;width:92%;margin:0 auto}.brand-home{left:50%;top:29px;width:64px}.brand-home .logo{width:64px}.header-tagline>span{font-size:7px}.header-tagline>span:nth-child(1){left:0;top:18px}.header-tagline>span:nth-child(2){left:5%;top:70px}.header-tagline>span:nth-child(3){left:auto;right:2%;top:73px}.instagram-notification{top:12px;right:0;width:112px}#instagram{padding:6px 7px;border-radius:11px;gap:5px}.instagram-icon{width:15px;height:15px}.instagram-icon img{width:15px;height:15px}.notification-top strong{font-size:8px}.notification-top>span{display:none}.instagram-handle{font-size:6px!important;max-width:75px;overflow:hidden;text-overflow:ellipsis}.header-right #open-cart{right:auto;left:0;top:49px;width:22px;height:26px}#open-cart svg{width:22px;height:26px}#cart-count{font-size:7px;margin-top:7px}.camera-app{padding:7px 3% 12px;min-height:0}.camera-view{height:54svh;min-height:360px;max-height:570px;width:100%}.camera-information{height:270px;min-height:270px;margin-top:26px}#info-panel section{width:100%;padding:20px 5px}#info-panel section[data-slot=right]{transform:translate(115%,0)}#info-panel h1{font-size:45px;margin-bottom:20px}#info-panel h2{font-size:27px}#info-panel .mode-lead{font-size:11px}#info-panel p{font-size:10px}.camera-dock{width:100%;padding-top:0;margin-top:0}.camera-modes{gap:20px;padding:11px 0 20px}.camera-modes button{font-size:8px}.camera-actions{grid-template-columns:28px 34px 67px 1fr 0 34px 28px;gap:5px;margin:8px 0 0;padding:0 0 26px}.camera-actions>#previous-mode,.camera-actions>#next-mode{width:27px;height:27px;font-size:13px}.gallery-thumbnail{width:29px;height:33px;border-radius:8px}.size-picker select{width:64px;min-height:33px;border-radius:10px;font-size:9px;padding:7px 20px 7px 8px;background-size:8px 11px;background-position:right 7px center}.size-picker label{font-size:6px;bottom:calc(100% + 5px)}.shutter{width:42px;height:42px}.shutter span{font-size:21px}.shutter-wrap>span{font-size:6px;top:calc(100% + 9px)}.reset-lens{width:29px;height:29px;font-size:18px}.reset-lens span{font-size:5px;top:calc(100% + 16px)}.zoom-controls{width:220px;height:110px}.zoom-dial text{font-size:10px}footer{padding:16px 4%}.instagram-card{width:min(310px,calc(100vw - 32px))}.profile-header{padding:16px}.profile-preview img{height:170px}.cart-header h2{font-size:23px}}
 @media(max-width:650px){.camera-information{inset:auto;position:relative;bottom:auto;top:auto;margin-top:26px}.header-tagline>span:nth-child(2){left:11%;top:72px}}
+
+/* Final rrose interface pass: equal header rhythm, metallic marks and quiet controls. */
+header{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));grid-template-areas:"instagram genderless logo timeless bag";align-items:center;gap:0;width:94%;max-width:1680px;height:78px;margin:0 auto;border-color:#17171518;overflow:visible}
+header>.brand-home{grid-area:logo;position:relative;left:auto;top:auto;justify-self:center;transform:none;width:86px;z-index:2}
+header>.brand-home .logo{display:block;width:86px;height:auto;max-height:46px;overflow:visible}
+header>.header-tagline{display:contents;position:static}
+header>.header-tagline>span{position:relative;inset:auto!important;display:block;justify-self:center;align-self:center;white-space:nowrap;font-size:clamp(10px,1.05vw,15px);letter-spacing:.15px;line-height:1.1;color:#292927}
+header>.header-tagline>span:nth-child(1){grid-area:genderless}
+header>.header-tagline>span:nth-child(2){grid-area:timeless}
+header>.header-right{display:contents;position:static;width:auto;height:auto}
+header .instagram-notification{grid-area:instagram;position:relative;inset:auto;width:auto;justify-self:center;opacity:1;transform:none;z-index:4}
+header #instagram{display:grid;place-items:center;width:36px;height:36px;padding:0;gap:0;overflow:visible;border:1px solid #fe1c03;border-radius:12px;background:linear-gradient(145deg,#fff 0%,#c9c9c7 18%,#f8f8f6 31%,#8c8e90 49%,#f5f5f3 63%,#b3b5b6 78%,#fff 100%);box-shadow:0 1px 1px #17171520,inset 0 1px 2px #fff,inset 0 -2px 4px #25282a32,0 0 0 1px #fe1c0320;transition:transform .2s,box-shadow .2s}
+header #instagram:hover,header #instagram:focus-visible{transform:translateY(-2px);background:linear-gradient(145deg,#fff 0%,#c9c9c7 18%,#f8f8f6 31%,#8c8e90 49%,#f5f5f3 63%,#b3b5b6 78%,#fff 100%);box-shadow:0 3px 8px #17171525,inset 0 1px 2px #fff,0 0 0 1px #fe1c0340}
+header .notification-copy{display:none}
+header .instagram-icon{display:grid;place-items:center;width:26px;height:26px;padding:3px;border-radius:8px;background:linear-gradient(135deg,#fff,#d8d8d6 36%,#73777a 50%,#fff 70%,#a4a6a7);box-shadow:inset 0 1px 1px #fff,0 1px 1px #19191935;filter:none}
+header .instagram-icon img{display:block;width:20px;height:20px;filter:brightness(.26) contrast(1.35) drop-shadow(0 1px 0 #fff8);opacity:.95}
+header .instagram-card{position:absolute;top:calc(100% + 15px);left:50%;right:auto;width:min(340px,calc(100vw - 28px));transform:translateX(-2%);transform-origin:top left;z-index:30}
+header #open-cart{grid-area:bag;position:relative;inset:auto;justify-self:center;display:grid;place-items:center;width:38px;height:38px;padding:3px;border:0;background:transparent}
+header #open-cart svg{position:relative;inset:auto;display:block;width:25px;height:29px;overflow:visible;fill:none;stroke:none;filter:drop-shadow(0 1px 1px #17171542)}
+header #open-cart .bag-body{fill:#3b3d3e;stroke:#171819;stroke-width:.7;stroke-linejoin:round}
+header #open-cart .bag-handle{fill:none;stroke:#3b3d3e;stroke-width:2.35;stroke-linecap:round}
+header #open-cart:hover .bag-body,header #open-cart:hover .bag-handle{fill:#222426;stroke:#222426}
+header #cart-count{position:absolute;right:-1px;bottom:-1px;min-width:14px;height:14px;display:grid;place-items:center;padding:0 3px;border-radius:8px;background:#f7f6f2;color:#282929;font:8px 'Signal Mono',monospace;line-height:1;box-shadow:0 1px 2px #0002}
+.profile-header{padding:15px 16px;gap:11px}
+.profile-avatar{width:39px;height:39px}
+.profile-avatar img{width:27px}
+.profile-header strong{font-size:14px}
+.profile-header>span>span{font-size:11px;margin-top:3px}
+.profile-arrow{font:8px 'Signal Mono',monospace;letter-spacing:.5px}
+.profile-preview{grid-template-columns:1fr 1fr;gap:3px;padding:0 3px 3px}
+.profile-preview img{display:block;width:100%;height:132px;object-fit:cover}
+.profile-preview img:first-child{object-position:center 44%;filter:grayscale(1)}
+.profile-visit{padding:12px;font-size:10px;letter-spacing:.25px}
+.zoom-loupe{position:absolute;left:20px;top:20px;z-index:5;width:150px;height:174px;opacity:0;pointer-events:none;transform:scale(.92);transition:opacity .18s,transform .18s}
+.zoom-loupe.visible{opacity:1;transform:scale(1)}
+.zoom-loupe canvas{display:block;width:150px;height:150px;border:2px solid #ffcf32;border-radius:50%;background:#f4f4f2;box-shadow:0 3px 16px #1113,0 0 0 2px #fff8;object-fit:cover}
+.zoom-loupe span{display:block;padding-top:7px;text-align:center;color:#363632;font:8px 'Signal Mono',monospace;letter-spacing:1px}
+.focus-frame{border:1px solid #ffcf32;box-shadow:0 0 0 1px #fff8,inset 0 0 14px #ffcf3218}
+.camera-actions{grid-template-columns:repeat(4,minmax(0,1fr));max-width:760px;gap:clamp(14px,4vw,48px);padding:0 3% 28px;margin:12px auto 0;align-items:center}
+.camera-actions>#previous-mode,.camera-actions>#next-mode{display:none!important}
+.camera-actions>.gallery-thumbnail,.camera-actions>.size-picker,.camera-actions>.shutter-wrap,.camera-actions>#reset-zoom{grid-column:auto;justify-self:center}
+.gallery-thumbnail{width:45px;height:52px;border:1px solid #dfdfdc;outline:0;border-radius:8px;box-shadow:0 2px 8px #1111;transform:none;overflow:hidden}
+.gallery-thumbnail:hover{transform:translateY(-2px) scale(1.03)}
+.size-picker{position:relative;display:flex;flex-direction:column;gap:5px;align-items:flex-start}
+.size-picker label{position:static;font-size:8px;letter-spacing:1px;color:#81817c}
+.size-picker select{width:104px;min-height:44px;padding:10px 27px 10px 13px;border:1px solid #d9d9d5;border-radius:13px;background-color:#f8f8f6;box-shadow:0 1px 2px #1717150c;font:12px 'Signal Mono',monospace}
+.shutter-wrap{gap:11px}
+.shutter{width:54px;height:54px;outline:2px solid #ffcf32;outline-offset:4px;border:2px solid #fff;background:#fe1c03;box-shadow:0 0 0 1px #fe1c0320}
+.shutter-wrap>span{position:static;font-size:8px;letter-spacing:.8px;color:#888}
+.reset-lens{position:relative;width:auto;height:auto;min-width:54px;display:flex;flex-direction:column;align-items:center;gap:9px;padding:0;border:0;border-radius:0;background:transparent;box-shadow:none;color:#42423e;font:9px 'Signal Mono',monospace;letter-spacing:.5px}
+.reset-lens span{position:static;font-size:8px;letter-spacing:.8px;color:#888}
+.reset-lens:hover{background:transparent;color:#fe1c03}
+.camera-actions .reset-lens:before{content:'⟲';display:grid;place-items:center;width:37px;height:37px;font:22px Arial,sans-serif;color:#454542;transition:transform .25s,color .2s}
+.camera-actions .reset-lens:hover:before{transform:rotate(-45deg);color:#fe1c03}
+.camera-actions .reset-lens{font-size:0}
+.camera-actions .reset-lens span{font-size:8px}
+.photo-navigation{left:8%;right:8%;bottom:18px;display:flex;align-items:center;justify-content:space-between;gap:14px}
+.camera-photo-view button{width:auto;height:auto;min-width:48px;padding:12px 6px;border:0;border-radius:0;background:transparent;backdrop-filter:none;color:#282826;font:9px 'Signal Mono',monospace;letter-spacing:1px}
+.camera-photo-view button:hover{color:#fe1c03;background:transparent}
+#back-to-video{top:14px;left:16px;padding:10px 0}
+.photo-navigation #photo-count{color:#777;font:9px 'Signal Mono',monospace;letter-spacing:1px}
+.camera-photo-view>img{transition:transform .18s ease-out;touch-action:none}
+.camera-photo-view.photo-zoomed>img{cursor:grab}
+.camera-photo-view.photo-zoomed>img:active{cursor:grabbing}
+.camera-modes button{position:relative;padding:8px 0;font-size:10px;letter-spacing:.8px}
+.camera-modes button:after{content:'';position:absolute;left:50%;right:50%;bottom:1px;height:1px;background:#fe1c03;transition:left .22s,right .22s}
+.camera-modes button[aria-selected=true]:after{left:0;right:0}
+.camera-actions{border:0}
+.shipping-calculator{margin-top:22px;max-width:440px}
+.shipping-calculator>label,.shipping-calculator>select,.cart-summary form>label,.cart-summary form>select,.cart-summary form>input{display:block}
+.shipping-calculator>label,.cart-summary form>label{margin:0 0 8px;color:#85857f;font:8px 'Signal Mono',monospace;letter-spacing:1px}
+.shipping-calculator>select,.cart-summary form>select,.cart-summary form>input{width:min(100%,260px);min-height:43px;margin:0 0 14px;padding:10px 13px;border:1px solid #d9d9d5;border-radius:11px;background:#fbfbf9;color:#222;font:11px 'Signal Mono',monospace}
+.shipping-calculator dl{margin:10px 0 0;font-size:10px}
+.shipping-calculator dl>div{display:flex;justify-content:space-between;gap:16px;padding:8px 0;border-bottom:1px solid #17171512}
+.shipping-calculator dt{color:#85857f}
+.shipping-calculator dd{margin:0;text-align:right;color:#242421}
+.shipping-calculator .shipping-note,.cart-summary .shipping-note{font-size:9px;line-height:1.6;color:#85857f}
+.cart-summary .cart-grand-row{padding:13px 0;border-top:1px solid #17171530;font-size:16px}
+.cart-summary .cart-grand-row strong{color:#fe1c03}
+#checkout:not(:disabled),#simulate-payment{background:#fe1c03;color:#fff;border:0}
+#checkout:disabled{opacity:.5}
+#demo-checkout-form{margin-top:18px;padding-top:20px;border-top:1px solid #17171518}
+#demo-checkout-form[hidden]{display:none}
+#demo-checkout-form .buy{width:100%;padding:15px 18px}
+#demo-payment-result{font-size:11px;line-height:1.6;color:#52524e}
+.demo-payment-note{font-size:10px;color:#777}
+#cart-dialog .cart-summary>div:not(.cart-grand-row){display:flex;justify-content:space-between;gap:20px;padding:7px 0;font-size:12px}
+#cart-dialog .cart-summary>div.cart-grand-row{display:flex;justify-content:space-between;gap:20px}
+#cart-dialog .cart-summary #checkout{font-size:10px;letter-spacing:.7px}
+#info-panel section[data-info="delivery"]{max-height:100%;overflow-y:auto;scrollbar-width:thin;scrollbar-color:#d8d8d3 transparent}
+
+@media(max-width:900px){
+ header{width:96%;height:72px}
+ header>.brand-home,header>.brand-home .logo{width:72px}
+ header>.header-tagline>span{font-size:10px}
+ header .instagram-card{left:0;transform:none}
+ .camera-actions{gap:clamp(10px,3vw,30px);padding-bottom:26px}
+}
+@media(max-width:650px){
+ header{width:96%;height:66px;grid-template-columns:repeat(5,minmax(0,1fr))}
+ header>.brand-home,header>.brand-home .logo{width:63px}
+ header>.brand-home .logo{max-height:36px}
+ header>.header-tagline>span{font-size:clamp(6px,2vw,8px);letter-spacing:0;white-space:nowrap}
+ header #instagram{width:31px;height:31px;border-radius:10px}
+ header .instagram-icon{width:23px;height:23px}
+ header .instagram-icon img{width:18px;height:18px}
+ header #open-cart{width:32px;height:34px}
+ header #open-cart svg{width:22px;height:26px}
+ header .instagram-card{position:absolute;left:0;right:auto;top:calc(100% + 12px);width:min(310px,calc(100vw - 28px))}
+ .profile-preview img{height:116px}
+ .camera-app{display:flex;flex-direction:column;gap:0;padding:8px 4% 18px;min-height:0;overflow:visible}
+ .camera-view{order:1;width:100%;height:53svh;min-height:350px;max-height:560px;margin:0 auto}
+ .camera-dock{order:2;width:100%;margin:2px auto 0;padding:0}
+ .camera-information{order:3;position:relative;inset:auto;width:100%;height:auto;min-height:0;margin:18px 0 10px;padding:0}
+ #info-panel{position:relative;height:250px;min-height:250px;overflow:hidden}
+ #info-panel section{position:absolute;top:0;left:0;width:100%;max-height:100%;overflow-y:auto;padding:16px 2px}
+ #info-panel section[data-slot="left"]{transform:translateX(0)}
+ #info-panel section[data-slot="right"]{transform:translateX(108%)}
+ #info-panel section[data-slot="exit-left"]{transform:translateX(-108%)}
+ #info-panel section[data-slot="exit-right"]{transform:translateX(108%)}
+ #info-panel h1{font-size:42px;letter-spacing:-1.5px;margin:0 0 12px}
+ #info-panel h2{font-size:23px;margin:0 0 13px}
+ #info-panel .mode-lead{font-size:11px;line-height:1.75}
+ #info-panel p,#info-panel dl{font-size:10px}
+ .camera-modes{justify-content:space-between;gap:12px;padding:10px 4px 11px}
+ .camera-modes button{font-size:8px;letter-spacing:.4px}
+ .camera-actions{grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:12px auto 0;padding:0 0 24px}
+ .gallery-thumbnail{width:36px;height:42px}
+ .size-picker{gap:4px}
+ .size-picker label{font-size:7px}
+ .size-picker select{width:88px;min-height:40px;padding:8px 22px 8px 10px;font-size:10px}
+ .shutter-wrap{gap:9px}
+ .shutter{width:48px;height:48px}
+ .shutter span{font-size:22px}
+ .shutter-wrap>span{font-size:7px}
+ .reset-lens{gap:8px}
+ .camera-actions .reset-lens:before{width:32px;height:32px;font-size:20px}
+ .reset-lens span{font-size:7px}
+ .camera-actions .reset-lens span{font-size:7px}
+ .zoom-loupe{width:118px;height:139px}
+ .zoom-loupe canvas{width:118px;height:118px}
+ .zoom-loupe span{font-size:7px}
+ .shipping-calculator{margin-top:15px}
+ .shipping-calculator dl{font-size:9px}
+ .shipping-calculator>select{min-height:40px}
+ footer{padding:14px 4%}
+}
+@media(max-width:380px){
+ header>.header-tagline>span{font-size:6px}
+ header>.brand-home,header>.brand-home .logo{width:58px}
+ .camera-view{height:50svh;min-height:330px}
+ .camera-modes{gap:8px}
+ .camera-modes button{font-size:7px}
+ .camera-actions{gap:4px}
+ .size-picker select{width:78px}
+}
+@media(prefers-reduced-motion:reduce){header #instagram,.zoom-loupe,.camera-modes button:after,.camera-photo-view>img,.camera-actions .reset-lens:before{transition:none}}
