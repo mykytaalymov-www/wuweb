@@ -16,10 +16,10 @@ window.RROSE_CONFIG = {
   shipping: {
     demoOnly: true,
     rates: {
-      PL: { EUR: 12, PLN: 49, route: 'InPost courier · demo (oversize for lockers)' },
-      EU: { EUR: 35, PLN: 149, route: 'International courier · demo' },
-      GB: { EUR: 55, PLN: 235, route: 'International courier · demo' },
-      WORLD: { EUR: 75, PLN: 319, route: 'International courier · demo' }
+      PL: { EUR: 12, PLN: 49, route: 'inpost courier / demo' },
+      EU: { EUR: 35, PLN: 149, route: 'international courier / demo' },
+      GB: { EUR: 55, PLN: 235, route: 'international courier / demo' },
+      WORLD: { EUR: 75, PLN: 319, route: 'international courier / demo' }
     }
   }
 };

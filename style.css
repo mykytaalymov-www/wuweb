@@ -185,3 +185,57 @@ header #cart-count{position:absolute;right:-1px;bottom:-1px;min-width:14px;heigh
  .size-picker select{width:78px}
 }
 @media(prefers-reduced-motion:reduce){header #instagram,.zoom-loupe,.camera-modes button:after,.camera-photo-view>img,.camera-actions .reset-lens:before{transition:none}}
+/* Review pass: house fonts, liquid header icons, real loupe, progressive zoom dial, centred shutter, compact copy. */
+@font-face{font-family:"Signal Mono";src:url("assets/fonts/signal-mono-extralight.otf") format("opentype");font-weight:200;font-style:normal;font-display:swap}@font-face{font-family:"Signal Mono";src:url("assets/fonts/signal-mono-extralight-italic.otf") format("opentype");font-weight:200;font-style:italic;font-display:swap}
+body,button,input,select,textarea,output,table,dialog,.shutter span,#play-indicator,.zoom-dial text{font-family:"Signal Mono",ui-monospace,monospace}
+header #instagram{border:0;border-radius:13px;background:radial-gradient(70% 55% at 28% 18%,#fff 0 22%,#fff0 60%),radial-gradient(60% 40% at 78% 92%,#ffffffd0 0 20%,#fff0 70%),linear-gradient(160deg,#f6f6f4 0%,#a7a9ab 26%,#efefee 44%,#6c6f72 60%,#d6d7d8 78%,#fbfbfa 100%);background-size:100% 100%,100% 100%,100% 220%;background-position:0 0,0 0,0 0;box-shadow:inset 0 1px 1px #fff,inset 0 -3px 6px #23262a38,inset 0 0 0 .5px #ffffffa0,0 0 0 .5px #17171526,0 3px 9px #1717151f;transition:background-position .9s cubic-bezier(.2,.8,.2,1),transform .3s}
+header #instagram:hover{background-position:0 0,0 0,0 100%;transform:translateY(-1px)}
+header .instagram-icon{background:none;box-shadow:none;filter:none}
+header .instagram-icon img{filter:brightness(.16) drop-shadow(0 1px 0 #ffffffc0)}
+header #open-cart{width:44px;height:44px;padding:0;border:0;background:none;transition:transform .3s}
+header #open-cart:hover{transform:translateY(-2px) rotate(-3deg)}
+header #open-cart .bag-icon{display:block;width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 3px 4px #17171533)}
+.viewfinder .zoom-loupe{left:0;top:0;width:150px;height:150px;border-radius:50%;overflow:hidden;background:#f7f6f2;border:1.5px solid #ffcf32;box-shadow:0 0 0 1px #ffffffa0,0 8px 26px #11111130;transform:translate(-50%,-50%) scale(.82);z-index:5}
+.viewfinder .zoom-loupe.visible{transform:translate(-50%,-50%) scale(1)}
+.viewfinder .zoom-loupe canvas{position:static;width:100%;height:100%;border:0;border-radius:0;box-shadow:none;background:none;opacity:1;transform:none;transition:none;object-fit:fill}
+.zoom-controls{opacity:0;transition:opacity .5s ease .15s}
+.viewfinder.zooming .zoom-controls,.zoom-controls:hover,.zoom-controls:focus-within{opacity:1;transition:opacity .15s}
+.zoom-dial line,.zoom-dial text{opacity:0;transition:opacity .25s,stroke .15s}
+.zoom-dial line.lit,.zoom-dial text.lit{opacity:1}
+.viewfinder>.reset-lens{position:absolute;right:14px;bottom:14px;z-index:4;display:flex;flex-direction:row;align-items:center;gap:6px;width:auto;height:auto;margin:0;padding:7px 11px 7px 9px;border:1px solid #17171514;border-radius:999px;background:#f7f6f2d9;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);color:#171715;font-size:10px;letter-spacing:.5px;line-height:1;opacity:0;pointer-events:none;transform:translateY(4px);transition:opacity .25s,transform .25s}
+.viewfinder.zoomed>.reset-lens{opacity:1;pointer-events:auto;transform:none}
+.viewfinder>.reset-lens:before{content:none;display:none}
+.viewfinder>.reset-lens svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.viewfinder>.reset-lens span{all:unset;font:inherit}
+.gallery-open>.reset-lens{visibility:hidden}
+#play-indicator svg{width:24px;height:24px;margin-left:3px;fill:currentColor}
+.camera-photo-view #back-to-video,.camera-photo-view .photo-navigation button,.camera-photo-view #photo-count{padding:8px 12px;border:1px solid #17171512;border-radius:999px;background:#f7f6f2e6;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);color:#171715;font-size:9px;letter-spacing:1px;line-height:1;white-space:nowrap}
+.camera-photo-view #back-to-video{top:14px;left:14px}
+.camera-photo-view .photo-navigation{left:14px;right:14px;bottom:14px;gap:8px}
+.camera-dock .camera-actions{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));width:100%;max-width:none;gap:0;margin:14px 0 0;padding:0 0 34px;align-items:center}
+.camera-dock .camera-actions>*{grid-row:1;justify-self:center;align-self:center}
+.camera-dock .camera-actions>#open-gallery{grid-column:1/3}
+.camera-dock .camera-actions>.shutter-wrap{grid-column:2/4}
+.camera-dock .camera-actions>.size-picker{grid-column:3/5}
+.camera-dock .shutter-wrap{position:relative}
+.camera-dock .shutter-wrap>span{position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%);white-space:nowrap}
+.camera-dock .size-picker>label{position:absolute;bottom:calc(100% + 6px);left:2px}
+.camera-dock #open-gallery{position:relative;isolation:isolate;overflow:visible;padding:0;border:2px solid #fff;border-radius:9px;background:none;box-shadow:0 2px 8px #17171526}
+.camera-dock #open-gallery img{border-radius:7px}
+.camera-dock #open-gallery:before,.camera-dock #open-gallery:after{content:"";position:absolute;inset:-2px;z-index:-1;border:2px solid #fff;border-radius:9px;background:#e6e5e1 center/cover;box-shadow:0 1px 5px #17171524;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+.camera-dock #open-gallery:before{background-image:url("assets/rrose/rrose-detail.jpg");transform:translate(-6px,1px) rotate(-10deg)}
+.camera-dock #open-gallery:after{background-image:url("assets/rrose/waist.jpg");transform:translate(6px,0) rotate(8deg)}
+.camera-dock #open-gallery:hover:before{transform:translate(-10px,0) rotate(-15deg)}
+.camera-dock #open-gallery:hover:after{transform:translate(10px,-1px) rotate(13deg)}
+#info-panel h2{font-weight:200;letter-spacing:-1px;margin:0 0 18px}
+#info-panel .mode-lead{font-family:"Signal Mono",ui-monospace,monospace;font-size:11px;line-height:1.75;letter-spacing:0;margin:0 0 14px}
+#info-panel p{margin:0 0 8px;line-height:1.7}
+#info-panel dl{margin:0 0 14px}
+#info-panel dl>div{display:grid;grid-template-columns:minmax(92px,max-content) 1fr;gap:16px;padding:3px 0;border:0}
+#info-panel dt,#info-panel dd{margin:0;text-align:left}
+#info-panel .size-table{margin:0 0 14px;border-collapse:collapse}
+#info-panel .size-table caption{text-align:left;padding:0 0 8px;font-style:italic;font-weight:200}
+#info-panel .size-table th,#info-panel .size-table td{border:0;padding:3px 16px 3px 0;text-align:left}
+#info-panel .shipping-note{font-style:italic;font-weight:200}
+@media (min-width:901px){#info-panel section{height:min(62%,470px)}}
+@media (max-width:900px){header .header-right #open-cart{top:auto;width:34px;height:34px}.camera-dock .camera-actions{margin-top:22px}.viewfinder .zoom-loupe{width:118px;height:118px}}
