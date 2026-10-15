@@ -218,7 +218,7 @@ header #open-cart .bag-icon{display:block;width:100%;height:100%;object-fit:cont
 .camera-dock .camera-actions>.shutter-wrap{grid-column:2/4}
 .camera-dock .camera-actions>.size-picker{grid-column:3/5}
 .camera-dock .shutter-wrap{position:relative}
-.camera-dock .shutter-wrap>span{position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%);white-space:nowrap}
+.camera-dock .shutter-wrap>span{position:absolute;top:calc(100% + 16px);left:50%;transform:translateX(-50%);white-space:nowrap}
 .camera-dock .size-picker>label{position:absolute;bottom:calc(100% + 6px);left:2px}
 .camera-dock #open-gallery{position:relative;isolation:isolate;overflow:visible;padding:0;border:2px solid #fff;border-radius:9px;background:none;box-shadow:0 2px 8px #17171526}
 .camera-dock #open-gallery img{border-radius:7px}
@@ -239,3 +239,5 @@ header #open-cart .bag-icon{display:block;width:100%;height:100%;object-fit:cont
 #info-panel .shipping-note{font-style:italic;font-weight:200}
 @media (min-width:901px){#info-panel section{height:min(62%,470px)}}
 @media (max-width:900px){header .header-right #open-cart{top:auto;width:34px;height:34px}.camera-dock .camera-actions{margin-top:22px}.viewfinder .zoom-loupe{width:118px;height:118px}}
+/* All page copy in lower case, including text written by script.js. */
+body *,body *::before,body *::after,select option{text-transform:lowercase!important}
