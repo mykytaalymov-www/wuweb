@@ -415,3 +415,9 @@ header .tag-timeless #open-cart{z-index:-1;pointer-events:auto}
 .order-thanks::backdrop{background:#f7f6f2b0;backdrop-filter:blur(6px)}
 .order-thanks h2{margin:0 0 12px;font-family:"WU Display",sans-serif;font-size:34px;font-weight:400;line-height:1}
 .order-thanks p{margin:0 0 6px;font-size:11px;line-height:1.7;color:#55554f}
+/* Header without the tagline: instagram, logo, bag. */
+header{grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);grid-template-areas:"instagram logo bag"}
+header .instagram-notification{justify-self:start;top:0}
+header #open-cart,header .header-right #open-cart{grid-area:bag;justify-self:end;position:relative;top:auto;left:auto;right:auto;margin:0;padding:0;width:44px;height:44px;z-index:1;pointer-events:auto;transform:none;box-sizing:border-box}
+header #open-cart:hover{animation:none;transform:translateY(-2px) rotate(-4deg)}
+@media (max-width:900px){header #open-cart,header .header-right #open-cart{width:36px;height:36px}}
