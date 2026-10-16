@@ -410,3 +410,8 @@ header .tag-timeless #open-cart{z-index:-1;pointer-events:auto}
 .camera-app.gallery-mode .shutter{background:none;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none}
 /* The delivery word catches a red sheen instead of chrome. */
 .delivery-link span{background-image:linear-gradient(105deg,#171715 0 36%,#a3160a 42%,#ffb3a8 48%,#fe1c03 53%,#ffd2cb 57%,#171715 64% 100%)}
+/* Thank-you note after a Stripe payment. */
+.order-thanks{max-width:360px;width:calc(100% - 40px);padding:34px 28px 28px;border:0;border-radius:22px;background:#f7f6f2;color:#171715;box-shadow:0 24px 60px #17171530;text-align:left}
+.order-thanks::backdrop{background:#f7f6f2b0;backdrop-filter:blur(6px)}
+.order-thanks h2{margin:0 0 12px;font-family:"WU Display",sans-serif;font-size:34px;font-weight:400;line-height:1}
+.order-thanks p{margin:0 0 6px;font-size:11px;line-height:1.7;color:#55554f}
