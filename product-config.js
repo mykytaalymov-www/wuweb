@@ -8,6 +8,8 @@ window.RROSE_CONFIG = {
     long: { EUR: 160, PLN: 699 }
   },
   checkoutLinks: { short: {}, long: {} },
+  // Stripe Payment Link (sandbox). Shipping rates, address, phone and size are collected on the Stripe page.
+  stripePaymentLink: 'https://buy.stripe.com/test_28EbJ18i17aC73UbrxdUY00',
   parcel: {
     weightKg: 1,
     dimensionsCm: { length: 60, width: 60, height: 30 },
