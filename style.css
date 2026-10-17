@@ -613,3 +613,156 @@ header #open-cart:hover{animation:none;transform:translateY(-2px) rotate(-4deg)}
  .finder-window-controls button:after,.mac-window-controls .mac-close:after{transition:none}
  #delivery-page[open]{animation:none}
 }
+
+/* Basquiat-inspired marker details animate with the model name and product specs. */
+#info-panel [data-info="rrose"] h1.product-title{position:relative;display:table;margin:0 0 35px;padding-bottom:8px}
+#info-panel [data-info="rrose"] .product-title .title-doodle{position:absolute;left:0;bottom:0;width:100%;height:12px;overflow:visible}
+#info-panel [data-info="rrose"] .product-title .title-doodle path{stroke:#fe1c03}
+#info-panel [data-info="rrose"] .product-details{margin-top:22px}
+#info-panel [data-info="rrose"] .product-details dd{position:relative;padding-bottom:6px}
+#info-panel [data-info="rrose"] .product-details .detail-doodle{position:absolute;right:0;bottom:-1px;width:100%;height:9px;overflow:visible}
+#info-panel [data-info="rrose"] .product-details .detail-doodle path{stroke:#75665c}
+
+/* The Size control opens a second Finder window, matching the photo library. */
+.size-photo-view{touch-action:auto;overscroll-behavior:contain}
+.size-finder-window{max-width:1060px}
+.size-finder-content{grid-template-columns:176px minmax(0,1fr)}
+.size-finder-scroll{grid-column:2;min-width:0;min-height:0;overflow:auto;padding:clamp(24px,5vw,66px);background:radial-gradient(ellipse at 75% 0,#fff 0,#f2f1ed 74%)}
+.size-finder-heading>span{color:#89867e;font:8px 'Signal Mono',monospace;letter-spacing:1px}
+.size-finder-heading h2{margin:16px 0 9px;font:clamp(30px,4vw,48px)/1.05 'WU Display',sans-serif;letter-spacing:0}
+.size-finder-heading p{margin:0;color:#77736c;font-size:10px;line-height:1.7}
+.size-finder-table{width:100%;margin:32px 0 23px;border-collapse:collapse;color:#2b2926;font-size:11px}
+.size-finder-table th,.size-finder-table td{padding:14px 10px;border-bottom:1px solid #d8d6d0;text-align:left;font-weight:400}
+.size-finder-table thead th{color:#858179;font-size:9px;letter-spacing:.4px}
+.size-finder-table tbody th{width:34%;text-transform:capitalize}
+.size-finder-table tbody td{font-size:12px}
+.size-finder-specs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;margin:0;padding:0;border-bottom:1px solid #d8d6d0}
+.size-finder-specs>div{display:flex;flex-direction:column;gap:7px;padding:13px 8px 16px 0}
+.size-finder-specs dt{color:#89867e;font-size:8px;letter-spacing:.5px}
+.size-finder-specs dd{margin:0;color:#272522;font-size:10px}
+.size-finder-note{max-width:500px;margin:20px 0 0;color:#77736c;font-size:9px;line-height:1.8}
+
+/* Keep the gallery's red close affordance visible and remove the accidental blue focus box. */
+#back-to-video,#close-size-window{position:relative!important;display:grid!important;place-items:center;width:14px!important;min-width:14px!important;height:14px!important;padding:0!important;border:1px solid #bc4a40!important;border-radius:50%!important;background:linear-gradient(#ff7568,#f14b40)!important;color:transparent!important;font-size:0!important;box-shadow:inset 0 1px 1px #fff9,0 1px 1px #0002!important;outline:0!important}
+#back-to-video span,#close-size-window span{display:none}
+#back-to-video:after,#close-size-window:after{content:"×";position:absolute;inset:-1px;display:grid;place-items:center;color:#78251f;font:10px/1 -apple-system,BlinkMacSystemFont,sans-serif;opacity:0;transition:opacity .14s}
+#back-to-video:hover:after,#back-to-video:focus-visible:after,#close-size-window:hover:after,#close-size-window:focus-visible:after{opacity:1}
+#back-to-video:focus-visible,#close-size-window:focus-visible{box-shadow:0 0 0 2px #f8f7f3,0 0 0 4px #fe1c03!important}
+#size-window .finder-window{max-width:1060px}
+#size-window .finder-item-total{white-space:nowrap}
+
+/* Matte WU red keeps checkout legible without the glossy glass treatment. */
+#cart-dialog .cart-summary #checkout,#cart-dialog .cart-summary #simulate-payment,#delivery-page #add-delivery{background:#fe1c03!important;background-image:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;color:#fff!important;text-shadow:none!important;border:1px solid #e21a04!important;border-radius:10px!important;box-shadow:0 2px 7px #17171518,inset 0 1px 0 #ffffff35!important;font:10px 'Signal Mono',monospace!important;letter-spacing:.45px!important;text-transform:lowercase!important}
+#cart-dialog .cart-summary #checkout:hover,#cart-dialog .cart-summary #simulate-payment:hover,#delivery-page #add-delivery:hover{background:#e71b06!important;box-shadow:0 5px 12px #17171520!important;transform:translateY(-1px)}
+#cart-dialog .cart-summary #checkout:active,#cart-dialog .cart-summary #simulate-payment:active,#delivery-page #add-delivery:active{transform:scale(.99)}
+#cart-dialog .cart-summary #checkout:disabled{border-color:#d4d2cc!important;background:#e4e3df!important;color:#85827c!important;box-shadow:none!important}
+.order-thanks .window-action{background:#fe1c03!important;background-image:none!important;box-shadow:0 2px 7px #17171518!important;text-transform:lowercase!important}
+.window-action,#cart-dialog .cart-summary .window-action,#delivery-page .window-action,.order-thanks .window-action{transition:background .16s,transform .16s,box-shadow .16s}
+
+@media(hover:none){
+ .zoom-controls{pointer-events:auto}
+ .camera-modes button{min-height:44px;padding:10px 9px}
+ .camera-actions{grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:8px;padding-right:0;padding-left:0}
+ .camera-actions>.gallery-thumbnail{justify-self:start;width:48px;height:48px}
+ .camera-actions>.size-picker{justify-self:center}
+ .camera-actions>.shutter-wrap{justify-self:end}
+ .size-picker select{min-height:44px;min-width:88px}
+ .zoom-controls{bottom:max(12px,env(safe-area-inset-bottom));touch-action:pan-x}
+ .zoom-controls #zoom-range{height:26px;min-height:26px;padding:7px 0;touch-action:pan-x}
+ .finder-window-controls #back-to-video,.finder-window-controls #close-size-window{width:36px!important;min-width:36px!important;height:36px!important;border:0!important;background:transparent!important;box-shadow:none!important}
+ .finder-window-controls #back-to-video:before,.finder-window-controls #close-size-window:before{content:"";position:absolute;width:13px;height:13px;border:1px solid #bc4a40;border-radius:50%;background:linear-gradient(#ff7568,#f14b40);box-shadow:inset 0 1px 1px #fff9,0 1px 1px #0002}
+ .finder-window-controls #back-to-video:after,.finder-window-controls #close-size-window:after{z-index:1}
+ .camera-photo-view .viewer-arrow{min-width:64px;height:44px;padding:0 12px;font-size:9px}
+ .finder-place{min-height:38px}
+ .mac-window-controls .mac-close{width:36px;height:36px;border:0;background:transparent;box-shadow:none}
+ .mac-window-controls .mac-close:before{content:"";position:absolute;width:13px;height:13px;border:1px solid #bd4b40;border-radius:50%;background:linear-gradient(#ff796d,#f04b40);box-shadow:inset 0 1px 1px #fff9,0 1px 1px #0002}
+ .mac-window-controls .mac-close:after{z-index:1}
+}
+@media(max-width:700px){
+ .camera-photo-view{padding:10px}
+ .size-finder-window{height:min(780px,calc(100dvh - 20px))}
+ .size-finder-content{grid-template-columns:1fr;grid-template-rows:40px minmax(0,1fr)}
+ .size-finder-scroll{grid-column:1;grid-row:2;padding:22px 16px}
+ .size-finder-table{margin:22px 0 15px;font-size:9px}
+ .size-finder-table th,.size-finder-table td{padding:12px 6px}
+ .size-finder-table tbody td{font-size:10px}
+ .size-finder-specs{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .size-finder-specs>div{padding:11px 6px 12px 0}
+ .size-finder-note{font-size:9px}
+ .finder-window-controls{gap:3px}
+}
+@media(max-width:390px){
+ .size-finder-heading h2{font-size:30px}
+ .size-finder-content{grid-template-rows:38px minmax(0,1fr)}
+ .size-finder-scroll{padding:18px 13px}
+ .size-finder-table th,.size-finder-table td{padding:10px 4px}
+ .size-finder-table tbody th{width:29%}
+ .camera-actions{gap:5px}
+}
+@media(prefers-reduced-motion:reduce){
+ #info-panel [data-info="rrose"] .product-title .title-doodle path,#info-panel [data-info="rrose"] .product-details .detail-doodle path{transition:none}
+}
+
+/* Restore the original camera-style zoom arc, with the 1.0× value as the neutral point. */
+.zoom-controls{left:50%;bottom:10px;width:min(320px,calc(100% - 32px));height:146px;display:block;padding:0;transform:translateX(-50%);border:0;border-radius:0;background:none;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;pointer-events:none;overflow:visible}
+.zoom-controls .zoom-dial{position:absolute;inset:0 0 auto;display:block;width:100%;height:112px;overflow:visible;cursor:ew-resize;pointer-events:auto;touch-action:pan-x;filter:drop-shadow(0 1px 1px #fff9)}
+.zoom-dial line{stroke:#75665c;stroke-width:1.2;opacity:.22}
+.zoom-dial line.lit{opacity:.86;stroke:#75665c}
+.zoom-dial text{fill:#625a52;font:10px 'Signal Mono',monospace;opacity:.55}
+.zoom-dial text.lit{fill:#342e29;opacity:1}
+.zoom-dial .dial-needle{fill:#ffcf32;stroke:#9a7920;stroke-width:.8;filter:drop-shadow(0 1px 1px #0003);transition:transform .12s ease-out}
+.zoom-controls .zoom-presets{position:absolute;left:50%;bottom:0;display:flex;width:min(290px,100%);height:34px;align-items:center;justify-content:space-between;gap:2px;padding:3px 5px;transform:translateX(-50%);border:1px solid #bdb8b0;border-radius:999px;background:#f7f6f2df;box-shadow:0 3px 10px #211b1514,inset 0 1px 0 #fff;backdrop-filter:blur(14px) saturate(1.2);-webkit-backdrop-filter:blur(14px) saturate(1.2);pointer-events:auto}
+.zoom-controls .zoom-presets button{flex:1;min-width:39px;height:28px;padding:0 4px;border:0;border-radius:999px;background:transparent;color:#71675f;font-size:9px;letter-spacing:0;touch-action:manipulation}
+.zoom-controls .zoom-presets button:hover{background:#e9e7e1;transform:none}
+.zoom-controls .zoom-presets button.selected{background:#75665c;color:#fff;box-shadow:0 1px 3px #33231a38}
+.zoom-controls output{position:absolute;left:50%;top:44px;display:block;transform:translateX(-50%);padding:2px 6px;border:1px solid #ffffff9c;border-radius:999px;background:#f7f6f2b8;color:#4f4841;font:10px 'Signal Mono',monospace;letter-spacing:.1px;text-shadow:0 1px #fff8;pointer-events:none}
+.zoom-controls #zoom-range{position:absolute;left:50%;bottom:39px;width:1px;height:1px;margin:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;opacity:0;pointer-events:none}
+.zoom-controls #zoom-range:focus-visible{left:50%;bottom:38px;width:min(160px,calc(100% - 70px));height:28px;transform:translateX(-50%);clip:auto;clip-path:none;opacity:1;z-index:4;border-radius:999px;background:#f7f6f2;border:2px solid #75665c;pointer-events:auto}
+.viewfinder>#reset-zoom{top:12px;right:12px;bottom:auto;left:auto;z-index:5;width:38px;height:38px;min-width:38px;padding:0;border:1px solid #d0ccc5;border-radius:50%;outline:0;background:#f7f6f2d9;background-image:none!important;box-shadow:0 2px 9px #211b151a,inset 0 1px 0 #fff;color:#66594f;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.viewfinder>#reset-zoom:hover{background:#eae8e2;color:#352e29;transform:rotate(-20deg)}
+.viewfinder>#reset-zoom:focus-visible{outline:2px solid #ffcf32;outline-offset:2px}
+.viewfinder>#reset-zoom span{display:none}
+@media(max-width:700px){
+ .zoom-controls{bottom:max(10px,env(safe-area-inset-bottom));width:min(300px,calc(100% - 28px));height:136px}
+ .zoom-controls .zoom-dial{height:104px}
+ .zoom-controls .zoom-presets{width:min(280px,100%);height:36px}
+ .zoom-controls .zoom-presets button{min-width:40px;height:30px;font-size:9px}
+ .viewfinder>#reset-zoom{top:10px;right:10px;width:42px;height:42px;min-width:42px}
+}
+@media(max-width:350px){.zoom-controls .zoom-presets button{min-width:35px;padding:0 2px;font-size:8px}.zoom-controls output{top:40px}}
+@media(hover:none){
+ .zoom-controls{pointer-events:none}
+ .zoom-controls .zoom-dial,.zoom-controls .zoom-presets{pointer-events:auto}
+ .finder-window-controls #back-to-video:after,.finder-window-controls #close-size-window:after{opacity:1;font-size:11px}
+}
+.zoom-controls{opacity:1!important;transition:none!important}
+.viewfinder>#reset-zoom{opacity:1!important;pointer-events:auto!important;transform:none!important}
+.zoom-controls output{width:auto!important;min-width:0!important;max-width:max-content;padding:3px 7px;line-height:1.2;white-space:nowrap}
+@media(max-width:700px){
+ .zoom-controls .zoom-presets{height:44px}
+ .zoom-controls .zoom-presets button{min-height:44px;height:44px}
+ .finder-window-controls #back-to-video,.finder-window-controls #close-size-window{width:44px!important;min-width:44px!important;height:44px!important}
+ .photos-bar.finder-toolbar{height:48px;min-height:48px}
+ .photo-viewer{inset:48px 0 0}
+ .viewfinder>#reset-zoom{width:44px;height:44px;min-width:44px}
+}
+.zoom-controls{mix-blend-mode:normal!important;isolation:isolate}
+.zoom-controls .zoom-dial,.zoom-controls .zoom-presets,.zoom-controls output{mix-blend-mode:normal!important}
+.zoom-dial line{stroke:#faf9f5;stroke-width:1.35;opacity:.72;filter:drop-shadow(0 1px 1px #201c18a6)}
+.zoom-dial line.lit{stroke:#ffcf32;stroke-width:1.6;opacity:1}
+.zoom-dial text{fill:#fff;font-size:12px;opacity:.94;paint-order:stroke;stroke:#1717159c;stroke-width:2.5px;stroke-linejoin:round;filter:drop-shadow(0 1px 1px #0008)}
+.zoom-dial text.lit{fill:#ffcf32}
+.camera-actions>#previous-mode,.camera-actions>#next-mode{display:none!important}
+@media(max-width:700px){
+ .camera-modes{justify-content:space-between;gap:0;padding:10px 0 14px}
+ .camera-modes button{flex:1;min-height:44px}
+ .camera-dock .camera-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:0;margin:8px 0 0;padding:0!important}
+ .camera-dock .camera-actions>#open-gallery{grid-column:1!important;grid-row:1;justify-self:start}
+ .camera-dock .camera-actions>.shutter-wrap{grid-column:2!important;grid-row:1;justify-self:center}
+ .camera-dock .camera-actions>.size-picker{grid-column:3!important;grid-row:1;justify-self:end}
+ .camera-dock .gallery-thumbnail{width:49px;height:56px}
+ .camera-dock .shutter{width:66px;height:66px}
+ .camera-dock .size-picker select{width:104px;min-height:44px}
+}
+@media(max-width:350px){.camera-dock .gallery-thumbnail{width:44px;height:50px}.camera-dock .size-picker select{width:96px}}
+.viewfinder>#reset-zoom svg{width:18px;height:18px}
