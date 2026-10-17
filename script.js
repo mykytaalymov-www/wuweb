@@ -1,6 +1,6 @@
 const config=window.RROSE_CONFIG,intro=document.getElementById('intro');let timer;
 function enter(){intro.classList.add('done');intro.setAttribute('aria-hidden','true');intro.inert=true;clearTimeout(timer);}
-try{if(sessionStorage.getItem('wu-intro'))enter();else{sessionStorage.setItem('wu-intro','seen');timer=setTimeout(enter,matchMedia('(prefers-reduced-motion: reduce)').matches?150:2300);}}catch{timer=setTimeout(enter,2300);}document.getElementById('skip-intro').onclick=enter;
+timer=setTimeout(enter,matchMedia('(prefers-reduced-motion: reduce)').matches?150:1800);document.getElementById('skip-intro').onclick=enter;
 const localeRegion=(navigator.language.split('-').pop()||'').toUpperCase();
 const sizeSelect=document.getElementById('size');sizeSelect.replaceChildren(...config.sizes.map(s=>new Option(s,s)));sizeSelect.disabled=!config.sizes.length;
 const currency=document.getElementById('currency');currency.value=Intl.DateTimeFormat().resolvedOptions().timeZone==='Europe/Warsaw'||localeRegion==='PL'?'PLN':'EUR';

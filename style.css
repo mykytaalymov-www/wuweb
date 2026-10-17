@@ -535,3 +535,81 @@ header #open-cart:hover{animation:none;transform:translateY(-2px) rotate(-4deg)}
 }
 @media(prefers-reduced-motion:reduce){.finder-window,.shutter,.zoom-controls .zoom-presets button,.camera-dock .gallery-thumbnail,.camera-photo-view .photo-tile,.camera-photo-view .strip-thumb{animation:none;transition:none}}
 @media (max-width:900px){header #open-cart,header .header-right #open-cart{width:36px;height:36px}}
+
+/* Brand intro: a soft focus resolves into the WU? wordmark before the page appears. */
+.intro{background:#f7f6f2;color:#171715}
+.intro .mark-wrap{width:clamp(145px,20vw,210px);margin:0}
+.intro-logo{display:block;width:100%;height:auto;opacity:.18;filter:blur(18px);transform:scale(.96);animation:intro-logo-focus 1.5s cubic-bezier(.2,.75,.25,1) forwards}
+@keyframes intro-logo-focus{0%{opacity:.14;filter:blur(22px);transform:scale(.94)}55%{opacity:.72;filter:blur(5px);transform:scale(1.015)}100%{opacity:1;filter:blur(0);transform:scale(1)}}
+.intro #skip-intro{font-family:'Signal Mono',monospace;font-size:9px;letter-spacing:1.4px}
+
+/* A camera shutter doubles as a quiet text purchase button. */
+.camera-dock .shutter,.camera-app.gallery-mode .camera-dock .shutter{background:linear-gradient(145deg,#fff 0%,#c7c9c8 18%,#fafaf8 35%,#969998 50%,#f4f5f3 66%,#b5b7b6 83%,#fff 100%);box-shadow:inset 0 1px 2px #fff,inset 0 -2px 4px #57595b66,0 3px 9px #1e1b1820}
+.camera-dock .shutter:before,.camera-app.gallery-mode .camera-dock .shutter:before{background:linear-gradient(145deg,#ff5b49 0%,#fe1c03 48%,#dc1800 100%)}
+.camera-dock .shutter .shutter-label,.camera-app.gallery-mode .camera-dock .shutter .shutter-label{position:relative;z-index:1;display:block;color:#fff;font:11px/1 'Signal Mono',monospace;letter-spacing:.3px;text-transform:lowercase;text-shadow:0 1px 2px #7a0a00a0}
+.camera-dock .shutter .shutter-bag,.camera-app.gallery-mode .camera-dock .shutter .shutter-bag{display:none!important}
+.camera-dock .shutter-wrap>span,.camera-app.gallery-mode .camera-dock .shutter-wrap>span{display:none!important}
+.camera-dock .shutter:focus-visible{outline:3px solid #ffcf32;outline-offset:5px}
+
+/* Shared macOS-style frame for bag, delivery and order windows. */
+.mac-window-titlebar{position:relative;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;min-height:48px;padding:0 16px;border-bottom:1px solid #d6d4ce;background:linear-gradient(180deg,#fafaf8,#e9e8e3);color:#33312e}
+.mac-window-controls{display:flex;align-items:center;gap:7px;justify-self:start;margin:0}
+.mac-window-controls .mac-close,.mac-window-controls i{position:relative;display:block;flex:none;width:13px;height:13px;padding:0;border:1px solid #bd4b40;border-radius:50%;background:linear-gradient(#ff796d,#f04b40);box-shadow:inset 0 1px 1px #fff9,0 1px 1px #0002}
+.mac-window-controls .mac-close{cursor:pointer}
+.mac-window-controls .mac-close:after{content:"×";position:absolute;inset:-1px;display:grid;place-items:center;color:#78251f;font:10px/1 -apple-system,BlinkMacSystemFont,sans-serif;opacity:0;transition:opacity .14s}
+.mac-window-controls .mac-close:hover:after,.mac-window-controls .mac-close:focus-visible:after{opacity:1}
+.mac-window-controls .mac-close:focus-visible{outline:2px solid #75665c;outline-offset:3px}
+.mac-window-controls i:nth-of-type(1){border-color:#c49b36;background:linear-gradient(#ffdc72,#f6c74c)}
+.mac-window-controls i:nth-of-type(2){border-color:#62a24c;background:linear-gradient(#a3e889,#73ce5a)}
+.mac-window-titlebar .window-context{justify-self:end;color:#88867f;font:8px 'Signal Mono',monospace;letter-spacing:.8px}
+.mac-window-titlebar .window-title{grid-column:2;white-space:nowrap;font:9px 'Signal Mono',monospace;letter-spacing:.7px}
+.mac-window-body{padding:22px 26px 26px}
+#cart-dialog,.order-thanks{width:min(650px,calc(100vw - 28px));max-width:none;max-height:min(82dvh,780px);margin:auto;padding:0;overflow:hidden;border:1px solid #c9c7c0;border-radius:15px;background:#f8f7f3;color:#171715;box-shadow:0 28px 88px #211b1533,0 2px 8px #211b151c}
+#cart-dialog::backdrop,#delivery-page::backdrop,.order-thanks::backdrop{background:#19181538;backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px)}
+#cart-dialog .cart-header{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;flex:none;min-height:48px;padding:0 16px;border-bottom:1px solid #d6d4ce;background:linear-gradient(180deg,#fafaf8,#e9e8e3)}
+#cart-dialog .cart-header .mac-window-controls{justify-self:start}
+#cart-dialog .cart-header h2{grid-column:2;margin:0;color:#33312e;font:10px 'Signal Mono',monospace;letter-spacing:.5px}
+#cart-dialog .cart-content{max-height:calc(min(82dvh,780px) - 50px);overflow:auto;padding:18px 26px 24px}
+#cart-dialog .cart-currency{margin:0 0 8px}
+#cart-dialog .cart-header .window-context{grid-column:3}
+#delivery-page{position:fixed;inset:0;width:min(560px,calc(100vw - 28px));height:auto;max-width:none;max-height:min(760px,calc(100dvh - 28px));margin:auto;padding:0;overflow:hidden;border:1px solid #c9c7c0;border-radius:15px;background:#f8f7f3;color:#171715;box-shadow:0 28px 88px #211b1533,0 2px 8px #211b151c}
+#delivery-page[open]{animation:mac-window-in .24s cubic-bezier(.2,.8,.2,1)}
+@keyframes mac-window-in{from{opacity:0;transform:translateY(7px) scale(.99)}to{opacity:1;transform:none}}
+#delivery-page .page-inner{display:flex;flex-direction:column;max-width:none;max-height:min(760px,calc(100dvh - 28px));margin:0;padding:0}
+#delivery-page .page-header{display:grid;grid-template-columns:1fr auto 1fr;flex:none;align-items:center;min-height:48px;margin:0;padding:0 16px;border-bottom:1px solid #d6d4ce;background:linear-gradient(180deg,#fafaf8,#e9e8e3)}
+#delivery-page .page-header .mac-window-controls{justify-self:start}
+#delivery-page #delivery-title{grid-column:2;margin:0;color:#33312e;font:10px 'Signal Mono',monospace;letter-spacing:.5px;text-transform:lowercase}
+#delivery-page .delivery-content{overflow:auto;padding:26px}
+#delivery-page .shipping-calculator select,#cart-dialog select,#cart-dialog input{min-height:42px;border:1px solid #d3d1ca;border-radius:9px;background:#fff;color:#171715}
+.order-thanks{width:min(440px,calc(100vw - 28px));text-align:left}
+.order-thanks .order-content{padding:30px}
+.order-thanks h2{margin:0 0 12px;font:32px/1.1 'WU Display',sans-serif;letter-spacing:0}
+.order-thanks p{margin:0 0 20px;color:#5c5953;font-size:11px;line-height:1.7}
+.order-thanks .order-content form{margin:0}
+.window-action,#cart-dialog .cart-summary .window-action,#delivery-page .window-action,.order-thanks .window-action{display:flex;align-items:center;justify-content:center;min-height:48px;width:100%;margin:18px 0 0;padding:13px 18px;border:1px solid #df1c09;border-radius:10px;background:linear-gradient(180deg,#ff3925,#ed1b06);color:#fff;font:10px 'Signal Mono',monospace;letter-spacing:.5px;text-align:center;text-decoration:none;box-shadow:inset 0 1px 0 #ffffff52,0 3px 8px #a51b0d24;transition:transform .16s,box-shadow .16s,filter .16s}
+.window-action:hover,#cart-dialog .cart-summary .window-action:hover,#delivery-page .window-action:hover,.order-thanks .window-action:hover{filter:saturate(1.08);transform:translateY(-1px);box-shadow:inset 0 1px 0 #ffffff65,0 6px 13px #a51b0d30}
+.window-action:active,#cart-dialog .cart-summary .window-action:active,#delivery-page .window-action:active,.order-thanks .window-action:active{transform:scale(.985)}
+.window-action:disabled{border-color:#d0cec8;background:#dfded9;color:#77746e;box-shadow:none}
+#cart-dialog #checkout-note{margin:12px 0 0}
+#cart-dialog .quantity button{display:grid;place-items:center;width:29px;height:29px;padding:0;border:1px solid #d7d5cf;border-radius:8px;background:linear-gradient(#fff,#f0efeb);color:#4b4944}
+#cart-dialog .quantity button:hover{background:#e9e7e1}
+#cart-dialog .quantity button.remove{width:auto;height:auto;padding:5px 0;border:0;background:none;color:#8a8780;text-decoration:underline;text-underline-offset:3px}
+#cart-dialog .cart-delivery-row .page-link{grid-column:1;justify-self:start;margin:4px 0 0;padding:6px 10px;border:1px solid #d7d5cf;border-radius:8px;background:linear-gradient(#fff,#f0efeb);color:#625f59;font:9px 'Signal Mono',monospace;text-decoration:none;text-underline-offset:0}
+#cart-dialog .cart-delivery-row .page-link:hover{background:#e9e7e1;color:#171715}
+#delivery-status{margin:12px 0 0}
+.finder-window-controls button:after{content:"×";position:absolute;inset:-1px;display:grid;place-items:center;color:#78251f;font:10px/1 -apple-system,BlinkMacSystemFont,sans-serif;opacity:0;transition:opacity .14s}
+.finder-window-controls button:hover:after,.finder-window-controls button:focus-visible:after{opacity:1}
+
+@media(max-width:600px){
+ .mac-window-titlebar{min-height:44px;padding-right:12px;padding-left:12px}
+ #cart-dialog .cart-content,#delivery-page .delivery-content{padding:19px 18px 22px}
+ #cart-dialog .cart-item{gap:12px}
+ #delivery-page{max-height:calc(100dvh - 20px)}
+ #delivery-page .page-inner{max-height:calc(100dvh - 20px)}
+ .order-thanks .order-content{padding:24px 20px}
+}
+@media(prefers-reduced-motion:reduce){
+ .intro-logo{opacity:1;filter:none;transform:none;animation:none}
+ .finder-window-controls button:after,.mac-window-controls .mac-close:after{transition:none}
+ #delivery-page[open]{animation:none}
+}
