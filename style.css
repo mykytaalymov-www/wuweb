@@ -420,4 +420,118 @@ header{grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);grid-template-area
 header .instagram-notification{justify-self:start;top:0}
 header #open-cart,header .header-right #open-cart{grid-area:bag;justify-self:end;position:relative;top:auto;left:auto;right:auto;margin:0;padding:0;width:44px;height:44px;z-index:1;pointer-events:auto;transform:none;box-sizing:border-box}
 header #open-cart:hover{animation:none;transform:translateY(-2px) rotate(-4deg)}
+
+/* iPhone camera controls, finished with a quiet Braun-inspired metal palette. */
+:root{--camera-brown:#75665c;--camera-red:#fe1c03;--camera-metal:#b8bab9;--camera-paper:#f7f6f2}
+.zoom-controls{z-index:5;left:50%;bottom:16px;display:grid;grid-template-columns:minmax(0,1fr) auto auto;grid-template-rows:auto auto;align-items:center;gap:4px 9px;width:clamp(230px,30vw,300px);height:auto;padding:8px 11px;transform:translateX(-50%);border:1px solid #51473c20;border-radius:18px;background:#f8f7f2d9;box-shadow:0 5px 18px #211b151c,inset 0 1px 0 #fff;backdrop-filter:blur(18px) saturate(1.25);-webkit-backdrop-filter:blur(18px) saturate(1.25);touch-action:pan-x}
+.zoom-controls .zoom-dial{display:none}
+.zoom-controls .zoom-presets{grid-column:1/-1;grid-row:1;display:flex;width:auto;justify-content:space-between;gap:3px}
+.zoom-controls .zoom-presets button{display:grid;place-items:center;width:auto;height:29px;min-width:37px;padding:0 7px;border:0;border-radius:999px;background:transparent;color:#625c56;font:10px -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;letter-spacing:-.1px;backdrop-filter:none;-webkit-backdrop-filter:none;transition:background .18s,color .18s,transform .18s}
+.zoom-controls .zoom-presets button:hover{transform:translateY(-1px);background:#eae7e0}
+.zoom-controls .zoom-presets button.selected{background:var(--camera-brown);color:#fff;box-shadow:0 1px 3px #33231a38}
+.zoom-controls #zoom-range{position:static;grid-column:1;grid-row:2;width:100%;height:12px;margin:0;opacity:.86;accent-color:var(--camera-brown);cursor:ew-resize}
+.zoom-controls output{position:static;grid-column:2;grid-row:2;align-self:center;color:#75665c;font:9px 'Signal Mono',monospace;letter-spacing:.1px;pointer-events:none}
+.zoom-controls #reset-zoom{position:static;grid-column:3;grid-row:2;display:grid;place-items:center;width:28px;height:28px;min-width:28px;padding:0;border:1px solid #c4c0b9;border-radius:50%;outline:0;outline-offset:0;background:linear-gradient(145deg,#fff,#eceae4);box-shadow:inset 0 1px 0 #fff,0 2px 5px #29231e16;color:#66594f;backdrop-filter:none;-webkit-backdrop-filter:none}
+.zoom-controls #reset-zoom svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.zoom-controls #reset-zoom span{position:absolute;clip:rect(0 0 0 0);clip-path:inset(50%);width:1px;height:1px;overflow:hidden;white-space:nowrap}
+.zoom-controls #reset-zoom:hover{background:#e8e5df;color:#352e29}
+@media(hover:none){.zoom-controls{pointer-events:auto}}
+.touch-hint{display:none!important}
+
+.camera-dock .shutter{position:relative;isolation:isolate;display:grid;place-items:center;width:74px;height:74px;padding:0;border:1px solid #a5a7a6;border-radius:50%;outline:2px solid #ffcf32;outline-offset:5px;background:linear-gradient(145deg,#fff 0%,#c7c9c8 18%,#fafaf8 35%,#969998 50%,#f4f5f3 66%,#b5b7b6 83%,#fff 100%);box-shadow:inset 0 1px 2px #fff,inset 0 -2px 4px #57595b66,0 3px 9px #1e1b1820;transition:transform .2s cubic-bezier(.2,.8,.2,1),box-shadow .2s}
+.camera-dock .shutter:before{content:"";position:absolute;inset:6px;z-index:0;border-radius:50%;background:linear-gradient(145deg,#ff5b49 0%,#fe1c03 48%,#dc1800 100%);box-shadow:inset 0 1px 2px #ffffff78,inset 0 -2px 4px #7a0c0655,0 1px 2px #51090030}
+.camera-dock .shutter .shutter-label{display:none}
+.camera-dock .shutter .shutter-bag,.camera-app.gallery-mode .camera-dock .shutter .shutter-bag{position:relative;z-index:1;display:block;width:39px;height:39px;margin:0;object-fit:contain;filter:drop-shadow(0 1px 2px #32302c55);transition:transform .2s}
+.camera-dock .shutter:hover{transform:scale(1.04);box-shadow:inset 0 1px 2px #fff,inset 0 -2px 4px #57595b66,0 5px 13px #1e1b1828}
+.camera-dock .shutter:active{transform:scale(.96)}
+.camera-dock .shutter:focus-visible{outline-color:#ffcf32;outline-width:3px}
+.camera-dock .shutter-wrap>span,.camera-app.gallery-mode .camera-dock .shutter-wrap>span{display:block;position:absolute;top:calc(100% + 12px);left:50%;transform:translateX(-50%);color:#75665c;font-size:8px;font-weight:400;letter-spacing:.8px;white-space:nowrap}
+.camera-dock .gallery-thumbnail{width:49px;height:56px;border:1px solid #c9c6bf;outline:0;border-radius:10px;padding:2px;background:linear-gradient(145deg,#fff,#eceae4);box-shadow:0 3px 9px #29231e18;transform:none}
+.camera-dock .gallery-thumbnail img{border-radius:7px}
+.camera-dock .gallery-thumbnail:hover{transform:translateY(-2px);box-shadow:0 5px 12px #29231e25}
+
+.camera-photo-view{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;width:100vw;height:100dvh;padding:34px;background:#eeede8b8;backdrop-filter:blur(18px) saturate(1.15);-webkit-backdrop-filter:blur(18px) saturate(1.15);touch-action:auto}
+.camera-photo-view[hidden],.photo-viewer[hidden]{display:none!important}
+.finder-window{position:relative;display:flex;flex-direction:column;width:min(1160px,100%);height:min(780px,calc(100dvh - 68px));overflow:hidden;border:1px solid #cfcdc7;border-radius:13px;background:#f8f8f6;box-shadow:0 24px 80px #29241f30,0 2px 8px #29241f16;animation:finder-arrive .28s cubic-bezier(.2,.8,.2,1) both}
+@keyframes finder-arrive{from{opacity:0;transform:translateY(8px) scale(.986)}to{opacity:1;transform:translateY(0) scale(1)}}
+.photos-bar.finder-toolbar{position:relative;z-index:4;display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;flex:none;height:48px;min-height:48px;padding:0 15px;border-bottom:1px solid #d8d6d0;background:linear-gradient(#fafaf9,#eeede9);color:#3b3935}
+.finder-window-controls{display:flex;align-items:center;gap:8px}
+.finder-window-controls button,.finder-window-controls i{position:relative;display:block;width:12px;height:12px;padding:0;border:1px solid #bc4a40;border-radius:50%;background:linear-gradient(#ff7568,#f14b40);box-shadow:inset 0 1px 1px #fff9,0 1px 1px #0002}
+.finder-window-controls button{cursor:pointer}
+.finder-window-controls button:hover:after{content:"×";position:absolute;inset:-1px;color:#73261e;font:10px/11px -apple-system,BlinkMacSystemFont,sans-serif}
+.finder-window-controls i:nth-of-type(1){border-color:#c49b36;background:linear-gradient(#ffdc72,#f6c74c)}
+.finder-window-controls i:nth-of-type(2){border-color:#62a24c;background:linear-gradient(#a3e889,#73ce5a)}
+.finder-title{display:flex;align-items:baseline;gap:8px;white-space:nowrap;font:11px -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+.finder-title strong{font-weight:500;color:#393834}
+.finder-title span,.finder-item-total{color:#8b8982;font-size:10px}
+.finder-item-total{justify-self:end}
+.photos-bar.finder-toolbar button,#back-to-video,#photo-close{position:static;width:auto;height:auto;min-width:0;padding:0;border:0;border-radius:0;background:none;color:#5c554e;font:9px 'Signal Mono',monospace;letter-spacing:.45px;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none}
+.photos-bar.finder-toolbar button:hover{background:none;color:#171715}
+.finder-content{flex:1;display:grid;grid-template-columns:176px minmax(0,1fr);min-width:0;min-height:0;background:#eeede9}
+.finder-sidebar{display:flex;flex-direction:column;gap:9px;padding:20px 12px;border-right:1px solid #d9d7d1;background:#f7f7f5}
+.finder-sidebar-heading{display:block;margin:0 7px 4px;color:#949189;font:8px 'Signal Mono',monospace;letter-spacing:1px}
+.finder-place{display:flex;justify-content:space-between;align-items:center;width:100%;padding:8px 9px;border:1px solid transparent;border-radius:7px;background:transparent;color:#55524c;text-align:left;font:10px -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+.finder-place.is-selected{border-color:#ddd9cf;background:#eae8e1;box-shadow:inset 0 1px #fff}
+.finder-place span:last-child{color:#8c8880;font:9px 'Signal Mono',monospace}
+.finder-sidebar-rule{height:1px;margin:4px 7px;background:#dedcd5}
+.finder-collection{padding:4px 9px;color:#77736c;font:10px -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+.photos-scroll{grid-column:2;min-width:0;min-height:0;padding:21px 23px;overflow:auto;background:radial-gradient(ellipse at 50% 0,#fff 0,#f2f1ed 74%)}
+.photos-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(128px,1fr));align-content:start;gap:13px;min-height:100%;padding:0;overflow:visible}
+.camera-photo-view .photo-tile{display:flex;flex-direction:column;gap:7px;width:100%;height:auto;min-width:0;padding:6px;border:1px solid transparent;border-radius:9px;background:transparent;text-align:left;cursor:default;aspect-ratio:auto;transition:background .16s,border-color .16s,box-shadow .16s}
+.camera-photo-view .photo-tile:hover{border-color:#dedbd2;background:#f7f6f2;box-shadow:0 3px 10px #32291f12}
+.camera-photo-view .photo-tile:focus-visible{outline:2px solid #b5a497;outline-offset:2px}
+.camera-photo-view .photo-tile img{display:block;width:100%;height:auto;aspect-ratio:1/1;object-fit:cover;border:1px solid #e2e0da;border-radius:5px;background:#fff;transition:transform .3s}
+.camera-photo-view .photo-tile:hover img{transform:scale(1.015);filter:none}
+.camera-photo-view .photo-tile span{display:block;overflow:hidden;padding:0 2px;color:#5d5952;font:8px 'Signal Mono',monospace;text-overflow:ellipsis;white-space:nowrap}
+.photo-viewer{position:absolute;inset:48px 0 0;z-index:3;display:flex;flex-direction:column;background:#f3f2ee}
+.photos-bar.finder-viewer-toolbar{z-index:3;height:44px;min-height:44px;padding:0 16px;background:linear-gradient(#f8f7f4,#ecebe6)}
+.photos-bar.finder-viewer-toolbar #photo-count{justify-self:end;color:#827e76;font:9px 'Signal Mono',monospace}
+.viewer-stage{position:relative;flex:1;min-height:0;overflow:hidden;background:radial-gradient(ellipse at 50% 43%,#fff 0,#f8f7f3 60%,#eeede9 100%)}
+.viewer-stage>#camera-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;touch-action:none;user-select:none;-webkit-user-drag:none}
+.camera-photo-view .viewer-arrow{position:absolute;top:50%;z-index:2;display:flex;align-items:center;justify-content:center;width:auto;height:34px;min-width:78px;padding:0 11px;border:1px solid #d4d1ca;border-radius:999px;outline:0;background:#f8f7f2dc;color:#514d46;font:8px 'Signal Mono',monospace;letter-spacing:.5px;opacity:1;transform:translateY(-50%);transition:background .18s,transform .18s;box-shadow:0 2px 8px #17171510;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.camera-photo-view .viewer-arrow:hover{background:#e8e5df;color:#171715;transform:translateY(-50%) scale(1.03);box-shadow:0 3px 10px #17171518}
+#previous-photo{left:16px}#next-photo{right:16px}
+.viewer-strip{flex:none;display:flex;justify-content:center;gap:5px;overflow-x:auto;padding:9px 14px 11px;border-top:1px solid #dfddd7;background:#f8f7f3;scrollbar-width:thin}
+.camera-photo-view .strip-thumb{flex:none;width:42px;height:50px;border:1px solid #d5d2ca;border-radius:5px;background:#fff;opacity:.62;transition:width .2s,opacity .18s,border-color .18s}
+.camera-photo-view .strip-thumb.active{width:52px;margin:0 2px;border-color:#958578;opacity:1}
+.gallery-open .zoom-controls,.gallery-open .focus-frame,.gallery-open #play-indicator,.gallery-open .touch-hint{visibility:hidden}
+
+@media(max-width:700px){
+ .zoom-controls{bottom:11px;width:min(255px,calc(100vw - 50px));padding:7px 9px;border-radius:16px}
+ .zoom-controls .zoom-presets button{height:27px;min-width:32px;padding:0 5px;font-size:9px}
+ .camera-dock .shutter{width:66px;height:66px}
+ .camera-dock .shutter .shutter-bag,.camera-app.gallery-mode .camera-dock .shutter .shutter-bag{width:35px;height:35px}
+ .camera-photo-view{padding:10px}
+ .finder-window{width:100%;height:min(780px,calc(100dvh - 20px));border-radius:11px}
+ .photos-bar.finder-toolbar{height:43px;min-height:43px;padding:0 10px}
+ .finder-window-controls{gap:5px}
+ .finder-window-controls button,.finder-window-controls i{width:10px;height:10px}
+ .finder-title{gap:5px;font-size:10px}
+ .finder-title span,.finder-item-total{font-size:9px}
+ .finder-content{grid-template-columns:1fr;grid-template-rows:34px minmax(0,1fr)}
+ .finder-sidebar{display:flex;flex-direction:row;align-items:center;gap:8px;overflow:hidden;padding:0 10px;border-right:0;border-bottom:1px solid #d9d7d1}
+ .finder-sidebar-heading,.finder-sidebar-rule,.finder-collection{display:none}
+ .finder-place{width:auto;gap:12px;padding:6px 9px;white-space:nowrap}
+ .photos-scroll{grid-column:1;grid-row:2;padding:12px}
+ .photos-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+ .camera-photo-view .photo-tile{gap:5px;padding:4px;border-radius:7px}
+ .camera-photo-view .photo-tile span{font-size:7px}
+ .photo-viewer{inset:43px 0 0}
+ .photos-bar.finder-viewer-toolbar{height:40px;min-height:40px;padding:0 10px}
+ .photos-bar.finder-viewer-toolbar button{font-size:7px}
+ .viewer-stage>#camera-photo{padding:4px}
+ .camera-photo-view .viewer-arrow{top:auto;bottom:12px;min-width:62px;height:28px;padding:0 8px;font-size:7px;transform:none}
+ .camera-photo-view .viewer-arrow:hover{transform:scale(1.02)}
+ #previous-photo{left:12px}#next-photo{right:12px}
+ .viewer-strip{justify-content:flex-start;gap:4px;padding:7px 9px}
+ .camera-photo-view .strip-thumb{width:32px;height:40px}
+ .camera-photo-view .strip-thumb.active{width:42px}
+}
+@media(max-width:390px){
+ .finder-item-total{font-size:8px}
+ .photos-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .photos-bar.finder-toolbar{grid-template-columns:minmax(0,1fr) auto minmax(0,1fr)}
+ .finder-title{font-size:9px}
+}
+@media(prefers-reduced-motion:reduce){.finder-window,.shutter,.zoom-controls .zoom-presets button,.camera-dock .gallery-thumbnail,.camera-photo-view .photo-tile,.camera-photo-view .strip-thumb{animation:none;transition:none}}
 @media (max-width:900px){header #open-cart,header .header-right #open-cart{width:36px;height:36px}}
