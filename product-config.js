@@ -1,27 +1,20 @@
-// Public product information and clearly labelled demonstration rates.
-// Replace the demo shipping table with a live carrier quote before launch.
+// WU? RROSE: fixed-price country checkout. Staged only; main stays untouched.
 window.RROSE_CONFIG = {
   instagramUrl: 'https://www.instagram.com/wuisthequestion/',
   sizes: ['S-M', 'M-L'],
-  prices: {
-    short: { EUR: 160, PLN: 699 },
-    long: { EUR: 160, PLN: 699 }
+  prices: { short: { EUR: 160, PLN: 699 }, long: { EUR: 160, PLN: 699 } },
+  stripePaymentLink: null,
+  checkoutLinks: {
+    PL: 'https://buy.stripe.com/dRm6oHfN5bXi1pXeJp67S00',
+    DE: 'https://buy.stripe.com/6oU4gz6cvf9u8Sp9p567S01'
   },
-  checkoutLinks: { short: {}, long: {} },
-  // Stripe Payment Link (sandbox). Shipping rates, address, phone and size are collected on the Stripe page.
-  stripePaymentLink: 'https://buy.stripe.com/test_28EbJ18i17aC73UbrxdUY00',
-  parcel: {
-    weightKg: 1,
-    dimensionsCm: { length: 60, width: 60, height: 30 },
-    volumetricDivisor: 5000
-  },
+  parcel: { weightKg: 1, dimensionsCm: { length: 35, width: 30, height: 10 }, volumetricDivisor: 5000 },
   shipping: {
-    demoOnly: true,
+    demoOnly: false,
     rates: {
-      PL: { EUR: 12, PLN: 49, route: 'inpost courier / demo' },
-      EU: { EUR: 35, PLN: 149, route: 'international courier / demo' },
-      GB: { EUR: 55, PLN: 235, route: 'international courier / demo' },
-      WORLD: { EUR: 75, PLN: 319, route: 'international courier / demo' }
+      PL: { PLN: 29, route: 'courier / Poland' },
+      DE: { EUR: 19, route: 'courier / Germany' }
     }
-  }
+  },
+  maxItemsPerOrder: 1
 };
