@@ -25,8 +25,8 @@
 <div><span>items</span><strong id="cart-total"></strong></div>
 <div class="cart-delivery-row"><span id="cart-shipping-label">delivery</span><strong id="cart-shipping">not added</strong><button type="button" class="page-link" data-open-delivery id="cart-delivery-link">calculate</button></div>
 <div class="cart-grand-row"><span>total estimate</span><strong id="cart-grand-total">49 PLN</strong></div>
-<button class="buy window-action" id="checkout" disabled>CONTINUE TO TEST CHECKOUT</button>
-<p id="checkout-note">demo checkout only. no payment is taken.</p>
+<button class="buy window-action" id="checkout" disabled>SECURE CHECKOUT</button>
+<p id="checkout-note">choose courier delivery to see the full payable total. VAT included.</p>
 <form id="demo-checkout-form" hidden><label for="checkout-email">email</label><input id="checkout-email" name="email" type="email" autocomplete="email" required placeholder="you@example.com"><p class="demo-payment-note">sandbox preview / no charge will be made.</p><button class="buy window-action" id="simulate-payment" type="submit">SIMULATE PAYMENT</button><p id="demo-payment-result" role="status" aria-live="polite"></p></form>
 </div>
 <p id="cart-status" class="sr-only" role="status"></p>
@@ -37,7 +37,7 @@
 <h2 id="delivery-title">delivery</h2><span class="window-context">SHIPPING</span>
 </div>
 <div class="mac-window-body delivery-content">
-<div class="shipping-calculator"><label for="shipping-country">deliver to</label><select id="shipping-country"><option value="PL">Poland</option><option value="DE">Germany</option><option value="FR">France</option><option value="NL">Netherlands</option><option value="IT">Italy</option><option value="ES">Spain</option><option value="GB">United Kingdom</option><option value="US">United States</option><option value="OTHER">Other destination</option></select><dl><div><dt>route</dt><dd id="shipping-route">inpost courier / demo</dd></div><div><dt>parcel</dt><dd>60 x 60 x 30 cm / 1 kg</dd></div><div><dt>volume weight</dt><dd id="shipping-volume-weight">21.6 kg*</dd></div><div><dt>estimate</dt><dd id="shipping-cost">49 PLN</dd></div></dl><p class="shipping-note">*volumetric estimate uses a 5000 cm3/kg divisor. test rate only, live carrier pricing is not connected.</p></div>
+<div class="shipping-calculator"><label for="shipping-country">deliver to</label><select id="shipping-country"><option value="PL">Poland</option><option value="DE">Germany</option></select><dl><div><dt>route</dt><dd id="shipping-route">inpost courier / demo</dd></div><div><dt>parcel</dt><dd>35 x 30 x 10 cm / approx. 1 kg</dd></div><div><dt>volume weight</dt><dd id="shipping-volume-weight">2.1 kg*</dd></div><div><dt>estimate</dt><dd id="shipping-cost">49 PLN</dd></div></dl><p class="shipping-note">*Volumetric weight is estimated using a 5000 cm3/kg divisor. Fixed courier prices are shown at checkout.</p></div>
 <button type="button" class="buy window-action" id="add-delivery">add delivery to bag</button><p id="delivery-status" role="status" aria-live="polite"></p>
 </div></div></dialog><dialog id="order-thanks" class="order-thanks" aria-labelledby="thanks-title">
 <div class="mac-window-titlebar order-titlebar">
@@ -45,4 +45,4 @@
 <span class="window-title">ORDER CONFIRMATION</span><span class="window-context">WU?</span>
 </div>
 <div class="mac-window-body order-content"><h2 id="thanks-title">thank you.</h2><p>your rrose is on its way to being packed. a receipt from stripe is in your inbox.</p><form method="dialog"><button class="page-link window-action">back to wu?</button></form></div>
-</dialog><script src="product-config.js?v=rrose-30"></script><script src="script.js?v=rrose-30"></script></body></html>
+</dialog><script src="product-config.js?v=rrose-live-staged-1"></script><script src="script.js?v=rrose-live-staged-1"></script></body></html>
