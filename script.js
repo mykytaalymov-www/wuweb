@@ -59,6 +59,7 @@ function renderCart(){
   root.append(row);
  }
  document.getElementById('cart-total').textContent=money(count()*config.prices.long[currency.value]);renderShipping();
+ document.getElementById('check-current-order').hidden=!attempt;
  const checkout=document.getElementById('checkout');checkout.disabled=!cart.length||busy||!config.checkoutApi;
  checkout.textContent=busy?'PLEASE WAIT…':'SECURE CHECKOUT';
  document.getElementById('checkout-note').textContent=!config.checkoutApi?'Checkout is temporarily unavailable. Your bag is saved.':serverQuote?'VAT included. Delivery charged once. Your selected sizes go with your order.':'Calculate delivery to confirm the full payable total. VAT included.';
@@ -114,7 +115,7 @@ async function checkOrder(){
  text.textContent='Checking payment confirmation…';
  try{
   const result=await api('/orders/'+attempt.id,{headers:{Authorization:'Bearer '+attempt.token}});
-  if(result.status==='failed'||result.status==='expired'){attempt=null;try{sessionStorage.removeItem('wu-checkout-attempt');}catch{}}
+  if(result.status==='failed'||result.status==='expired'){attempt=null;try{sessionStorage.removeItem('wu-checkout-attempt');}catch{}renderCart();}
   if(result.status==='paid'){
    text.textContent='Payment confirmed. Order '+result.id+'. Dispatch information will follow by email.';
    if(attempt.snapshot===JSON.stringify(payload())){cart=[];serverQuote=null;delivery=null;save();renderCart();}
@@ -122,6 +123,7 @@ async function checkOrder(){
  }catch{text.textContent='Payment confirmation is unavailable. Your bag is saved. Check again shortly or contact support.';}
 }
 document.getElementById('check-order-status').onclick=checkOrder;
+document.getElementById('check-current-order').onclick=()=>{cartDialog.close();checkOrder();};
 const checkoutReturn=new URLSearchParams(location.search).get('checkout');
 if(checkoutReturn==='returned')checkOrder();
 if(checkoutReturn==='cancelled'){cartDialog.showModal();document.getElementById('checkout-note').textContent='Checkout was cancelled. Your bag is saved. No payment is assumed.';}
