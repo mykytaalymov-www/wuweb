@@ -1,44 +1,152 @@
 const config=window.RROSE_CONFIG,intro=document.getElementById('intro');let timer;
 function enter(){intro.classList.add('done');intro.setAttribute('aria-hidden','true');intro.inert=true;clearTimeout(timer);}
-timer=setTimeout(enter,matchMedia('(prefers-reduced-motion: reduce)').matches?150:1800);document.getElementById('skip-intro').onclick=enter;
-const localeRegion=(navigator.language.split('-').pop()||'').toUpperCase();
-const sizeSelect=document.getElementById('size');sizeSelect.replaceChildren(...config.sizes.map(s=>new Option(s,s)));sizeSelect.disabled=!config.sizes.length;
-const currency=document.getElementById('currency');currency.value=Intl.DateTimeFormat().resolvedOptions().timeZone==='Europe/Warsaw'||localeRegion==='PL'?'PLN':'EUR';
-let cart=[];try{const saved=localStorage.getItem('rrose-currency');if(['EUR','PLN'].includes(saved))currency.value=saved;const stored=JSON.parse(localStorage.getItem('rrose-cart-v1')||'[]');if(Array.isArray(stored))cart=stored.filter(i=>config.sizes.includes(i.size)&&Number.isInteger(i.quantity)&&i.quantity>0&&i.quantity<=20).map(i=>({size:i.size,quantity:i.quantity}));}catch{}
-const cartDialog=document.getElementById('cart-dialog');const moneyLocale=(()=>{try{new Intl.NumberFormat(navigator.language);return navigator.language;}catch{return 'en';}})();function money(n){return new Intl.NumberFormat(moneyLocale,{style:'currency',currency:currency.value}).format(n);}
-function save(){try{localStorage.setItem('rrose-cart-v1',JSON.stringify(cart));localStorage.setItem('rrose-currency',currency.value);if(delivery)localStorage.setItem('rrose-delivery',delivery);else localStorage.removeItem('rrose-delivery');}catch{}}
+timer=setTimeout(enter,matchMedia('(prefers-reduced-motion: reduce)').matches?150:1800);
+document.getElementById('skip-intro').onclick=enter;
+const sizeSelect=document.getElementById('size');
+sizeSelect.replaceChildren(...config.sizes.map(s=>new Option(s,s)));sizeSelect.disabled=false;
+const currency=document.getElementById('currency');currency.disabled=true;
+const cartDialog=document.getElementById('cart-dialog'),deliveryPage=document.getElementById('delivery-page');
+const hosted=config.checkoutMode==='hosted',maxItems=hosted?1:20;
+function checkoutAvailable(){return hosted?!!config.checkoutLinks?.[shippingCountryInput.value]:!!config.checkoutApi;}
 const shippingCountryInput=document.getElementById('shipping-country');
-const euCountries=new Set(['DE','FR','NL','IT','ES']);
-const availableCountries=new Set(Array.from(shippingCountryInput.options,o=>o.value));
-const initialCountry=availableCountries.has(localeRegion)?localeRegion:(Intl.DateTimeFormat().resolvedOptions().timeZone==='Europe/Warsaw'?'PL':'OTHER');
-// Delivery is only part of the bag once it has been calculated and added on the delivery page.
-let delivery=null;try{const d=localStorage.getItem('rrose-delivery');if(availableCountries.has(d))delivery=d;}catch{}
-shippingCountryInput.value=delivery||initialCountry;
-function shippingZone(country){if(country==='PL')return 'PL';if(euCountries.has(country))return 'EU';if(country==='GB')return 'GB';return 'WORLD';}
-function shippingQuote(country=shippingCountryInput.value){return config.shipping.rates[shippingZone(country)];}
-function deliveryAmount(country=shippingCountryInput.value){return shippingQuote(country)[currency.value];}
-function countryName(country){return shippingCountryInput.querySelector(`option[value="${country}"]`).textContent;}
-const parcelVolumeWeight=config.parcel.dimensionsCm.length*config.parcel.dimensionsCm.width*config.parcel.dimensionsCm.height/config.parcel.volumetricDivisor;
-function renderShipping(){const country=shippingCountryInput.value,quote=shippingQuote(country);document.getElementById('shipping-route').textContent=quote.route;document.getElementById('shipping-volume-weight').textContent=Math.max(config.parcel.weightKg,parcelVolumeWeight).toFixed(1)+' kg*';document.getElementById('shipping-cost').textContent=money(deliveryAmount(country));const added=delivery===country;document.getElementById('add-delivery').textContent=added?'delivery added':'add delivery to bag';document.getElementById('add-delivery').disabled=added;
- const items=cart.reduce((sum,item)=>sum+config.prices.long[currency.value]*item.quantity,0),shipping=delivery?deliveryAmount(delivery):0;document.getElementById('cart-shipping-label').textContent=delivery?'delivery to '+countryName(delivery):'delivery';document.getElementById('cart-shipping').textContent=delivery?money(shipping):'not added';document.getElementById('cart-delivery-link').textContent=delivery?'change':'calculate';document.getElementById('cart-grand-total').textContent=money(items+shipping);}
-shippingCountryInput.addEventListener('change',renderShipping);
-const deliveryPage=document.getElementById('delivery-page');
-function openDeliveryPage(){document.getElementById('delivery-status').textContent='';if(delivery)shippingCountryInput.value=delivery;renderShipping();deliveryPage.showModal();}
-document.querySelectorAll('[data-open-delivery]').forEach(b=>b.addEventListener('click',openDeliveryPage));document.getElementById('close-delivery').onclick=()=>deliveryPage.close();
-document.getElementById('add-delivery').onclick=()=>{delivery=shippingCountryInput.value;save();renderCart();document.getElementById('delivery-status').textContent='delivery added to your bag.';setTimeout(()=>{deliveryPage.close();if(!cartDialog.open)cartDialog.showModal();},450);};
-function renderCart(){document.getElementById('cart-count').textContent=cart.reduce((n,i)=>n+i.quantity,0);const root=document.getElementById('cart-items');root.replaceChildren();let total=0;
+const countries='PL DE AT BE BG HR CY CZ DK EE FI FR GR HU IE IT LV LT LU MT NL PT RO SK SI ES SE GB NO CH US CA AU NZ JP KR SG AE AL AD BA IS LI MD ME MK RS TR UA BR MX IN ZA'.split(' ');
+const names=new Intl.DisplayNames([navigator.language||'en'],{type:'region'});
+shippingCountryInput.replaceChildren(...countries.map(c=>new Option(names.of(c)+(c==='PL'||c==='DE'?'':' — rate confirmation required'),c)));
+let cart=[],delivery=null,serverQuote=null,revision=0,busy=false,attempt=null;
+try{
+ const saved=JSON.parse(localStorage.getItem('rrose-cart-v1')||'[]');
+ if(Array.isArray(saved)) for(const i of saved){if(i&&config.sizes.includes(i.size)&&Number.isInteger(i.quantity)&&i.quantity>0&&i.quantity<=20){const item=cart.find(x=>x.size===i.size);if(item)item.quantity=Math.min(20,item.quantity+i.quantity);else cart.push({size:i.size,quantity:i.quantity});}}
+ const c=localStorage.getItem('rrose-country');if(countries.includes(c))shippingCountryInput.value=c;
+ attempt=JSON.parse(sessionStorage.getItem('wu-checkout-attempt')||'null');
+}catch{}
+function money(n,cur=currency.value){return new Intl.NumberFormat(navigator.language||'en',{style:'currency',currency:cur}).format(n);}
+function payload(){return {country:shippingCountryInput.value,items:cart.map(i=>({...i}))};}
+function save(){try{localStorage.setItem('rrose-cart-v1',JSON.stringify(cart));localStorage.setItem('rrose-country',shippingCountryInput.value);}catch{}}
+function count(){return cart.reduce((n,i)=>n+i.quantity,0);}
+function message(code){return ({shipping_unavailable:'Delivery to this country is not available for payment yet.',packing_confirmation_required:'This quantity needs confirmed packing and delivery. Contact united.creative.buro@gmail.com.',checkout_unavailable:'Checkout is temporarily unavailable. Please try again later.',catalog_mismatch:'Checkout is temporarily unavailable.',request_key_reused:'Your bag changed. Please calculate delivery again.',checkout_expired:'Checkout expired. Check payment status before starting again.',order_already_processed:'This order was already processed. Check payment status before starting again.'})[code]||'Unable to reach secure checkout. Your bag has been saved. Please try again.';}
+async function api(path,options={}){
+ if(!config.checkoutApi)throw new Error('checkout_unavailable');
+ const response=await fetch(config.checkoutApi+path,{...options,signal:AbortSignal.timeout(15000),headers:{'Content-Type':'application/json',...options.headers}});
+ const data=await response.json();if(!response.ok)throw new Error(data.error||'service_unavailable');return data;
+}
+function renderShipping(){
+ const c=shippingCountryInput.value,rate=config.shipping.rates[c];currency.value=c==='PL'?'PLN':'EUR';
+ document.getElementById('shipping-route').textContent=rate?rate.route:'not available until rate confirmed';
+ document.getElementById('shipping-volume-weight').textContent='2.1 kg*';
+ document.getElementById('shipping-cost').textContent=rate?money(rate[currency.value]):'unavailable';
+ document.getElementById('add-delivery').disabled=busy||!cart.length||!checkoutAvailable()||(hosted&&count()!==1);
+ const q=serverQuote;
+ document.getElementById('cart-shipping-label').textContent=q?'delivery to '+names.of(q.country):'delivery';
+ document.getElementById('cart-shipping').textContent=q?money(q.shipping/100,q.currency):'not confirmed';
+ document.getElementById('cart-delivery-link').textContent=q?'change':'calculate';
+ document.getElementById('cart-grand-total').textContent=q?money(q.total/100,q.currency):'calculate delivery';
+}
+function renderCart(){
+ shippingCountryInput.disabled=busy;document.getElementById('buy').disabled=busy||count()>=maxItems;
+ currency.value=shippingCountryInput.value==='PL'?'PLN':'EUR';
+ document.getElementById('cart-count').textContent=String(count());
+ const root=document.getElementById('cart-items');root.replaceChildren();
  if(!cart.length){const empty=document.createElement('p');empty.className='empty-cart';empty.textContent='your bag is empty.';root.append(empty);}
- for(const item of cart){const price=config.prices.long[currency.value];total+=price*item.quantity;const row=document.createElement('article');row.className='cart-item';row.innerHTML='<img src="assets/rrose/rrose-full.jpg" alt="rrose skirt"><div><h3>rrose</h3><p class="cart-size"></p><div class="quantity"><button class="minus" aria-label="Decrease quantity">−</button><span class="quantity-value"></span><button class="plus" aria-label="Increase quantity">+</button><button class="remove">remove</button></div></div><strong class="item-price"></strong>';row.querySelector('.cart-size').textContent=item.size;row.querySelector('.quantity-value').textContent=item.quantity;row.querySelector('.item-price').textContent=money(price*item.quantity);row.querySelector('.minus').onclick=()=>{if(item.quantity>1)item.quantity--;else cart=cart.filter(i=>i!==item);changed();};row.querySelector('.plus').disabled=item.quantity>=20;row.querySelector('.plus').onclick=()=>{item.quantity=Math.min(20,item.quantity+1);changed();};row.querySelector('.remove').onclick=()=>{cart=cart.filter(i=>i!==item);changed();};root.append(row);}
- document.getElementById('cart-total').textContent=money(total);renderShipping();const checkout=document.getElementById('checkout');checkout.disabled=!cart.length;if(config.stripePaymentLink){checkout.textContent='checkout';document.getElementById('checkout-note').textContent='secure payment by stripe. size, address and delivery are confirmed on the next page'+(currency.value==='EUR'?'.':', charged in eur.');checkout.onclick=()=>{if(!cart.length)return;const url=stripeCheckoutUrl();let framed=true;try{framed=window.top!==window;}catch{}if(framed)window.open(url,'_blank','noopener');else window.location.href=url;};return;}
- checkout.textContent='CONTINUE TO TEST CHECKOUT';document.getElementById('checkout-note').textContent='demo checkout only. no payment is taken.';checkout.onclick=()=>{if(!cart.length)return;if(!delivery){openDeliveryPage();return;}const form=document.getElementById('demo-checkout-form');form.hidden=false;document.getElementById('checkout-email').focus();};}
-// Stripe Payment Link: the bag travels as client_reference_id (letters, digits, - and _ only), e.g. sm1_ml2_pl.
-function stripeCheckoutUrl(){const ref=cart.map(i=>i.size.toLowerCase().replace(/[^a-z]/g,'')+i.quantity).concat(delivery?[delivery.toLowerCase()]:[]).join('_').slice(0,200);const url=new URL(config.stripePaymentLink);url.searchParams.set('client_reference_id',ref);url.searchParams.set('locale','en');return url.toString();}
-// Back from a completed Stripe payment: empty the bag and say thank you.
-if(new URLSearchParams(location.search).has('paid')){cart=[];delivery=null;save();history.replaceState(null,'',location.pathname);addEventListener('load',()=>{const thanks=document.getElementById('order-thanks');if(thanks)thanks.showModal();});}
-function changed(){save();renderCart();document.getElementById('cart-status').textContent='Shopping bag updated.';}
-document.getElementById('buy').disabled=sizeSelect.disabled;document.getElementById('buy').onclick=()=>{const size=sizeSelect.value;if(!config.sizes.includes(size))return;const item=cart.find(i=>i.size===size);if(item)item.quantity=Math.min(20,item.quantity+1);else cart.push({size,quantity:1});changed();cartDialog.showModal();};document.getElementById('open-cart').onclick=()=>cartDialog.showModal();document.getElementById('close-cart').onclick=()=>cartDialog.close();currency.onchange=changed;renderCart();
-document.getElementById('demo-checkout-form').addEventListener('submit',e=>{e.preventDefault();if(!e.currentTarget.reportValidity())return;document.getElementById('demo-payment-result').textContent='demo complete. no payment was processed and no order was placed.';document.getElementById('simulate-payment').textContent='DEMO COMPLETE';document.getElementById('simulate-payment').disabled=true;});
-cartDialog.addEventListener('click',e=>{if(e.target===cartDialog){const r=cartDialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)cartDialog.close();}});document.getElementById('year').textContent=new Date().getFullYear();
+ for(const item of cart){
+  const row=document.createElement('article');row.className='cart-item';
+  row.innerHTML='<img src="assets/rrose/rrose-full.jpg" alt="rrose skirt"><div><h3>rrose</h3><p class="cart-size"></p><div class="quantity"><button class="minus" aria-label="Decrease quantity">−</button><span class="quantity-value"></span><button class="plus" aria-label="Increase quantity">+</button><button class="remove">remove</button></div></div><strong class="item-price"></strong>';
+  row.querySelector('.cart-size').textContent=item.size;
+  row.querySelector('.quantity-value').textContent=item.quantity;
+  row.querySelector('.item-price').textContent=money(config.prices.long[currency.value]*item.quantity);
+  row.querySelector('.minus').disabled=busy;row.querySelector('.remove').disabled=busy;
+  row.querySelector('.minus').onclick=()=>{if(item.quantity>1)item.quantity--;else cart=cart.filter(i=>i!==item);changed();};
+  row.querySelector('.plus').disabled=count()>=maxItems||busy;
+  row.querySelector('.plus').onclick=()=>{if(count()<maxItems)item.quantity++;changed();};
+  row.querySelector('.remove').onclick=()=>{cart=cart.filter(i=>i!==item);changed();};
+  root.append(row);
+ }
+ document.getElementById('cart-total').textContent=money(count()*config.prices.long[currency.value]);renderShipping();
+ document.getElementById('check-current-order').hidden=hosted||!attempt;
+ const checkout=document.getElementById('checkout');checkout.disabled=!cart.length||busy||!checkoutAvailable()||(hosted&&count()!==1);
+ checkout.textContent=busy?'PLEASE WAIT…':'SECURE CHECKOUT';
+ document.getElementById('checkout-note').textContent=hosted
+  ?count()>1?'One RROSE per order. Please reduce your bag to one item.':!checkoutAvailable()?'Delivery to this country is not available for payment yet.':'One RROSE per order. VAT included; delivery charged once. Confirm your size and enter your address on Stripe.'
+  :!config.checkoutApi?'Checkout is temporarily unavailable. Your bag is saved.':serverQuote?'VAT included. Delivery charged once. Your selected sizes go with your order.':'Calculate delivery to confirm the full payable total. VAT included.';
+ checkout.onclick=startCheckout;
+}
+function changed(){revision++;delivery=null;serverQuote=null;attempt=null;try{sessionStorage.removeItem('wu-checkout-attempt');}catch{}save();renderCart();document.getElementById('cart-status').textContent='Shopping bag updated.';}
+function openDeliveryPage(){document.getElementById('delivery-status').textContent='';renderShipping();deliveryPage.showModal();}
+document.querySelectorAll('[data-open-delivery]').forEach(b=>b.addEventListener('click',openDeliveryPage));
+document.getElementById('close-delivery').onclick=()=>deliveryPage.close();
+shippingCountryInput.onchange=changed;
+document.getElementById('add-delivery').onclick=async()=>{
+ if(hosted){
+  if(count()!==1||!checkoutAvailable())return;
+  const country=shippingCountryInput.value,cur=country==='PL'?'pln':'eur',unit=config.prices.long[cur.toUpperCase()]*100,shipping=config.shipping.rates[country][cur.toUpperCase()]*100;
+  serverQuote={country,currency:cur,subtotal:unit,shipping,total:unit+shipping};delivery=country;
+  save();renderCart();deliveryPage.close();if(!cartDialog.open)cartDialog.showModal();return;
+ }
+ const current=revision;busy=true;renderCart();document.getElementById('delivery-status').textContent='Confirming delivery…';
+ try{
+  const q=await api('/quote',{method:'POST',body:JSON.stringify(payload())});
+  if(current!==revision)return;serverQuote=q;delivery=q.country;
+  document.getElementById('delivery-status').textContent='Delivery confirmed. Total: '+money(q.total/100,q.currency)+'. VAT included.';
+  deliveryPage.close();if(!cartDialog.open)cartDialog.showModal();
+ }catch(e){document.getElementById('delivery-status').textContent=message(e.message);}
+ finally{busy=false;renderCart();}
+};
+function hostedCheckoutUrl(){
+ if(!hosted||count()!==1||!delivery||delivery!==shippingCountryInput.value||!config.sizes.includes(cart[0].size))return null;
+ const link=config.checkoutLinks?.[delivery];if(!link)return null;
+ const url=new URL(link);if(url.origin!=='https://buy.stripe.com'||url.pathname.includes('test_'))return null;
+ // Reconciliation hint only. The required size choice on Stripe controls fulfillment.
+ url.searchParams.set('client_reference_id','rrose_'+cart[0].size.replace('-','').toLowerCase()+'_'+delivery.toLowerCase());
+ return url.toString();
+}
+async function startCheckout(){
+ if(hosted){if(busy||count()!==1)return;if(!delivery){openDeliveryPage();return;}const url=hostedCheckoutUrl();if(url)window.location.assign(url);return;}
+ if(busy||!cart.length)return;if(!serverQuote||!delivery){openDeliveryPage();return;}
+ const input=payload(),snapshot=JSON.stringify(input),current=revision;
+ busy=true;renderCart();
+ try{
+  const fresh=await api('/quote',{method:'POST',body:snapshot});
+  if(current!==revision)return;
+  if(fresh.total!==serverQuote.total||fresh.currency!==serverQuote.currency){serverQuote=fresh;document.getElementById('cart-status').textContent='Total updated. Please review and continue.';return;}
+  if(!attempt||attempt.snapshot!==snapshot){
+   const bytes=crypto.getRandomValues(new Uint8Array(32));
+   attempt={id:crypto.randomUUID(),token:btoa(String.fromCharCode(...bytes)).replaceAll('+','-').replaceAll('/','_').replaceAll('=',''),snapshot};
+  }
+  // Save before creating the session: a timeout can be retried with the same Stripe idempotency key.
+  sessionStorage.setItem('wu-checkout-attempt',JSON.stringify(attempt));
+  const result=await api('/checkout',{method:'POST',body:snapshot,headers:{Authorization:'Bearer '+attempt.token,'Idempotency-Key':attempt.id}});
+  if(current!==revision)return;
+  if(result.quote.total!==fresh.total||result.quote.currency!==fresh.currency)throw new Error('total_changed');
+  if(new URL(result.url).origin!=='https://checkout.stripe.com')throw new Error('invalid_checkout_url');
+  window.location.assign(result.url);
+ }catch(e){document.getElementById('cart-status').textContent=message(e.message);document.getElementById('checkout-note').textContent=message(e.message);}
+ finally{busy=false;const note=document.getElementById('checkout-note').textContent;renderCart();document.getElementById('checkout-note').textContent=note;}
+}
+document.getElementById('buy').disabled=count()>=maxItems;
+document.getElementById('buy').onclick=()=>{if(busy||count()>=maxItems)return;const size=sizeSelect.value,item=cart.find(i=>i.size===size);if(item)item.quantity++;else cart.push({size,quantity:1});changed();cartDialog.showModal();};
+document.getElementById('open-cart').onclick=()=>cartDialog.showModal();document.getElementById('close-cart').onclick=()=>cartDialog.close();
+currency.onchange=()=>{};renderCart();
+cartDialog.addEventListener('click',e=>{if(e.target===cartDialog){const r=cartDialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)cartDialog.close();}});
+document.getElementById('year').textContent=new Date().getFullYear();
+async function checkOrder(){
+ const thanks=document.getElementById('order-thanks'),text=document.getElementById('order-confirmation-status');
+ if(!thanks.open)thanks.showModal();
+ if(!attempt){text.textContent='Payment cannot be verified in this browser. Contact support with your Stripe receipt. Your bag is saved.';return;}
+ text.textContent='Checking payment confirmation…';
+ try{
+  const result=await api('/orders/'+attempt.id,{headers:{Authorization:'Bearer '+attempt.token}});
+  if(result.status==='failed'||result.status==='expired'){attempt=null;try{sessionStorage.removeItem('wu-checkout-attempt');}catch{}renderCart();}
+  if(result.status==='paid'){
+   text.textContent='Payment confirmed. Order '+result.id+'. Dispatch information will follow by email.';
+   if(attempt.snapshot===JSON.stringify(payload())){cart=[];serverQuote=null;delivery=null;save();renderCart();}
+  }else text.textContent=({pending:'Payment confirmation is pending. Check again shortly; do not place another order.',failed:'Payment failed. Your bag is saved. Contact support or try checkout again.',expired:'Checkout expired. Your bag is saved. Calculate delivery to try again.'})[result.status]||'Payment not confirmed.';
+ }catch{text.textContent='Payment confirmation is unavailable. Your bag is saved. Check again shortly or contact support.';}
+}
+document.getElementById('check-order-status').onclick=checkOrder;
+document.getElementById('check-current-order').onclick=()=>{cartDialog.close();checkOrder();};
+const checkoutReturn=new URLSearchParams(location.search).get('checkout');
+if(checkoutReturn==='returned')checkOrder();
+if(checkoutReturn==='cancelled'){cartDialog.showModal();document.getElementById('checkout-note').textContent='Checkout was cancelled. Your bag is saved. No payment is assumed.';}
+if(checkoutReturn)history.replaceState(null,'',location.pathname+location.hash);
 const video=document.getElementById('product-video'),film=document.getElementById('product-film'),filmContext=film.getContext('2d',{willReadFrequently:true}),videoButton=document.getElementById('product-film'),videoStatus=document.getElementById('video-status'),view=document.querySelector('.viewfinder'),photoView=document.getElementById('camera-photo-view'),zoomRange=document.getElementById('zoom-range');let lens=1;
 film.width=540;film.height=960;let framePending=false;
 const zoomLoupe=document.getElementById('zoom-loupe'),zoomLoupeCanvas=document.getElementById('zoom-loupe-canvas'),zoomLoupeContext=zoomLoupeCanvas.getContext('2d');let loupePoint=null;

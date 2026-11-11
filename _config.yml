@@ -1,0 +1,9 @@
+# Pages remains static. Never publish backend source, test fixtures or dependencies.
+exclude:
+  - backend
+  - supabase
+  - node_modules
+  - package.json
+  - package-lock.json
+  - Dockerfile
+  - STRIPE-LIVE-STAGING.md
