@@ -51,7 +51,7 @@ export function makeServer({ env, checkout }) {
       if (url.pathname === '/countries' && req.method === 'GET')
         return send(200, { countries: shippingZones(env).flatMap(z => z.countries), maxItems: Number(env.PACKAGE_MAX_ITEMS || 1) });
       if (req.method === 'GET' && /^\/orders\/[0-9a-f-]{36}$/.test(url.pathname))
-        return send(200, checkout.status(url.pathname.split('/')[2], req.headers.authorization?.replace(/^Bearer /, '')));
+        return send(200, await checkout.status(url.pathname.split('/')[2], req.headers.authorization?.replace(/^Bearer /, '')));
       if (req.method === 'POST' && ['/quote','/checkout'].includes(url.pathname)) {
         if (req.headers['content-type']?.split(';')[0] !== 'application/json') throw new Problem(415, 'json_required');
         let input;

@@ -1,6 +1,8 @@
 # WU checkout service
 
-Existing storefront stays on GitHub Pages. This backend is a standalone Node 24 service with SQLite on a **persistent local volume**, not an ephemeral serverless filesystem. Run one instance and one mail worker. TLS, ingress rate limiting, encrypted disk/backups, restricted operator access and a tested restore are deployment requirements. No service has been provisioned and no production endpoint is claimed.
+A free Supabase staging variant is now deployed; see backend/supabase/README.md for its URL and WU_STAGING_* secrets. The instructions below describe the original standalone Docker alternative.
+
+Existing storefront stays on GitHub Pages. This backend is a standalone Node 24 service with SQLite on a **persistent local volume**, not an ephemeral serverless filesystem. Run one instance and one mail worker. TLS, ingress rate limiting, encrypted disk/backups, restricted operator access and a tested restore are deployment requirements. The Docker alternative has not been provisioned; no Live production endpoint is claimed.
 
 ## Run
 

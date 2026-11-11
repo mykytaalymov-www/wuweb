@@ -1,0 +1,21 @@
+{
+  "version": "5",
+  "specifiers": {
+    "npm:nodemailer@10.5.0": "10.5.0",
+    "npm:stripe@23.0.0": "23.0.0"
+  },
+  "npm": {
+    "nodemailer@10.5.0": {
+      "integrity": "sha512-L/w/HH5MqpzMDuZD7fQdt/+KqymuvrpaApaIjAH2XA3ILePwlcvXCVVvP75xVrXCEt2ggK2marrrHHFB5Qu0kA=="
+    },
+    "stripe@23.0.0": {
+      "integrity": "sha512-MDE2A5ZVVluYURORaZEVghSmnLJc3w6aHAlZSxDQMsOjOb3V0O6ro/CiaeFlJS4N7uIVmsg98ocRsPmUK6YfyA=="
+    }
+  },
+  "workspace": {
+    "dependencies": [
+      "npm:nodemailer@10.5.0",
+      "npm:stripe@23.0.0"
+    ]
+  }
+}

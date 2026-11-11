@@ -25,7 +25,7 @@ export class Checkout {
     if (!/^[0-9a-f-]{36}$/.test(id || '') || !/^[a-zA-Z0-9_-]{43,128}$/.test(token || '')) throw new Problem(400, 'invalid_request_key');
     const q = quote(input, this.env);
     const fingerprint = hash(JSON.stringify(q));
-    const old = this.store.get(id);
+    const old = await this.store.get(id);
     if (old) {
       authenticate(old, token);
       if (old.fingerprint !== fingerprint) throw new Problem(409, 'request_key_reused');
@@ -34,7 +34,7 @@ export class Checkout {
       if (old.status !== 'pending') throw new Problem(409, 'order_already_processed');
       if (old.checkout_url) return { id, url: old.checkout_url, quote: q };
     }
-    const order = this.store.create({ id, tokenHash: hash(token), fingerprint, quote: q, created: Date.now() });
+    const order = await this.store.create({ id, tokenHash: hash(token), fingerprint, quote: q, created: Date.now() });
     authenticate(order, token);
     if (order.fingerprint !== fingerprint) throw new Problem(409, 'request_key_reused');
     const live = this.env.STRIPE_MODE === 'live';
@@ -66,20 +66,20 @@ export class Checkout {
     }, { idempotencyKey: `wu:${id}` });
     if (session.livemode !== live || !session.url || new URL(session.url).origin !== 'https://checkout.stripe.com')
       throw new Problem(502, 'invalid_checkout_response');
-    this.store.attach(id, session);
+    await this.store.attach(id, session);
     return { id, url: session.url, quote: q };
   }
 
   async event(raw, signature) {
     let event;
-    try { event = this.stripe.webhooks.constructEvent(raw, signature, this.env.STRIPE_WEBHOOK_SECRET); }
+    try { event = await this.stripe.webhooks.constructEvent(raw, signature, this.env.STRIPE_WEBHOOK_SECRET); }
     catch { throw new Problem(400, 'invalid_signature'); }
     const supported = ['checkout.session.completed','checkout.session.async_payment_succeeded',
       'checkout.session.async_payment_failed','checkout.session.expired'];
     if (!supported.includes(event.type)) return;
     if (event.livemode !== (this.env.STRIPE_MODE === 'live')) throw new Problem(400, 'wrong_mode');
     const incoming = event.data.object;
-    const order = this.store.get(incoming.metadata?.order_id);
+    const order = await this.store.get(incoming.metadata?.order_id);
     // Ignore unrelated Payment Link sessions on the same account.
     if (!order) {
       if (incoming.metadata?.order_id) throw new Problem(409, 'order_missing');
@@ -101,11 +101,12 @@ export class Checkout {
         throw new Problem(409, 'customer_details_mismatch');
       status = 'paid';
     } else if (event.type === 'checkout.session.async_payment_failed') status = 'failed';
-    this.store.apply(event, order, session, status);
+    await this.store.apply(event, order, session, status);
+    return { orderId: order.id, status };
   }
 
-  status(id, token) {
-    const order = this.store.get(id); authenticate(order, token);
+  async status(id, token) {
+    const order = await this.store.get(id); authenticate(order, token);
     return { id, status: order.status, quote: JSON.parse(order.quote) };
   }
 }

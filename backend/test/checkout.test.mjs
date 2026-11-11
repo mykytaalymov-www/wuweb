@@ -71,13 +71,13 @@ test('Checkout uses server price, mixed-size metadata, one shipping option and n
  assert.equal(params.automatic_tax.enabled,false);assert.equal(params.adaptive_pricing.enabled,false);
  assert.deepEqual(params.shipping_address_collection.allowed_countries,['PL']);assert.equal(params.phone_number_collection.enabled,true);
  assert.match(params.custom_text.submit.message,/M-L × 2/);assert.equal(params.payment_method_types,undefined);
- assert.ok(!params.success_url.includes(f.token));assert.equal(f.checkout.status(f.id,f.token).status,'pending');
+ assert.ok(!params.success_url.includes(f.token));assert.equal((await f.checkout.status(f.id,f.token)).status,'pending');
 });
 test('Checkout retries reuse session, token auth and request fingerprint are enforced',async t=>{
  const f=setup(t);const first=await f.checkout.create(input(),f.id,f.token);assert.deepEqual(await f.checkout.create(input(),f.id,f.token),first);assert.equal(f.calls.length,1);
  await assert.rejects(()=>f.checkout.create(input('DE'),f.id,f.token),/request_key_reused/);
  await assert.rejects(()=>f.checkout.create(input(),f.id,'X'.repeat(43)),/order_not_found/);
- assert.throws(()=>f.checkout.status(f.id,'bad'),/order_not_found/);
+ await assert.rejects(()=>f.checkout.status(f.id,'bad'),/order_not_found/);
  f.store.db.prepare('UPDATE orders SET created=? WHERE id=?').run(Date.now()-24*3600000,f.id);
  await assert.rejects(()=>f.checkout.create(input(),f.id,f.token),/checkout_expired/);
 });

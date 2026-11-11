@@ -41,5 +41,8 @@ export class Store {
       this.db.exec('COMMIT');
     } catch (e) { this.db.exec('ROLLBACK'); throw e; }
   }
+  claimMail() { return this.db.prepare('SELECT * FROM outbox WHERE sent IS NULL AND next_attempt<=? LIMIT 20').all(Date.now()); }
+  mailSent(job) { this.db.prepare('UPDATE outbox SET sent=? WHERE id=?').run(Date.now(), job.id); }
+  mailRetry(job, next) { this.db.prepare('UPDATE outbox SET attempts=attempts+1, next_attempt=? WHERE id=?').run(next, job.id); }
   close() { this.db.close(); }
 }
