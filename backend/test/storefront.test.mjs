@@ -86,3 +86,31 @@ test('hosted checkout blocks old multi-item carts without discarding their conte
  assert.equal(f.get('cart-count').textContent,'2');assert.equal(f.get('checkout').disabled,true);assert.match(f.get('checkout-note').textContent,/reduce/);
  f.get('cart-items').querySelector('.minus').click();assert.equal(f.get('cart-count').textContent,'1');assert.equal(f.get('checkout').disabled,false);
 });
+
+// Each country is checked against the same zone used by the existing Stripe links.
+test('hosted regions preserve exact totals, country lists and import disclosure',async t=>{
+ const f=page(t,{hosted:true,api:false});f.get('buy').click();
+ const zones=[
+  ['AT BE BG HR CY CZ DK EE FI FR GR HU IE IT LV LT LU MT NL PT RO SK SI ES SE',209,'/7sY28rfN5d1m9WtfNt67S02',false],
+  ['GB NO CH',259,'/aFa7sL7gzd1m3y51WD67S03',true],
+  ['AL AD BA GI GG GL IM IS JE LI MC MD ME MK RS SM TR VA XK',529,'/dRmbJ1eJ12mI7OlgRx67S04',true]
+ ];
+ for(const [countries,total,path,importFees] of zones)for(const country of countries.split(' ')){
+  f.get('shipping-country').value=country;f.get('shipping-country').dispatchEvent(new f.w.Event('change'));
+  assert.equal(f.w.hostedCheckoutUrl(),null);assert.equal(f.get('add-delivery').disabled,false,country);
+  f.get('add-delivery').click();await f.tick();
+  assert.equal(f.get('cart-grand-total').textContent,new Intl.NumberFormat(f.w.navigator.language,{style:'currency',currency:'eur'}).format(total),country);
+  assert.equal(new URL(f.w.hostedCheckoutUrl()).pathname,path,country);
+  assert.equal(f.get('shipping-route').textContent.includes('import duties'),importFees,country);
+  assert.equal(f.get('currency').value,'EUR');
+ }
+ assert.equal(f.calls.length,0);
+});
+test('hosted unsupported worldwide routes cannot acquire a quote or payment link',t=>{
+ const f=page(t,{hosted:true,api:false});f.get('buy').click();
+ for(const country of ['US','CA','AU','NZ','JP','UA']){
+  f.get('shipping-country').value=country;f.get('shipping-country').dispatchEvent(new f.w.Event('change'));
+  f.get('add-delivery').click();assert.equal(f.get('checkout').disabled,true,country);
+  assert.equal(f.w.hostedCheckoutUrl(),null);assert.equal(f.get('cart-grand-total').textContent,'calculate delivery');
+ }
+});

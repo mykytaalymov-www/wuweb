@@ -7,11 +7,13 @@ sizeSelect.replaceChildren(...config.sizes.map(s=>new Option(s,s)));sizeSelect.d
 const currency=document.getElementById('currency');currency.disabled=true;
 const cartDialog=document.getElementById('cart-dialog'),deliveryPage=document.getElementById('delivery-page');
 const hosted=config.checkoutMode==='hosted',maxItems=hosted?1:20;
-function checkoutAvailable(){return hosted?!!config.checkoutLinks?.[shippingCountryInput.value]:!!config.checkoutApi;}
+function shippingZone(country){return Object.keys(config.shipping.zones||{}).find(zone=>config.shipping.zones[zone].includes(country))||country;}
+function shippingRate(country){return config.shipping.rates[shippingZone(country)];}
+function checkoutAvailable(){return hosted?!!config.checkoutLinks?.[shippingZone(shippingCountryInput.value)]:!!config.checkoutApi;}
 const shippingCountryInput=document.getElementById('shipping-country');
-const countries='PL DE AT BE BG HR CY CZ DK EE FI FR GR HU IE IT LV LT LU MT NL PT RO SK SI ES SE GB NO CH US CA AU NZ JP KR SG AE AL AD BA IS LI MD ME MK RS TR UA BR MX IN ZA'.split(' ');
+const countries=[...new Set([...Object.values(config.shipping.zones||{}).flat(),...'PL DE AT BE BG HR CY CZ DK EE FI FR GR HU IE IT LV LT LU MT NL PT RO SK SI ES SE GB NO CH US CA AU NZ JP KR SG AE AL AD BA IS LI MD ME MK RS TR UA BR MX IN ZA'.split(' ')])];
 const names=new Intl.DisplayNames([navigator.language||'en'],{type:'region'});
-shippingCountryInput.replaceChildren(...countries.map(c=>new Option(names.of(c)+(c==='PL'||c==='DE'?'':' — rate confirmation required'),c)));
+shippingCountryInput.replaceChildren(...countries.map(c=>new Option(names.of(c)+(config.checkoutLinks?.[shippingZone(c)]?'':' — unavailable'),c)));
 let cart=[],delivery=null,serverQuote=null,revision=0,busy=false,attempt=null;
 try{
  const saved=JSON.parse(localStorage.getItem('rrose-cart-v1')||'[]');
@@ -30,8 +32,8 @@ async function api(path,options={}){
  const data=await response.json();if(!response.ok)throw new Error(data.error||'service_unavailable');return data;
 }
 function renderShipping(){
- const c=shippingCountryInput.value,rate=config.shipping.rates[c];currency.value=c==='PL'?'PLN':'EUR';
- document.getElementById('shipping-route').textContent=rate?rate.route:'not available until rate confirmed';
+ const c=shippingCountryInput.value,rate=shippingRate(c);currency.value=c==='PL'?'PLN':'EUR';
+ document.getElementById('shipping-route').textContent=rate?rate.route+(rate.importFees?' / import duties and local taxes payable by recipient':''):'not available until rate confirmed';
  document.getElementById('shipping-volume-weight').textContent='2.1 kg*';
  document.getElementById('shipping-cost').textContent=rate?money(rate[currency.value]):'unavailable';
  document.getElementById('add-delivery').disabled=busy||!cart.length||!checkoutAvailable()||(hosted&&count()!==1);
@@ -77,7 +79,7 @@ shippingCountryInput.onchange=changed;
 document.getElementById('add-delivery').onclick=async()=>{
  if(hosted){
   if(count()!==1||!checkoutAvailable())return;
-  const country=shippingCountryInput.value,cur=country==='PL'?'pln':'eur',unit=config.prices.long[cur.toUpperCase()]*100,shipping=config.shipping.rates[country][cur.toUpperCase()]*100;
+  const country=shippingCountryInput.value,cur=country==='PL'?'pln':'eur',unit=config.prices.long[cur.toUpperCase()]*100,shipping=shippingRate(country)[cur.toUpperCase()]*100;
   serverQuote={country,currency:cur,subtotal:unit,shipping,total:unit+shipping};delivery=country;
   save();renderCart();deliveryPage.close();if(!cartDialog.open)cartDialog.showModal();return;
  }
@@ -92,7 +94,7 @@ document.getElementById('add-delivery').onclick=async()=>{
 };
 function hostedCheckoutUrl(){
  if(!hosted||count()!==1||!delivery||delivery!==shippingCountryInput.value||!config.sizes.includes(cart[0].size))return null;
- const link=config.checkoutLinks?.[delivery];if(!link)return null;
+ const link=config.checkoutLinks?.[shippingZone(delivery)];if(!link)return null;
  const url=new URL(link);if(url.origin!=='https://buy.stripe.com'||url.pathname.includes('test_'))return null;
  // Reconciliation hint only. The required size choice on Stripe controls fulfillment.
  url.searchParams.set('client_reference_id','rrose_'+cart[0].size.replace('-','').toLowerCase()+'_'+delivery.toLowerCase());

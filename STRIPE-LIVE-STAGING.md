@@ -8,15 +8,18 @@ The existing GitHub Pages site uses the existing country-locked Stripe Live Paym
 | --- | ---: | ---: | ---: |
 | PL | 699 PLN | 29 PLN | 728 PLN |
 | DE | 160 EUR | 19 EUR | 179 EUR |
+| Other supported EU | 160 EUR | 49 EUR | 209 EUR |
+| UK/NO/CH | 160 EUR | 99 EUR | 259 EUR |
+| Extended Europe | 160 EUR | 369 EUR | 529 EUR |
 
-VAT is included. No VAT or second shipping fee is added by the browser. Other countries cannot proceed to payment.
+VAT is included. No VAT or second shipping fee is added by the browser. Countries outside the five configured zones cannot proceed to payment.
 
 Existing product: prod_VbTxAjvibHelD7. Existing regular prices: price_1UaGzgHv7Ryf9QPajobbmb7t and price_1UaGziHv7Ryf9QPa2wcb62JL.
 
 PL link: https://buy.stripe.com/dRm6oHfN5bXi1pXeJp67S00
 DE link: https://buy.stripe.com/6oU4gz6cvf9u8Sp9p567S01
 
-Both links were read from Stripe Live: active, fixed product and delivery quantities 1 each, correct currency, required size S-M/M-L, address/phone collection and country restriction. All line-item totals were rechecked immediately before release. Shipping is already a line item in Stripe; the frontend does not add another payment line.
+The PL and DE links were read from Stripe Live: active, fixed product and delivery quantities 1 each, correct currency, required size S-M/M-L, address/phone collection and country restriction. All line-item totals were rechecked immediately before release. Shipping is already a line item in Stripe; the frontend does not add another payment line.
 
 ## Actual Live payment verified
 
@@ -34,7 +37,7 @@ This verifies Stripe-hosted payment, not the optional backend webhook/email flow
 
 ## Checks
 
-29 automated tests cover dynamic backend regressions and the active hosted route: country/total/link mapping, one-item capacity, disabled unconfirmed routes, old saved multi-item bags, cancel/forged-paid URLs and no dependency on backend availability for hosted checkout. npm run check and git diff --check also pass. CI must pass on the final commit before merging this existing PR.
+31 automated tests cover dynamic backend regressions and the active hosted route: country/total/link mapping, one-item capacity, disabled unconfirmed routes, old saved multi-item bags, cancel/forged-paid URLs and no dependency on backend availability for hosted checkout. npm run check and git diff --check also pass. Run checks before publishing the regional update; PR #6 is already merged.
 
 After merging, verify the actual Pages build and fetch the published product-config.js/script.js to confirm hosted Live mode and the correct links. Do not claim a visual browser check when only source/DOM tests were performed.
 
@@ -42,7 +45,7 @@ After merging, verify the actual Pages build and fetch the published product-con
 
 The seller fulfills orders manually from Stripe Dashboard, using paid/succeeded status and the required size field. Stripe hosts the buyer's payment confirmation. Customer receipt emails can be enabled in Stripe, but their automatic delivery has not been checked. Automatic Stripe invoices are disabled; the seller's VAT/fiscal/invoice/OSS obligations still need the appropriate accounting process. These are not solved by a payment receipt.
 
-International tariffs beyond PL/DE and multiple-item parcel capacity are unconfirmed and remain blocked. Three existing links with unapproved 49/99/369 EUR shipping were disabled during the audit. No carrier API or label booking is claimed.
+After the owner confirmed the previously configured international rates in the voice session, the existing EU (49 EUR), NEAR (99 EUR) and EUROPE_EXT (369 EUR) links were reactivated and connected to their exact Stripe country lists. These are merchant-configured rates, not independently verified carrier quotes. Worldwide has only an old demo value of 75 EUR and no existing Live price; it remains blocked pending confirmation. Multiple-item parcel capacity remains unconfirmed. No carrier API or label booking is claimed.
 
 ## Optional backend retained separately
 

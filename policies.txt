@@ -11,7 +11,7 @@ Product and prices
 RROSE cotton wrap skirt, sizes S-M and M-L. Check the size guide before ordering.
 Polish delivery: 699 PLN per item. International delivery: 160 EUR per item.
 The advertised prices are final and include VAT. No additional VAT is added at checkout.
-Delivery is charged once per order. Poland: 29 PLN. Germany: 19 EUR.
+Delivery is charged once per order. Poland: 29 PLN. Germany: 19 EUR. Other supported EU destinations: 49 EUR. UK, Norway and Switzerland: 99 EUR. Supported extended-European destinations: 369 EUR. The country selector shows available routes.
 The bag displays the full payable amount, including delivery, before opening Stripe Checkout.
 Payment requires an approved delivery route. Other destinations remain unavailable until their delivery rate and customs requirements are confirmed.
 
@@ -20,7 +20,7 @@ Check the selected sizes, quantities, destination and total before paying. Payme
 
 Delivery
 Orders ship from Poland to the address entered at checkout. No collection or locker delivery is offered in this flow. Multiple items are accepted only within the confirmed parcel capacity. If no different delivery time is expressly agreed, goods will be delivered within 30 days of the contract. Contact support about delays or damaged deliveries; statutory remedies remain available.
-International routes outside the EU require a confirmed courier rate and review of destination restrictions and customs documentation. Any recipient import duties, taxes and clearance fees must be explained for the route before it is enabled. No unverified customs or carrier charge is collected here.
+International routes outside the EU require a confirmed courier rate and review of destination restrictions and customs documentation. For destinations outside the EU, import duties, local taxes and clearance fees may be payable by the recipient in addition to the displayed checkout total. No unverified customs or carrier charge is collected here.
 
 Withdrawal and returns
 For consumer distance purchases, you may withdraw without giving a reason within 14 days after you or your nominated recipient receives the goods. For goods delivered separately in one order, the period starts on receipt of the last item. Send an unambiguous withdrawal notice to the email or postal address above. You may use this wording: “I withdraw from the sale of [items], ordered on [date], received on [date], order number [number]. Name, address, date.” A particular form is not required.
