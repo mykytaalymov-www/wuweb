@@ -1,11 +1,25 @@
 # rrose by wu?
 
-Existing WU? storefront on GitHub Pages at https://wuisthequestion.com. Keep the existing camera interface, official logos, photos and domain.
+Existing WU? storefront on GitHub Pages: https://wuisthequestion.com. The camera interface, official logos, photos, CSS and domain are retained.
 
-Preview static files: `python3 -m http.server 3002`. Run checks: `npm ci`, `npm run check`, `npm test`.
+## Current checkout: Stripe-hosted, no backend required
 
-Public display configuration is in product-config.js. `checkoutApi` must point to a separately deployed verified HTTPS backend; empty disables payment. No secrets belong in the storefront. The browser never determines payable prices or shipping charges. Currency follows delivery country (PLN for Poland, EUR for approved international routes).
+One RROSE per order, size S-M or M-L confirmed on Stripe. Choose the destination in the bag before payment:
 
-Free Supabase staging backend: https://fsosngspvclkgtbszwoc.supabase.co/functions/v1/wu-checkout-staging/health (test mode, payment disabled). Setup/secrets: backend/supabase/README.md.
+- Poland: 699 PLN + one courier delivery 29 PLN = 728 PLN, VAT included.
+- Germany: 160 EUR + one courier delivery 19 EUR = 179 EUR, VAT included.
+- Other destinations remain unavailable until tariffs/customs are confirmed.
 
-Backend setup and operational details: backend/README.md. Current release evidence and blockers: STRIPE-LIVE-STAGING.md. Seller information, consumer terms and privacy: policies.html / policies.txt. Changes continue existing PR #6; do not merge before real Sandbox and Live verification.
+The existing Live Payment Links enforce the actual prices, quantities and delivery countries inside Stripe. Frontend totals are only a display; the browser never supplies a payable amount. A required size dropdown, shipping address and phone are collected by Stripe. The size chosen in Stripe controls fulfillment; the bag size is a reconciliation hint. Saved multi-item bags must be reduced to one item before checkout; their contents are not silently discarded.
+
+After payment Stripe hosts confirmation. The seller checks paid/succeeded in Stripe Dashboard and manually prepares dispatch, tracking and customer support. Automatic customer receipt delivery and fiscal/invoice handling are not claimed verified. Stripe invoices are currently disabled. A query string on this site never proves payment and never empties a paid cart.
+
+A controlled Live 2 PLN payment through a separate, structurally equivalent hosted link succeeded on 2026-11-11. Stripe confirmed paid/complete and succeeded, with size/contact/address captured. That verification link is now disabled. It did not use or verify the optional custom backend.
+
+## Development
+
+Preview: python3 -m http.server 3002. Checks: npm ci, npm run check, npm test (29 tests). Public display configuration is in product-config.js. No Stripe secret belongs in frontend code.
+
+Optional server-side implementations remain in backend/ for a future multi-item/automated flow; they are not used by the current hosted checkout. The Supabase Free staging API stays test-only and disabled for payments. See backend/supabase/README.md only when working on that optional path. GitHub Pages excludes backend sources and Supabase migrations.
+
+Seller information and customer policies: policies.html / policies.txt. Release evidence: STRIPE-LIVE-STAGING.md.

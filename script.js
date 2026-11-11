@@ -6,6 +6,8 @@ const sizeSelect=document.getElementById('size');
 sizeSelect.replaceChildren(...config.sizes.map(s=>new Option(s,s)));sizeSelect.disabled=false;
 const currency=document.getElementById('currency');currency.disabled=true;
 const cartDialog=document.getElementById('cart-dialog'),deliveryPage=document.getElementById('delivery-page');
+const hosted=config.checkoutMode==='hosted',maxItems=hosted?1:20;
+function checkoutAvailable(){return hosted?!!config.checkoutLinks?.[shippingCountryInput.value]:!!config.checkoutApi;}
 const shippingCountryInput=document.getElementById('shipping-country');
 const countries='PL DE AT BE BG HR CY CZ DK EE FI FR GR HU IE IT LV LT LU MT NL PT RO SK SI ES SE GB NO CH US CA AU NZ JP KR SG AE AL AD BA IS LI MD ME MK RS TR UA BR MX IN ZA'.split(' ');
 const names=new Intl.DisplayNames([navigator.language||'en'],{type:'region'});
@@ -32,7 +34,7 @@ function renderShipping(){
  document.getElementById('shipping-route').textContent=rate?rate.route:'not available until rate confirmed';
  document.getElementById('shipping-volume-weight').textContent='2.1 kg*';
  document.getElementById('shipping-cost').textContent=rate?money(rate[currency.value]):'unavailable';
- document.getElementById('add-delivery').disabled=busy||!cart.length||!config.checkoutApi;
+ document.getElementById('add-delivery').disabled=busy||!cart.length||!checkoutAvailable()||(hosted&&count()!==1);
  const q=serverQuote;
  document.getElementById('cart-shipping-label').textContent=q?'delivery to '+names.of(q.country):'delivery';
  document.getElementById('cart-shipping').textContent=q?money(q.shipping/100,q.currency):'not confirmed';
@@ -40,7 +42,7 @@ function renderShipping(){
  document.getElementById('cart-grand-total').textContent=q?money(q.total/100,q.currency):'calculate delivery';
 }
 function renderCart(){
- shippingCountryInput.disabled=busy;document.getElementById('buy').disabled=busy||count()>=20;
+ shippingCountryInput.disabled=busy;document.getElementById('buy').disabled=busy||count()>=maxItems;
  currency.value=shippingCountryInput.value==='PL'?'PLN':'EUR';
  document.getElementById('cart-count').textContent=String(count());
  const root=document.getElementById('cart-items');root.replaceChildren();
@@ -53,16 +55,18 @@ function renderCart(){
   row.querySelector('.item-price').textContent=money(config.prices.long[currency.value]*item.quantity);
   row.querySelector('.minus').disabled=busy;row.querySelector('.remove').disabled=busy;
   row.querySelector('.minus').onclick=()=>{if(item.quantity>1)item.quantity--;else cart=cart.filter(i=>i!==item);changed();};
-  row.querySelector('.plus').disabled=count()>=20||busy;
-  row.querySelector('.plus').onclick=()=>{if(count()<20)item.quantity++;changed();};
+  row.querySelector('.plus').disabled=count()>=maxItems||busy;
+  row.querySelector('.plus').onclick=()=>{if(count()<maxItems)item.quantity++;changed();};
   row.querySelector('.remove').onclick=()=>{cart=cart.filter(i=>i!==item);changed();};
   root.append(row);
  }
  document.getElementById('cart-total').textContent=money(count()*config.prices.long[currency.value]);renderShipping();
- document.getElementById('check-current-order').hidden=!attempt;
- const checkout=document.getElementById('checkout');checkout.disabled=!cart.length||busy||!config.checkoutApi;
+ document.getElementById('check-current-order').hidden=hosted||!attempt;
+ const checkout=document.getElementById('checkout');checkout.disabled=!cart.length||busy||!checkoutAvailable()||(hosted&&count()!==1);
  checkout.textContent=busy?'PLEASE WAIT…':'SECURE CHECKOUT';
- document.getElementById('checkout-note').textContent=!config.checkoutApi?'Checkout is temporarily unavailable. Your bag is saved.':serverQuote?'VAT included. Delivery charged once. Your selected sizes go with your order.':'Calculate delivery to confirm the full payable total. VAT included.';
+ document.getElementById('checkout-note').textContent=hosted
+  ?count()>1?'One RROSE per order. Please reduce your bag to one item.':!checkoutAvailable()?'Delivery to this country is not available for payment yet.':'One RROSE per order. VAT included; delivery charged once. Confirm your size and enter your address on Stripe.'
+  :!config.checkoutApi?'Checkout is temporarily unavailable. Your bag is saved.':serverQuote?'VAT included. Delivery charged once. Your selected sizes go with your order.':'Calculate delivery to confirm the full payable total. VAT included.';
  checkout.onclick=startCheckout;
 }
 function changed(){revision++;delivery=null;serverQuote=null;attempt=null;try{sessionStorage.removeItem('wu-checkout-attempt');}catch{}save();renderCart();document.getElementById('cart-status').textContent='Shopping bag updated.';}
@@ -71,6 +75,12 @@ document.querySelectorAll('[data-open-delivery]').forEach(b=>b.addEventListener(
 document.getElementById('close-delivery').onclick=()=>deliveryPage.close();
 shippingCountryInput.onchange=changed;
 document.getElementById('add-delivery').onclick=async()=>{
+ if(hosted){
+  if(count()!==1||!checkoutAvailable())return;
+  const country=shippingCountryInput.value,cur=country==='PL'?'pln':'eur',unit=config.prices.long[cur.toUpperCase()]*100,shipping=config.shipping.rates[country][cur.toUpperCase()]*100;
+  serverQuote={country,currency:cur,subtotal:unit,shipping,total:unit+shipping};delivery=country;
+  save();renderCart();deliveryPage.close();if(!cartDialog.open)cartDialog.showModal();return;
+ }
  const current=revision;busy=true;renderCart();document.getElementById('delivery-status').textContent='Confirming delivery…';
  try{
   const q=await api('/quote',{method:'POST',body:JSON.stringify(payload())});
@@ -80,7 +90,16 @@ document.getElementById('add-delivery').onclick=async()=>{
  }catch(e){document.getElementById('delivery-status').textContent=message(e.message);}
  finally{busy=false;renderCart();}
 };
+function hostedCheckoutUrl(){
+ if(!hosted||count()!==1||!delivery||delivery!==shippingCountryInput.value||!config.sizes.includes(cart[0].size))return null;
+ const link=config.checkoutLinks?.[delivery];if(!link)return null;
+ const url=new URL(link);if(url.origin!=='https://buy.stripe.com'||url.pathname.includes('test_'))return null;
+ // Reconciliation hint only. The required size choice on Stripe controls fulfillment.
+ url.searchParams.set('client_reference_id','rrose_'+cart[0].size.replace('-','').toLowerCase()+'_'+delivery.toLowerCase());
+ return url.toString();
+}
 async function startCheckout(){
+ if(hosted){if(busy||count()!==1)return;if(!delivery){openDeliveryPage();return;}const url=hostedCheckoutUrl();if(url)window.location.assign(url);return;}
  if(busy||!cart.length)return;if(!serverQuote||!delivery){openDeliveryPage();return;}
  const input=payload(),snapshot=JSON.stringify(input),current=revision;
  busy=true;renderCart();
@@ -102,8 +121,8 @@ async function startCheckout(){
  }catch(e){document.getElementById('cart-status').textContent=message(e.message);document.getElementById('checkout-note').textContent=message(e.message);}
  finally{busy=false;const note=document.getElementById('checkout-note').textContent;renderCart();document.getElementById('checkout-note').textContent=note;}
 }
-document.getElementById('buy').disabled=false;
-document.getElementById('buy').onclick=()=>{if(busy||count()>=20)return;const size=sizeSelect.value,item=cart.find(i=>i.size===size);if(item)item.quantity++;else cart.push({size,quantity:1});changed();cartDialog.showModal();};
+document.getElementById('buy').disabled=count()>=maxItems;
+document.getElementById('buy').onclick=()=>{if(busy||count()>=maxItems)return;const size=sizeSelect.value,item=cart.find(i=>i.size===size);if(item)item.quantity++;else cart.push({size,quantity:1});changed();cartDialog.showModal();};
 document.getElementById('open-cart').onclick=()=>cartDialog.showModal();document.getElementById('close-cart').onclick=()=>cartDialog.close();
 currency.onchange=()=>{};renderCart();
 cartDialog.addEventListener('click',e=>{if(e.target===cartDialog){const r=cartDialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)cartDialog.close();}});

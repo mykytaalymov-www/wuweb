@@ -1,65 +1,49 @@
-# WU? RROSE release audit — 2026-11-11
+# WU? hosted Live checkout release evidence — 2026-11-11
 
-**Implementation is staged in existing PR #6 / feature/stripe-live-checkout-staging. Supabase Free staging API is deployed; storefront/Live are not deployed. Live payments have not been tested.**
+## Final launch scope
 
-## Verified external state
+The existing GitHub Pages site uses the existing country-locked Stripe Live Payment Links. One RROSE per checkout; size confirmed on Stripe. No backend key, SMTP setup or paid hosting is needed for this launch. Design, CSS/media and domain are preserved. The separate Supabase staging backend is not part of the purchase path.
 
-- GitHub Pages main: `e350c65abfae51458f2843014cd4b6b7aa3dac9f`. Last successful Pages run: https://github.com/mykytaalymov-www/wuweb/actions/runs/40850651288 (2026-10-29).
-- `https://wuisthequestion.com` returns HTTP 200 from GitHub.com. Its current product-config still contains the original Sandbox Payment Link and demo delivery rates. Existing main also contains unsafe `?paid` confirmation; this branch removes it.
-- Stripe account WU?: `acct_1URD6xHv7Ryf9QPa`, only Live exposed by the connected Stripe tool.
-- Existing active product `prod_VbTxAjvibHelD7`, RROSE, shippable, clothing tax code `txcd_30011000`.
-- `price_1UaGzgHv7Ryf9QPajobbmb7t`: active, Live, PLN 69900 minor units, inclusive, one-time.
-- `price_1UaGziHv7Ryf9QPa2wcb62JL`: active, Live, EUR 16000 minor units, inclusive, one-time.
-- No new products, prices or payment links were created.
-- No webhook endpoints. Stripe Tax Settings active; registrations list empty. Automatic Tax remains disabled; this does not remove the merchant's VAT reporting obligations.
+| Destination | Product | One delivery | Total |
+| --- | ---: | ---: | ---: |
+| PL | 699 PLN | 29 PLN | 728 PLN |
+| DE | 160 EUR | 19 EUR | 179 EUR |
 
-## Payment Link audit
+VAT is included. No VAT or second shipping fee is added by the browser. Other countries cannot proceed to payment.
 
-All five links were read along with line items, allowed countries, required size dropdown, phone/address collection and tax settings. Shipping is already a line item on these links: do not add it a second time.
+Existing product: prod_VbTxAjvibHelD7. Existing regular prices: price_1UaGzgHv7Ryf9QPajobbmb7t and price_1UaGziHv7Ryf9QPa2wcb62JL.
 
-| Group | Existing link ID | Product + delivery | Current action |
-| --- | --- | --- | --- |
-| PL | `plink_1UaHLiHv7Ryf9QPa8nqUnJBx` | 699 + 29 = 728 PLN | Preserved; new storefront does not use links |
-| DE | `plink_1UaHLlHv7Ryf9QPaTXFLiPFs` | 160 + 19 = 179 EUR | Preserved; new storefront does not use links |
-| EU | `plink_1UaJ5dHv7Ryf9QPaVGBWDakX` | 160 + 49 = 209 EUR | Deactivated; unapproved tariff |
-| GB/NO/CH | `plink_1UaJ5kHv7Ryf9QPax4GchZpo` | 160 + 99 = 259 EUR | Deactivated; unapproved tariff |
-| Extended Europe | `plink_1UaJ5pHv7Ryf9QPaMkYVLjtl` | 160 + 369 = 529 EUR | Deactivated; unapproved tariff |
+PL link: https://buy.stripe.com/dRm6oHfN5bXi1pXeJp67S00
+DE link: https://buy.stripe.com/6oU4gz6cvf9u8Sp9p567S01
 
-The three deactivation API responses confirmed `active:false`. PL/DE links remain independent of the new order store; existing direct-link purchases require Dashboard fulfillment. No changes to their price/tax configuration were made.
+Both links were read from Stripe Live: active, fixed product and delivery quantities 1 each, correct currency, required size S-M/M-L, address/phone collection and country restriction. All line-item totals were rechecked immediately before release. Shipping is already a line item in Stripe; the frontend does not add another payment line.
 
-## Implemented in code
+## Actual Live payment verified
 
-- Existing design/media preserved. Multiple size/quantity cart, confirmed server quote, final total before Stripe, destination-controlled currency, no Payment Link fallback.
-- Portable Node backend, server-only key, runtime price validation, allowed destinations and reviewed configurable zones, one shipping charge/order.
-- Required Stripe address/phone collection, size summary/metadata, server-owned success/cancel URLs, no paid-by-query behavior.
-- Signed raw-body webhook, canonical session retrieval, amount/country/mode validation, transactional event deduplication and persistent SQLite order/outbox records, retrying SMTP confirmation.
-- Seller data supplied by user in policies; durable terms attachment. VAT is never added to the final price. Legal/accounting release review remains outstanding.
-- Payments fail closed with missing credentials/release approvals. `checkoutApi` stays empty on the public storefront until actual Sandbox/Live end-to-end verification passes; the staging API is now available separately.
+The user explicitly authorized a controlled small Live purchase. A separate verification price/link was created on the existing RROSE product. The initial 1 EUR link was disabled when the user requested PLN. Stripe rejected 1 PLN as below its minimum; after explicit user approval, a 2 PLN link was used.
 
-## Checks and actual limits
+The user completed the 2 PLN payment. Direct Stripe retrieval verified:
+- livemode true, Checkout complete and payment_status paid;
+- PaymentIntent succeeded and amount_received 200 PLN minor units;
+- size S-M and shipping address/phone/email collected;
+- the verification link was disabled after success, with a one-completed-session limit.
 
-`npm run check`, `npm test` (26 local tests), dependency audit (0 vulnerabilities after upgrading Nodemailer), and `git diff --check` passed. Local tests use a Stripe API double and real Stripe SDK signature verification. They cover PL/DE/mixed sizes, one shipping fee, unconfirmed routes/packing, amount injection, idempotency, wrong mode/catalog, signature tampering/expiry, delayed success/failure, status authentication, database reopening, email retry, cart/country changes, cancel and forged success URLs.
+The regular 699 PLN / 160 EUR prices were unchanged. Verification prices are not exposed by the storefront. No refund or additional charge was initiated. No personal customer data or card details are stored in this repository.
 
-**No real Sandbox payment, Live charge, live webhook delivery, actual email delivery or deployed browser E2E has passed.** The required browser skill path in the updated tool catalog is missing on disk, and the earlier GitHub browser session was unauthenticated. No visual screenshot verification is claimed.
+This verifies Stripe-hosted payment, not the optional backend webhook/email flow. No 728 PLN or 179 EUR test charge was made.
 
-Infrastructure discovery: no backend configuration/workflow in the existing branches; old removed Supabase function was explicitly a nondeployed draft. GitHub connector cannot read secrets APIs; local gh token invalid; browser GitHub settings requires sign-in. Therefore GitHub Secrets have NOT been verified absent. Vercel project lookup returned a team-access 403; it is not used as an assumed available backend. No API keys are present in this task environment. Connected Supabase lists two INACTIVE projects; the general personal project has no Edge Functions. The unrelated photo-sphere project was not modified. No active WU backend was identified at the initial audit; the general project has since been restored and the staging function deployed (see update below).
+## Checks
 
-Release blockers:
-1. Staging hosting access is now resolved through the deployed Supabase Free function. Configure its WU_STAGING_* Sandbox key/catalog IDs, webhook signing secret and TLS SMTP credentials directly in Supabase Secrets. Live will use a separate function/storage namespace after Sandbox verification. GitHub Secrets cannot be recovered into this chat.
-2. Accountant confirmation of PL/DE VAT/OSS reporting and fiscal/invoice/KSeF flow, plus final seller policies review. No tax registration is inferred or created.
-3. Real Sandbox end-to-end evidence followed by a controlled Live verification before merge/deploy.
+29 automated tests cover dynamic backend regressions and the active hosted route: country/total/link mapping, one-item capacity, disabled unconfirmed routes, old saved multi-item bags, cancel/forged-paid URLs and no dependency on backend availability for hosted checkout. npm run check and git diff --check also pass. CI must pass on the final commit before merging this existing PR.
 
-International countries beyond PL/DE stay blocked until supported rates/customs are confirmed. Orders larger than the verified parcel capacity (default 1) stay blocked until packing capacity is approved. Configurable multi-item behavior is locally tested with capacity 4; this is not a claim that four garments fit.
+After merging, verify the actual Pages build and fetch the published product-config.js/script.js to confirm hosted Live mode and the correct links. Do not claim a visual browser check when only source/DOM tests were performed.
 
-See backend/README.md for exact environment names, endpoints and release procedure.
+## Operating limits
 
-## Free backend deployment update
+The seller fulfills orders manually from Stripe Dashboard, using paid/succeeded status and the required size field. Stripe hosts the buyer's payment confirmation. Customer receipt emails can be enabled in Stripe, but their automatic delivery has not been checked. Automatic Stripe invoices are disabled; the seller's VAT/fiscal/invoice/OSS obligations still need the appropriate accounting process. These are not solved by a payment receipt.
 
-Existing general Supabase project restored on its Free plan, empty public schema confirmed, and WU staging API deployed:
-https://fsosngspvclkgtbszwoc.supabase.co/functions/v1/wu-checkout-staging/health
+International tariffs beyond PL/DE and multiple-item parcel capacity are unconfirmed and remain blocked. Three existing links with unapproved 49/99/369 EUR shipping were disabled during the audit. No carrier API or label booking is claimed.
 
-Postgres orders/events/outbox are private with RLS and service-only RPC grants. 14 deployed HTTPS checks passed; transactional Postgres self-test passed and rolled back. Zero test records persist. No subscriptions were upgraded and no new storefront was created.
+## Optional backend retained separately
 
-The infrastructure-access blocker is resolved for staging. Remaining configuration goes directly in Supabase Edge Functions Secrets with WU_STAGING_* names (backend/supabase/.env.example); no Render account or paid disk is needed. This staging function forces test mode and payments stay disabled pending keys/email/Sandbox E2E. A separate Live function/storage namespace is still required after tests.
-
-Auto-review rejected a cron migration affecting shared extensions/net privileges. It was not applied; email retries use the persisted outbox plus Stripe webhook redelivery instead, as documented in backend/supabase/README.md. Supabase Free can pause after inactivity and has finite quotas.
+Supabase Free staging API exists at https://fsosngspvclkgtbszwoc.supabase.co/functions/v1/wu-checkout-staging/health. It is test-only, payment-disabled and excluded from the hosted flow. Its earlier 14 HTTPS checks and transactional Postgres self-test passed, but no actual Sandbox payment or SMTP delivery passed there. No paid subscription was added. See backend/supabase/README.md for that optional implementation.

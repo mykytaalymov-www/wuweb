@@ -1,3 +1,5 @@
+Current production launch uses Stripe-hosted Payment Links and manual fulfillment. This backend is optional and is not needed for that flow.
+
 # WU checkout service
 
 A free Supabase staging variant is now deployed; see backend/supabase/README.md for its URL and WU_STAGING_* secrets. The instructions below describe the original standalone Docker alternative.
