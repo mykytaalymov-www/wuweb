@@ -11,7 +11,7 @@ Product and prices
 RROSE cotton wrap skirt, sizes S-M and M-L. Check the size guide before ordering.
 Polish delivery: 699 PLN per item. International delivery: 160 EUR per item.
 The advertised prices are final and include VAT. No additional VAT is added at checkout.
-Delivery is charged once per order. Poland: 29 PLN. Germany: 19 EUR. Other supported EU destinations: 49 EUR. UK, Norway and Switzerland: 99 EUR. Supported extended-European destinations: 369 EUR. The country selector shows available routes.
+Delivery is charged once per order. Poland: 29 PLN. Germany: 19 EUR. Other supported EU destinations: 49 EUR. UK, Norway and Switzerland: 99 EUR. Supported extended-European destinations: 369 EUR. Worldwide: 60 EUR for the remaining supported destinations. Up to two skirts share one delivery charge. The country selector shows available routes.
 The bag displays the full payable amount, including delivery, before opening Stripe Checkout.
 Payment requires an approved delivery route. Other destinations remain unavailable until their delivery rate and customs requirements are confirmed.
 
@@ -19,7 +19,7 @@ Ordering and payment
 Check the selected sizes, quantities, destination and total before paying. Payment is processed by Stripe. The checkout button on Stripe places an order with an obligation to pay. Stripe displays confirmation after a successful payment. The seller verifies paid orders in Stripe before dispatch. Returning to this website alone does not confirm payment. A separate dispatch notification follows by email. If confirmation is delayed, contact support before placing another order.
 
 Delivery
-Orders ship from Poland to the address entered at checkout. No collection or locker delivery is offered in this flow. Multiple items are accepted only within the confirmed parcel capacity. If no different delivery time is expressly agreed, goods will be delivered within 30 days of the contract. Contact support about delays or damaged deliveries; statutory remedies remain available.
+Orders ship from Poland to the address entered at checkout. No collection or locker delivery is offered in this flow. Destinations restricted by sanctions or without a supported delivery route are unavailable. Up to two skirts are accepted per order with one delivery charge. If no different delivery time is expressly agreed, goods will be delivered within 30 days of the contract. Contact support about delays or damaged deliveries; statutory remedies remain available.
 International routes outside the EU require a confirmed courier rate and review of destination restrictions and customs documentation. For destinations outside the EU, import duties, local taxes and clearance fees may be payable by the recipient in addition to the displayed checkout total. No unverified customs or carrier charge is collected here.
 
 Withdrawal and returns

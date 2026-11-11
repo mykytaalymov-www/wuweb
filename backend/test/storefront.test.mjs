@@ -69,7 +69,7 @@ test('verified status is required before clearing the matching cart',async t=>{
 
 test('hosted storefront uses the verified PL Live link with one delivery and no backend',async t=>{
  const f=page(t,{hosted:true,api:false});f.get('size').value='S-M';f.get('buy').click();
- assert.equal(f.get('buy').disabled,true);assert.equal(f.get('cart-items').querySelector('.plus').disabled,true);
+ assert.equal(f.get('buy').disabled,false);assert.equal(f.get('cart-items').querySelector('.plus').disabled,false);
  f.get('add-delivery').click();await f.tick();assert.match(f.get('cart-grand-total').textContent,/728/);
  const url=new URL(f.w.hostedCheckoutUrl());assert.equal(url.origin+url.pathname,'https://buy.stripe.com/dRm6oHfN5bXi1pXeJp67S00');
  assert.equal(url.searchParams.get('client_reference_id'),'rrose_sm_pl');assert.equal(url.searchParams.has('amount'),false);assert.equal(f.calls.length,0);
@@ -78,13 +78,13 @@ test('hosted storefront switches to verified DE link and refuses unapproved coun
  const f=page(t,{hosted:true,api:false});f.get('buy').click();
  f.get('shipping-country').value='DE';f.get('shipping-country').dispatchEvent(new f.w.Event('change'));f.get('add-delivery').click();await f.tick();
  assert.match(f.get('cart-grand-total').textContent,/179/);assert.equal(new URL(f.w.hostedCheckoutUrl()).pathname,'/6oU4gz6cvf9u8Sp9p567S01');
- f.get('shipping-country').value='US';f.get('shipping-country').dispatchEvent(new f.w.Event('change'));
+ f.get('shipping-country').value='UA';f.get('shipping-country').dispatchEvent(new f.w.Event('change'));
  assert.equal(f.get('checkout').disabled,true);assert.equal(f.get('add-delivery').disabled,true);assert.equal(f.w.hostedCheckoutUrl(),null);
 });
-test('hosted checkout blocks old multi-item carts without discarding their contents',t=>{
- const f=page(t,{hosted:true,api:false,stored:[{size:'S-M',quantity:2}]});
- assert.equal(f.get('cart-count').textContent,'2');assert.equal(f.get('checkout').disabled,true);assert.match(f.get('checkout-note').textContent,/reduce/);
- f.get('cart-items').querySelector('.minus').click();assert.equal(f.get('cart-count').textContent,'1');assert.equal(f.get('checkout').disabled,false);
+test('hosted checkout blocks saved bags over two items without discarding contents',t=>{
+ const f=page(t,{hosted:true,api:false,stored:[{size:'S-M',quantity:3}]});
+ assert.equal(f.get('cart-count').textContent,'3');assert.equal(f.get('checkout').disabled,true);assert.match(f.get('checkout-note').textContent,/reduce/);
+ f.get('cart-items').querySelector('.minus').click();assert.equal(f.get('cart-count').textContent,'2');assert.equal(f.get('checkout').disabled,false);
 });
 
 // Each country is checked against the same zone used by the existing Stripe links.
@@ -106,11 +106,58 @@ test('hosted regions preserve exact totals, country lists and import disclosure'
  }
  assert.equal(f.calls.length,0);
 });
-test('hosted unsupported worldwide routes cannot acquire a quote or payment link',t=>{
+test('hosted unavailable routes cannot acquire a quote or payment link',t=>{
  const f=page(t,{hosted:true,api:false});f.get('buy').click();
- for(const country of ['US','CA','AU','NZ','JP','UA']){
+ for(const country of ['UA']){
   f.get('shipping-country').value=country;f.get('shipping-country').dispatchEvent(new f.w.Event('change'));
   f.get('add-delivery').click();assert.equal(f.get('checkout').disabled,true,country);
   assert.equal(f.w.hostedCheckoutUrl(),null);assert.equal(f.get('cart-grand-total').textContent,'calculate delivery');
+ }
+});
+
+test('two-skirt checkout carries each exact size combination and charges delivery once in all zones',async t=>{
+ const recorded=JSON.parse(readFileSync(new URL('../hosted-links.json',import.meta.url),'utf8')).links;
+ for(const sizes of [['S-M','S-M'],['S-M','M-L'],['M-L','M-L']]){
+  const f=page(t,{hosted:true,api:false});
+  for(const size of sizes){f.get('size').value=size;f.get('buy').click();}
+  assert.equal(f.get('cart-count').textContent,'2');assert.equal(f.get('buy').disabled,true);
+  for(const button of f.get('cart-items').querySelectorAll('.plus'))assert.equal(button.disabled,true);
+  f.get('buy').click();assert.equal(f.get('cart-count').textContent,'2');
+  for(const [country,zone,total] of [['PL','PL',1427],['DE','DE',339],['FR','EU',369],['GB','NEAR',419],['AL','EUROPE_EXT',689],['US','WORLD',380]]){
+   f.get('shipping-country').value=country;f.get('shipping-country').dispatchEvent(new f.w.Event('change'));
+   f.get('add-delivery').click();await f.tick();
+   const sm=sizes.filter(s=>s==='S-M').length,ml=2-sm;
+   const live=recorded.find(l=>l.zone===zone&&l.quantity===2&&l.sizes.sm===sm&&l.sizes.ml===ml);
+   assert.ok(live);assert.equal(live.total,total*100);
+   const url=new URL(f.w.hostedCheckoutUrl());assert.equal(url.origin+url.pathname,live.url);
+   assert.equal(url.searchParams.get('client_reference_id'),'rrose_sm'+sm+'ml'+ml+'_'+country.toLowerCase());
+   assert.equal(url.searchParams.has('amount'),false);assert.equal(url.searchParams.has('quantity'),false);
+   const cur=country==='PL'?'PLN':'EUR';
+   assert.equal(f.get('cart-grand-total').textContent,new Intl.NumberFormat(f.w.navigator.language,{style:'currency',currency:cur}).format(total));
+   assert.equal(live.items[0].quantity,2);assert.equal(live.items[1].quantity,1);
+   assert.equal(live.custom_fields[0].dropdown.options.length,1);
+   assert.equal(live.custom_fields[0].dropdown.options[0].value,'sm'+sm+'ml'+ml);
+  }
+  assert.equal(f.calls.length,0);
+ }
+});
+test('all enabled Worldwide countries use the approved 60 EUR order rate and exact Stripe allowlist',async t=>{
+ const f=page(t,{hosted:true,api:false});f.get('buy').click();
+ const world=f.w.RROSE_CONFIG.shipping.zones.WORLD;
+ const recorded=JSON.parse(readFileSync(new URL('../hosted-links.json',import.meta.url),'utf8')).links;
+ for(const l of recorded.filter(l=>l.zone==='WORLD'))assert.deepEqual([...world].sort(),l.countries.toSorted());
+ for(const country of world){
+  f.get('shipping-country').value=country;f.get('shipping-country').dispatchEvent(new f.w.Event('change'));
+  f.get('add-delivery').click();await f.tick();
+  assert.equal(new URL(f.w.hostedCheckoutUrl()).origin+new URL(f.w.hostedCheckoutUrl()).pathname,f.w.RROSE_CONFIG.checkoutLinks.WORLD,country);
+  assert.equal(f.get('cart-grand-total').textContent,new Intl.NumberFormat(f.w.navigator.language,{style:'currency',currency:'EUR'}).format(220),country);
+ }
+});
+test('restricted destinations and fabricated zone names stay blocked even when injected into selector',t=>{
+ const f=page(t,{hosted:true,api:false});f.get('buy').click();
+ for(const country of ['CU','IR','KP','SY','RU','BY','UA','SO','AQ','ZZ','WORLD','EU']){
+  f.get('shipping-country').add(new f.w.Option(country,country));f.get('shipping-country').value=country;
+  f.get('shipping-country').dispatchEvent(new f.w.Event('change'));f.get('add-delivery').click();
+  assert.equal(f.get('checkout').disabled,true,country);assert.equal(f.w.hostedCheckoutUrl(),null,country);
  }
 });

@@ -1,0 +1,1999 @@
+{
+  "verifiedAt": "2026-11-11",
+  "links": [
+    {
+      "id": "plink_1UaJ5pHv7Ryf9QPaMkYVLjtl",
+      "url": "https://buy.stripe.com/dRmbJ1eJ12mI7OlgRx67S04",
+      "zone": "EUROPE_EXT",
+      "quantity": 1,
+      "sizes": null,
+      "countries": [
+        "AL",
+        "AD",
+        "BA",
+        "GI",
+        "GG",
+        "GL",
+        "IM",
+        "IS",
+        "JE",
+        "LI",
+        "MC",
+        "MD",
+        "ME",
+        "MK",
+        "RS",
+        "SM",
+        "TR",
+        "VA",
+        "XK"
+      ],
+      "custom_fields": [
+        {
+          "dropdown": {
+            "default_value": null,
+            "options": [
+              {
+                "label": "S-M",
+                "value": "sm"
+              },
+              {
+                "label": "M-L",
+                "value": "ml"
+              }
+            ]
+          },
+          "key": "size",
+          "label": {
+            "custom": "RROSE size",
+            "type": "custom"
+          },
+          "optional": false,
+          "type": "dropdown"
+        }
+      ],
+      "items": [
+        {
+          "price": "price_1UaGziHv7Ryf9QPa2wcb62JL",
+          "currency": "eur",
+          "quantity": 1,
+          "amount_total": 16000
+        },
+        {
+          "price": "price_1UaJ5nHv7Ryf9QPa7RE2bfK3",
+          "currency": "eur",
+          "quantity": 1,
+          "amount_total": 36900
+        }
+      ],
+      "total": 52900
+    },
+    {
+      "id": "plink_1UaJ5kHv7Ryf9QPax4GchZpo",
+      "url": "https://buy.stripe.com/aFa7sL7gzd1m3y51WD67S03",
+      "zone": "NEAR",
+      "quantity": 1,
+      "sizes": null,
+      "countries": [
+        "GB",
+        "NO",
+        "CH"
+      ],
+      "custom_fields": [
+        {
+          "dropdown": {
+            "default_value": null,
+            "options": [
+              {
+                "label": "S-M",
+                "value": "sm"
+              },
+              {
+                "label": "M-L",
+                "value": "ml"
+              }
+            ]
+          },
+          "key": "size",
+          "label": {
+            "custom": "RROSE size",
+            "type": "custom"
+          },
+          "optional": false,
+          "type": "dropdown"
+        }
+      ],
+      "items": [
+        {
+          "price": "price_1UaGziHv7Ryf9QPa2wcb62JL",
+          "currency": "eur",
+          "quantity": 1,
+          "amount_total": 16000
+        },
+        {
+          "price": "price_1UaJ5hHv7Ryf9QPa26X0rxJK",
+          "currency": "eur",
+          "quantity": 1,
+          "amount_total": 9900
+        }
+      ],
+      "total": 25900
+    },
+    {
+      "id": "plink_1UaJ5dHv7Ryf9QPaVGBWDakX",
+      "url": "https://buy.stripe.com/7sY28rfN5d1m9WtfNt67S02",
+      "zone": "EU",
+      "quantity": 1,
+      "sizes": null,
+      "countries": [
+        "AT",
+        "BE",
+        "BG",
+        "HR",
+        "CY",
+        "CZ",
+        "DK",
+        "EE",
+        "FI",
+        "FR",
+        "GR",
+        "HU",
+        "IE",
+        "IT",
+        "LV",
+        "LT",
+        "LU",
+        "MT",
+        "NL",
+        "PT",
+        "RO",
+        "SK",
+        "SI",
+        "ES",
+        "SE"
+      ],
+      "custom_fields": [
+        {
+          "dropdown": {
+            "default_value": null,
+            "options": [
+              {
+                "label": "S-M",
+                "value": "sm"
+              },
+              {
+                "label": "M-L",
+                "value": "ml"
+              }
+            ]
+          },
+          "key": "size",
+          "label": {
+            "custom": "RROSE size",
+            "type": "custom"
+          },
+          "optional": false,
+          "type": "dropdown"
+        }
+      ],
+      "items": [
+        {
+          "price": "price_1UaGziHv7Ryf9QPa2wcb62JL",
+          "currency": "eur",
+          "quantity": 1,
+          "amount_total": 16000
+        },
+        {
+          "price": "price_1UaJ5aHv7Ryf9QPaEXeh0uCh",
+          "currency": "eur",
+          "quantity": 1,
+          "amount_total": 4900
+        }
+      ],
+      "total": 20900
+    },
+    {
+      "id": "plink_1UaHLlHv7Ryf9QPaTXFLiPFs",
+      "url": "https://buy.stripe.com/6oU4gz6cvf9u8Sp9p567S01",
+      "zone": "DE",
+      "quantity": 1,
+      "sizes": null,
+      "countries": [
+        "DE"
+      ],
+      "custom_fields": [
+        {
+          "dropdown": {
+            "default_value": null,
+            "options": [
+              {
+                "label": "S-M",
+                "value": "sm"
+              },
+              {
+                "label": "M-L",
+                "value": "ml"
+              }
+            ]
+          },
+          "key": "size",
+          "label": {
+            "custom": "RROSE size",
+            "type": "custom"
+          },
+          "optional": false,
+          "type": "dropdown"
+        }
+      ],
+      "items": [
+        {
+          "price": "price_1UaGziHv7Ryf9QPa2wcb62JL",
+          "currency": "eur",
+          "quantity": 1,
+          "amount_total": 16000
+        },
+        {
+          "price": "price_1UaHLWHv7Ryf9QPafVhZrTeA",
+          "currency": "eur",
+          "quantity": 1,
+          "amount_total": 1900
+        }
+      ],
+      "total": 17900
+    },
+    {
+      "id": "plink_1UaHLiHv7Ryf9QPa8nqUnJBx",
+      "url": "https://buy.stripe.com/dRm6oHfN5bXi1pXeJp67S00",
+      "zone": "PL",
+      "quantity": 1,
+      "sizes": null,
+      "countries": [
+        "PL"
+      ],
+      "custom_fields": [
+        {
+          "dropdown": {
+            "default_value": null,
+            "options": [
+              {
+                "label": "S-M",
+                "value": "sm"
+              },
+              {
+                "label": "M-L",
+                "value": "ml"
+              }
+            ]
+          },
+          "key": "size",
+          "label": {
+            "custom": "RROSE size",
+            "type": "custom"
+          },
+          "optional": false,
+          "type": "dropdown"
+        }
+      ],
+      "items": [
+        {
+          "price": "price_1UaGzgHv7Ryf9QPajobbmb7t",
+          "currency": "pln",
+          "quantity": 1,
+          "amount_total": 69900
+        },
+        {
+          "price": "price_1UaHLUHv7Ryf9QPaXOpxXf10",
+          "currency": "pln",
+          "quantity": 1,
+          "amount_total": 2900
+        }
+      ],
+      "total": 72800
+    },
+    {
+      "id": "plink_1UahnoHv7Ryf9QPaSXg9gxjO",
+      "url": "https://buy.stripe.com/4gM00j6cvf9u7Ol0Sz67S07",
+      "zone": "WORLD",
+      "quantity": 1,
+      "sizes": null,
+      "countries": [
+        "AE",
+        "AG",
+        "AI",
+        "AM",
+        "AO",
+        "AR",
+        "AU",
+        "AW",
+        "AZ",
+        "BB",
+        "BD",
+        "BF",
+        "BH",
+        "BI",
+        "BJ",
+        "BL",
+        "BM",
+        "BN",
+        "BO",
+        "BQ",
+        "BR",
+        "BS",
+        "BT",
+        "BW",
+        "BZ",
+        "CA",
+        "CD",
+        "CF",
+        "CG",
+        "CI",
+        "CK",
+        "CL",
+        "CM",
+        "CN",
+        "CO",
+        "CR",
+        "CV",
+        "CW",
+        "DJ",
+        "DM",
+        "DO",
+        "DZ",
+        "EC",
+        "EG",
+        "ER",
+        "ET",
+        "FJ",
+        "FK",
+        "FO",
+        "GA",
+        "GD",
+        "GE",
+        "GF",
+        "GH",
+        "GM",
+        "GN",
+        "GP",
+        "GQ",
+        "GT",
+        "GU",
+        "GW",
+        "GY",
+        "HK",
+        "HN",
+        "HT",
+        "ID",
+        "IL",
+        "IN",
+        "IQ",
+        "JM",
+        "JO",
+        "JP",
+        "KE",
+        "KG",
+        "KH",
+        "KI",
+        "KM",
+        "KN",
+        "KR",
+        "KW",
+        "KY",
+        "KZ",
+        "LA",
+        "LB",
+        "LC",
+        "LK",
+        "LR",
+        "LS",
+        "LY",
+        "MA",
+        "MG",
+        "ML",
+        "MM",
+        "MN",
+        "MO",
+        "MQ",
+        "MR",
+        "MS",
+        "MU",
+        "MV",
+        "MW",
+        "MX",
+        "MY",
+        "MZ",
+        "NA",
+        "NC",
+        "NE",
+        "NG",
+        "NI",
+        "NP",
+        "NR",
+        "NU",
+        "NZ",
+        "OM",
+        "PA",
+        "PE",
+        "PF",
+        "PG",
+        "PH",
+        "PK",
+        "PR",
+        "PY",
+        "QA",
+        "RE",
+        "RW",
+        "SA",
+        "SB",
+        "SC",
+        "SD",
+        "SG",
+        "SH",
+        "SL",
+        "SN",
+        "SR",
+        "SS",
+        "ST",
+        "SV",
+        "SX",
+        "SZ",
+        "TC",
+        "TD",
+        "TG",
+        "TH",
+        "TJ",
+        "TL",
+        "TM",
+        "TN",
+        "TO",
+        "TT",
+        "TV",
+        "TW",
+        "TZ",
+        "UG",
+        "US",
+        "UY",
+        "UZ",
+        "VC",
+        "VE",
+        "VG",
+        "VN",
+        "VU",
+        "WS",
+        "YE",
+        "YT",
+        "ZM",
+        "ZW"
+      ],
+      "custom_fields": [
+        {
+          "dropdown": {
+            "default_value": null,
+            "options": [
+              {
+                "label": "S-M",
+                "value": "sm"
+              },
+              {
+                "label": "M-L",
+                "value": "ml"
+              }
+            ]
+          },
+          "key": "size",
+          "label": {
+            "custom": "RROSE size",
+            "type": "custom"
+          },
+          "optional": false,
+          "type": "dropdown"
+        }
+      ],
+      "items": [
+        {
+          "price": "price_1UaGziHv7Ryf9QPa2wcb62JL",
+          "currency": "eur",
+          "quantity": 1,
+          "amount_total": 16000
+        },
+        {
+          "price": "price_1UahlcHv7Ryf9QPaNbH4ThsZ",
+          "currency": "eur",
+          "quantity": 1,
+          "amount_total": 6000
+        }
+      ],
+      "total": 22000
+    },
+    {
+      "id": "plink_1Uaho4Hv7Ryf9QPazh3E15KA",
+      "url": "https://buy.stripe.com/00w4gz30jf9u2u1cBh67S08",
+      "zone": "EUROPE_EXT",
+      "quantity": 2,
+      "sizes": {
+        "sm": 2,
+        "ml": 0
+      },
+      "countries": [
+        "AL",
+        "AD",
+        "BA",
+        "GI",
+        "GG",
+        "GL",
+        "IM",
+        "IS",
+        "JE",
+        "LI",
+        "MC",
+        "MD",
+        "ME",
+        "MK",
+        "RS",
+        "SM",
+        "TR",
+        "VA",
+        "XK"
+      ],
+      "custom_fields": [
+        {
+          "dropdown": {
+            "default_value": "sm2ml0",
+            "options": [
+              {
+                "label": "2 × S-M",
+                "value": "sm2ml0"
+              }
+            ]
+          },
+          "key": "sizes",
+          "label": {
+            "custom": "RROSE sizes — 2 skirts",
+            "type": "custom"
+          },
+          "optional": false,
+          "type": "dropdown"
+        }
+      ],
+      "items": [
+        {
+          "price": "price_1UaGziHv7Ryf9QPa2wcb62JL",
+          "currency": "eur",
+          "quantity": 2,
+          "amount_total": 32000
+        },
+        {
+          "price": "price_1UaJ5nHv7Ryf9QPa7RE2bfK3",
+          "currency": "eur",
+          "quantity": 1,
+          "amount_total": 36900
+        }
+      ],
+      "total": 68900
+    },
+    {
+      "id": "plink_1Uaho5Hv7Ryf9QPa8vQmjPVt",
+      "url": "https://buy.stripe.com/7sY3cv44nbXi3y5fNt67S09",
+      "zone": "EUROPE_EXT",
+      "quantity": 2,
+      "sizes": {
+        "sm": 1,
+        "ml": 1
+      },
+      "countries": [
+        "AL",
+        "AD",
+        "BA",
+        "GI",
+        "GG",
+        "GL",
+        "IM",
+        "IS",
+        "JE",
+        "LI",
+        "MC",
+        "MD",
+        "ME",
+        "MK",
+        "RS",
+        "SM",
+        "TR",
+        "VA",
+        "XK"
+      ],
+      "custom_fields": [
+        {
+          "dropdown": {
+            "default_value": "sm1ml1",
+            "options": [
+              {
+                "label": "1 × S-M + 1 × M-L",
+                "value": "sm1ml1"
+              }
+            ]
+          },
+          "key": "sizes",
+          "label": {
+            "custom": "RROSE sizes — 2 skirts",
+            "type": "custom"
+          },
+          "optional": false,
+          "type": "dropdown"
+        }
+      ],
+      "items": [
+        {
+          "price": "price_1UaGziHv7Ryf9QPa2wcb62JL",
+          "currency": "eur",
+          "quantity": 2,
+          "amount_total": 32000
+        },
+        {
+          "price": "price_1UaJ5nHv7Ryf9QPa7RE2bfK3",
+          "currency": "eur",
+          "quantity": 1,
+          "amount_total": 36900
+        }
+      ],
+      "total": 68900
+    },
+    {
+      "id": "plink_1Uaho6Hv7Ryf9QPatyeKi7Te",
+      "url": "https://buy.stripe.com/6oU6oH30j1iE0lT6cT67S0a",
+      "zone": "EUROPE_EXT",
+      "quantity": 2,
+      "sizes": {
+        "sm": 0,
+        "ml": 2
+      },
+      "countries": [
+        "AL",
+        "AD",
+        "BA",
+        "GI",
+        "GG",
+        "GL",
+        "IM",
+        "IS",
+        "JE",
+        "LI",
+        "MC",
+        "MD",
+        "ME",
+        "MK",
+        "RS",
+        "SM",
+        "TR",
+        "VA",
+        "XK"
+      ],
+      "custom_fields": [
+        {
+          "dropdown": {
+            "default_value": "sm0ml2",
+            "options": [
+              {
+                "label": "2 × M-L",
+                "value": "sm0ml2"
+              }
+            ]
+          },
+          "key": "sizes",
+          "label": {
+            "custom": "RROSE sizes — 2 skirts",
+            "type": "custom"
+          },
+          "optional": false,
+          "type": "dropdown"
+        }
+      ],
+      "items": [
+        {
+          "price": "price_1UaGziHv7Ryf9QPa2wcb62JL",
+          "currency": "eur",
+          "quantity": 2,
+          "amount_total": 32000
+        },
+        {
+          "price": "price_1UaJ5nHv7Ryf9QPa7RE2bfK3",
+          "currency": "eur",
+          "quantity": 1,
+          "amount_total": 36900
+        }
+      ],
+      "total": 68900
+    },
+    {
+      "id": "plink_1Uaho7Hv7Ryf9QPaI3digmrs",
+      "url": "https://buy.stripe.com/00weVd44ngdy7Ol8l167S0b",
+      "zone": "NEAR",
+      "quantity": 2,
+      "sizes": {
+        "sm": 2,
+        "ml": 0
+      },
+      "countries": [
+        "GB",
+        "NO",
+        "CH"
+      ],
+      "custom_fields": [
+        {
+          "dropdown": {
+            "default_value": "sm2ml0",
+            "options": [
+              {
+                "label": "2 × S-M",
+                "value": "sm2ml0"
+              }
+            ]
+          },
+          "key": "sizes",
+          "label": {
+            "custom": "RROSE sizes — 2 skirts",
+            "type": "custom"
+          },
+          "optional": false,
+          "type": "dropdown"
+        }
+      ],
+      "items": [
+        {
+          "price": "price_1UaGziHv7Ryf9QPa2wcb62JL",
+          "currency": "eur",
+          "quantity": 2,
+          "amount_total": 32000
+        },
+        {
+          "price": "price_1UaJ5hHv7Ryf9QPa26X0rxJK",
+          "currency": "eur",
+          "quantity": 1,
+          "amount_total": 9900
+        }
+      ],
+      "total": 41900
+    },
+    {
+      "id": "plink_1Uaho8Hv7Ryf9QPaQdeGXUUW",
+      "url": "https://buy.stripe.com/28E9AT30j3qM3y5fNt67S0c",
+      "zone": "NEAR",
+      "quantity": 2,
+      "sizes": {
+        "sm": 1,
+        "ml": 1
+      },
+      "countries": [
+        "GB",
+        "NO",
+        "CH"
+      ],
+      "custom_fields": [
+        {
+          "dropdown": {
+            "default_value": "sm1ml1",
+            "options": [
+              {
+                "label": "1 × S-M + 1 × M-L",
+                "value": "sm1ml1"
+              }
+            ]
+          },
+          "key": "sizes",
+          "label": {
+            "custom": "RROSE sizes — 2 skirts",
+            "type": "custom"
+          },
+          "optional": false,
+          "type": "dropdown"
+        }
+      ],
+      "items": [
+        {
+          "price": "price_1UaGziHv7Ryf9QPa2wcb62JL",
+          "currency": "eur",
+          "quantity": 2,
+          "amount_total": 32000
+        },
+        {
+          "price": "price_1UaJ5hHv7Ryf9QPa26X0rxJK",
+          "currency": "eur",
+          "quantity": 1,
+          "amount_total": 9900
+        }
+      ],
+      "total": 41900
+    },
+    {
+      "id": "plink_1Uaho9Hv7Ryf9QPaSV3cWLas",
+      "url": "https://buy.stripe.com/aFadR97gz9Pa1pX7gX67S0d",
+      "zone": "NEAR",
+      "quantity": 2,
+      "sizes": {
+        "sm": 0,
+        "ml": 2
+      },
+      "countries": [
+        "GB",
+        "NO",
+        "CH"
+      ],
+      "custom_fields": [
+        {
+          "dropdown": {
+            "default_value": "sm0ml2",
+            "options": [
+              {
+                "label": "2 × M-L",
+                "value": "sm0ml2"
+              }
+            ]
+          },
+          "key": "sizes",
+          "label": {
+            "custom": "RROSE sizes — 2 skirts",
+            "type": "custom"
+          },
+          "optional": false,
+          "type": "dropdown"
+        }
+      ],
+      "items": [
+        {
+          "price": "price_1UaGziHv7Ryf9QPa2wcb62JL",
+          "currency": "eur",
+          "quantity": 2,
+          "amount_total": 32000
+        },
+        {
+          "price": "price_1UaJ5hHv7Ryf9QPa26X0rxJK",
+          "currency": "eur",
+          "quantity": 1,
+          "amount_total": 9900
+        }
+      ],
+      "total": 41900
+    },
+    {
+      "id": "plink_1UahoBHv7Ryf9QPa8NnGsde5",
+      "url": "https://buy.stripe.com/4gM6oHfN59Pa1pX6cT67S0e",
+      "zone": "EU",
+      "quantity": 2,
+      "sizes": {
+        "sm": 2,
+        "ml": 0
+      },
+      "countries": [
+        "AT",
+        "BE",
+        "BG",
+        "HR",
+        "CY",
+        "CZ",
+        "DK",
+        "EE",
+        "FI",
+        "FR",
+        "GR",
+        "HU",
+        "IE",
+        "IT",
+        "LV",
+        "LT",
+        "LU",
+        "MT",
+        "NL",
+        "PT",
+        "RO",
+        "SK",
+        "SI",
+        "ES",
+        "SE"
+      ],
+      "custom_fields": [
+        {
+          "dropdown": {
+            "default_value": "sm2ml0",
+            "options": [
+              {
+                "label": "2 × S-M",
+                "value": "sm2ml0"
+              }
+            ]
+          },
+          "key": "sizes",
+          "label": {
+            "custom": "RROSE sizes — 2 skirts",
+            "type": "custom"
+          },
+          "optional": false,
+          "type": "dropdown"
+        }
+      ],
+      "items": [
+        {
+          "price": "price_1UaGziHv7Ryf9QPa2wcb62JL",
+          "currency": "eur",
+          "quantity": 2,
+          "amount_total": 32000
+        },
+        {
+          "price": "price_1UaJ5aHv7Ryf9QPaEXeh0uCh",
+          "currency": "eur",
+          "quantity": 1,
+          "amount_total": 4900
+        }
+      ],
+      "total": 36900
+    },
+    {
+      "id": "plink_1UahoCHv7Ryf9QPaVThS98bS",
+      "url": "https://buy.stripe.com/dRm7sL0Sb1iE7Ol6cT67S0f",
+      "zone": "EU",
+      "quantity": 2,
+      "sizes": {
+        "sm": 1,
+        "ml": 1
+      },
+      "countries": [
+        "AT",
+        "BE",
+        "BG",
+        "HR",
+        "CY",
+        "CZ",
+        "DK",
+        "EE",
+        "FI",
+        "FR",
+        "GR",
+        "HU",
+        "IE",
+        "IT",
+        "LV",
+        "LT",
+        "LU",
+        "MT",
+        "NL",
+        "PT",
+        "RO",
+        "SK",
+        "SI",
+        "ES",
+        "SE"
+      ],
+      "custom_fields": [
+        {
+          "dropdown": {
+            "default_value": "sm1ml1",
+            "options": [
+              {
+                "label": "1 × S-M + 1 × M-L",
+                "value": "sm1ml1"
+              }
+            ]
+          },
+          "key": "sizes",
+          "label": {
+            "custom": "RROSE sizes — 2 skirts",
+            "type": "custom"
+          },
+          "optional": false,
+          "type": "dropdown"
+        }
+      ],
+      "items": [
+        {
+          "price": "price_1UaGziHv7Ryf9QPa2wcb62JL",
+          "currency": "eur",
+          "quantity": 2,
+          "amount_total": 32000
+        },
+        {
+          "price": "price_1UaJ5aHv7Ryf9QPaEXeh0uCh",
+          "currency": "eur",
+          "quantity": 1,
+          "amount_total": 4900
+        }
+      ],
+      "total": 36900
+    },
+    {
+      "id": "plink_1UahoDHv7Ryf9QPaCEbOeP8h",
+      "url": "https://buy.stripe.com/bJeaEX0Sb2mI5Gd58P67S0g",
+      "zone": "EU",
+      "quantity": 2,
+      "sizes": {
+        "sm": 0,
+        "ml": 2
+      },
+      "countries": [
+        "AT",
+        "BE",
+        "BG",
+        "HR",
+        "CY",
+        "CZ",
+        "DK",
+        "EE",
+        "FI",
+        "FR",
+        "GR",
+        "HU",
+        "IE",
+        "IT",
+        "LV",
+        "LT",
+        "LU",
+        "MT",
+        "NL",
+        "PT",
+        "RO",
+        "SK",
+        "SI",
+        "ES",
+        "SE"
+      ],
+      "custom_fields": [
+        {
+          "dropdown": {
+            "default_value": "sm0ml2",
+            "options": [
+              {
+                "label": "2 × M-L",
+                "value": "sm0ml2"
+              }
+            ]
+          },
+          "key": "sizes",
+          "label": {
+            "custom": "RROSE sizes — 2 skirts",
+            "type": "custom"
+          },
+          "optional": false,
+          "type": "dropdown"
+        }
+      ],
+      "items": [
+        {
+          "price": "price_1UaGziHv7Ryf9QPa2wcb62JL",
+          "currency": "eur",
+          "quantity": 2,
+          "amount_total": 32000
+        },
+        {
+          "price": "price_1UaJ5aHv7Ryf9QPaEXeh0uCh",
+          "currency": "eur",
+          "quantity": 1,
+          "amount_total": 4900
+        }
+      ],
+      "total": 36900
+    },
+    {
+      "id": "plink_1UahoEHv7Ryf9QPaeYwUEOXM",
+      "url": "https://buy.stripe.com/14A6oHgR9aTe2u10Sz67S0h",
+      "zone": "DE",
+      "quantity": 2,
+      "sizes": {
+        "sm": 2,
+        "ml": 0
+      },
+      "countries": [
+        "DE"
+      ],
+      "custom_fields": [
+        {
+          "dropdown": {
+            "default_value": "sm2ml0",
+            "options": [
+              {
+                "label": "2 × S-M",
+                "value": "sm2ml0"
+              }
+            ]
+          },
+          "key": "sizes",
+          "label": {
+            "custom": "RROSE sizes — 2 skirts",
+            "type": "custom"
+          },
+          "optional": false,
+          "type": "dropdown"
+        }
+      ],
+      "items": [
+        {
+          "price": "price_1UaGziHv7Ryf9QPa2wcb62JL",
+          "currency": "eur",
+          "quantity": 2,
+          "amount_total": 32000
+        },
+        {
+          "price": "price_1UaHLWHv7Ryf9QPafVhZrTeA",
+          "currency": "eur",
+          "quantity": 1,
+          "amount_total": 1900
+        }
+      ],
+      "total": 33900
+    },
+    {
+      "id": "plink_1UahoFHv7Ryf9QPafG5x58lD",
+      "url": "https://buy.stripe.com/28EeVdeJ10eA0lT7gX67S0i",
+      "zone": "DE",
+      "quantity": 2,
+      "sizes": {
+        "sm": 1,
+        "ml": 1
+      },
+      "countries": [
+        "DE"
+      ],
+      "custom_fields": [
+        {
+          "dropdown": {
+            "default_value": "sm1ml1",
+            "options": [
+              {
+                "label": "1 × S-M + 1 × M-L",
+                "value": "sm1ml1"
+              }
+            ]
+          },
+          "key": "sizes",
+          "label": {
+            "custom": "RROSE sizes — 2 skirts",
+            "type": "custom"
+          },
+          "optional": false,
+          "type": "dropdown"
+        }
+      ],
+      "items": [
+        {
+          "price": "price_1UaGziHv7Ryf9QPa2wcb62JL",
+          "currency": "eur",
+          "quantity": 2,
+          "amount_total": 32000
+        },
+        {
+          "price": "price_1UaHLWHv7Ryf9QPafVhZrTeA",
+          "currency": "eur",
+          "quantity": 1,
+          "amount_total": 1900
+        }
+      ],
+      "total": 33900
+    },
+    {
+      "id": "plink_1UahoHHv7Ryf9QPa5l4Afgud",
+      "url": "https://buy.stripe.com/cNieVdgR95yU3y5dFl67S0j",
+      "zone": "DE",
+      "quantity": 2,
+      "sizes": {
+        "sm": 0,
+        "ml": 2
+      },
+      "countries": [
+        "DE"
+      ],
+      "custom_fields": [
+        {
+          "dropdown": {
+            "default_value": "sm0ml2",
+            "options": [
+              {
+                "label": "2 × M-L",
+                "value": "sm0ml2"
+              }
+            ]
+          },
+          "key": "sizes",
+          "label": {
+            "custom": "RROSE sizes — 2 skirts",
+            "type": "custom"
+          },
+          "optional": false,
+          "type": "dropdown"
+        }
+      ],
+      "items": [
+        {
+          "price": "price_1UaGziHv7Ryf9QPa2wcb62JL",
+          "currency": "eur",
+          "quantity": 2,
+          "amount_total": 32000
+        },
+        {
+          "price": "price_1UaHLWHv7Ryf9QPafVhZrTeA",
+          "currency": "eur",
+          "quantity": 1,
+          "amount_total": 1900
+        }
+      ],
+      "total": 33900
+    },
+    {
+      "id": "plink_1UahoIHv7Ryf9QPaIggnKVLC",
+      "url": "https://buy.stripe.com/6oUeVdbwPgdyfgN7gX67S0k",
+      "zone": "PL",
+      "quantity": 2,
+      "sizes": {
+        "sm": 2,
+        "ml": 0
+      },
+      "countries": [
+        "PL"
+      ],
+      "custom_fields": [
+        {
+          "dropdown": {
+            "default_value": "sm2ml0",
+            "options": [
+              {
+                "label": "2 × S-M",
+                "value": "sm2ml0"
+              }
+            ]
+          },
+          "key": "sizes",
+          "label": {
+            "custom": "RROSE sizes — 2 skirts",
+            "type": "custom"
+          },
+          "optional": false,
+          "type": "dropdown"
+        }
+      ],
+      "items": [
+        {
+          "price": "price_1UaGzgHv7Ryf9QPajobbmb7t",
+          "currency": "pln",
+          "quantity": 2,
+          "amount_total": 139800
+        },
+        {
+          "price": "price_1UaHLUHv7Ryf9QPaXOpxXf10",
+          "currency": "pln",
+          "quantity": 1,
+          "amount_total": 2900
+        }
+      ],
+      "total": 142700
+    },
+    {
+      "id": "plink_1UahoJHv7Ryf9QPamn9FZ4vx",
+      "url": "https://buy.stripe.com/eVq9ATeJ14uQc4B9p567S0l",
+      "zone": "PL",
+      "quantity": 2,
+      "sizes": {
+        "sm": 1,
+        "ml": 1
+      },
+      "countries": [
+        "PL"
+      ],
+      "custom_fields": [
+        {
+          "dropdown": {
+            "default_value": "sm1ml1",
+            "options": [
+              {
+                "label": "1 × S-M + 1 × M-L",
+                "value": "sm1ml1"
+              }
+            ]
+          },
+          "key": "sizes",
+          "label": {
+            "custom": "RROSE sizes — 2 skirts",
+            "type": "custom"
+          },
+          "optional": false,
+          "type": "dropdown"
+        }
+      ],
+      "items": [
+        {
+          "price": "price_1UaGzgHv7Ryf9QPajobbmb7t",
+          "currency": "pln",
+          "quantity": 2,
+          "amount_total": 139800
+        },
+        {
+          "price": "price_1UaHLUHv7Ryf9QPaXOpxXf10",
+          "currency": "pln",
+          "quantity": 1,
+          "amount_total": 2900
+        }
+      ],
+      "total": 142700
+    },
+    {
+      "id": "plink_1UahoKHv7Ryf9QPaQovEqhja",
+      "url": "https://buy.stripe.com/fZudR99oH8L63y5eJp67S0m",
+      "zone": "PL",
+      "quantity": 2,
+      "sizes": {
+        "sm": 0,
+        "ml": 2
+      },
+      "countries": [
+        "PL"
+      ],
+      "custom_fields": [
+        {
+          "dropdown": {
+            "default_value": "sm0ml2",
+            "options": [
+              {
+                "label": "2 × M-L",
+                "value": "sm0ml2"
+              }
+            ]
+          },
+          "key": "sizes",
+          "label": {
+            "custom": "RROSE sizes — 2 skirts",
+            "type": "custom"
+          },
+          "optional": false,
+          "type": "dropdown"
+        }
+      ],
+      "items": [
+        {
+          "price": "price_1UaGzgHv7Ryf9QPajobbmb7t",
+          "currency": "pln",
+          "quantity": 2,
+          "amount_total": 139800
+        },
+        {
+          "price": "price_1UaHLUHv7Ryf9QPaXOpxXf10",
+          "currency": "pln",
+          "quantity": 1,
+          "amount_total": 2900
+        }
+      ],
+      "total": 142700
+    },
+    {
+      "id": "plink_1UahoLHv7Ryf9QPao7qDff2l",
+      "url": "https://buy.stripe.com/9B6cN5eJ1f9u6Kh6cT67S0n",
+      "zone": "WORLD",
+      "quantity": 2,
+      "sizes": {
+        "sm": 2,
+        "ml": 0
+      },
+      "countries": [
+        "AE",
+        "AG",
+        "AI",
+        "AM",
+        "AO",
+        "AR",
+        "AU",
+        "AW",
+        "AZ",
+        "BB",
+        "BD",
+        "BF",
+        "BH",
+        "BI",
+        "BJ",
+        "BL",
+        "BM",
+        "BN",
+        "BO",
+        "BQ",
+        "BR",
+        "BS",
+        "BT",
+        "BW",
+        "BZ",
+        "CA",
+        "CD",
+        "CF",
+        "CG",
+        "CI",
+        "CK",
+        "CL",
+        "CM",
+        "CN",
+        "CO",
+        "CR",
+        "CV",
+        "CW",
+        "DJ",
+        "DM",
+        "DO",
+        "DZ",
+        "EC",
+        "EG",
+        "ER",
+        "ET",
+        "FJ",
+        "FK",
+        "FO",
+        "GA",
+        "GD",
+        "GE",
+        "GF",
+        "GH",
+        "GM",
+        "GN",
+        "GP",
+        "GQ",
+        "GT",
+        "GU",
+        "GW",
+        "GY",
+        "HK",
+        "HN",
+        "HT",
+        "ID",
+        "IL",
+        "IN",
+        "IQ",
+        "JM",
+        "JO",
+        "JP",
+        "KE",
+        "KG",
+        "KH",
+        "KI",
+        "KM",
+        "KN",
+        "KR",
+        "KW",
+        "KY",
+        "KZ",
+        "LA",
+        "LB",
+        "LC",
+        "LK",
+        "LR",
+        "LS",
+        "LY",
+        "MA",
+        "MG",
+        "ML",
+        "MM",
+        "MN",
+        "MO",
+        "MQ",
+        "MR",
+        "MS",
+        "MU",
+        "MV",
+        "MW",
+        "MX",
+        "MY",
+        "MZ",
+        "NA",
+        "NC",
+        "NE",
+        "NG",
+        "NI",
+        "NP",
+        "NR",
+        "NU",
+        "NZ",
+        "OM",
+        "PA",
+        "PE",
+        "PF",
+        "PG",
+        "PH",
+        "PK",
+        "PR",
+        "PY",
+        "QA",
+        "RE",
+        "RW",
+        "SA",
+        "SB",
+        "SC",
+        "SD",
+        "SG",
+        "SH",
+        "SL",
+        "SN",
+        "SR",
+        "SS",
+        "ST",
+        "SV",
+        "SX",
+        "SZ",
+        "TC",
+        "TD",
+        "TG",
+        "TH",
+        "TJ",
+        "TL",
+        "TM",
+        "TN",
+        "TO",
+        "TT",
+        "TV",
+        "TW",
+        "TZ",
+        "UG",
+        "US",
+        "UY",
+        "UZ",
+        "VC",
+        "VE",
+        "VG",
+        "VN",
+        "VU",
+        "WS",
+        "YE",
+        "YT",
+        "ZM",
+        "ZW"
+      ],
+      "custom_fields": [
+        {
+          "dropdown": {
+            "default_value": "sm2ml0",
+            "options": [
+              {
+                "label": "2 × S-M",
+                "value": "sm2ml0"
+              }
+            ]
+          },
+          "key": "sizes",
+          "label": {
+            "custom": "RROSE sizes — 2 skirts",
+            "type": "custom"
+          },
+          "optional": false,
+          "type": "dropdown"
+        }
+      ],
+      "items": [
+        {
+          "price": "price_1UaGziHv7Ryf9QPa2wcb62JL",
+          "currency": "eur",
+          "quantity": 2,
+          "amount_total": 32000
+        },
+        {
+          "price": "price_1UahlcHv7Ryf9QPaNbH4ThsZ",
+          "currency": "eur",
+          "quantity": 1,
+          "amount_total": 6000
+        }
+      ],
+      "total": 38000
+    },
+    {
+      "id": "plink_1UahoNHv7Ryf9QPaqyqQMyMN",
+      "url": "https://buy.stripe.com/5kQ28r6cv4uQb0x30H67S0o",
+      "zone": "WORLD",
+      "quantity": 2,
+      "sizes": {
+        "sm": 1,
+        "ml": 1
+      },
+      "countries": [
+        "AE",
+        "AG",
+        "AI",
+        "AM",
+        "AO",
+        "AR",
+        "AU",
+        "AW",
+        "AZ",
+        "BB",
+        "BD",
+        "BF",
+        "BH",
+        "BI",
+        "BJ",
+        "BL",
+        "BM",
+        "BN",
+        "BO",
+        "BQ",
+        "BR",
+        "BS",
+        "BT",
+        "BW",
+        "BZ",
+        "CA",
+        "CD",
+        "CF",
+        "CG",
+        "CI",
+        "CK",
+        "CL",
+        "CM",
+        "CN",
+        "CO",
+        "CR",
+        "CV",
+        "CW",
+        "DJ",
+        "DM",
+        "DO",
+        "DZ",
+        "EC",
+        "EG",
+        "ER",
+        "ET",
+        "FJ",
+        "FK",
+        "FO",
+        "GA",
+        "GD",
+        "GE",
+        "GF",
+        "GH",
+        "GM",
+        "GN",
+        "GP",
+        "GQ",
+        "GT",
+        "GU",
+        "GW",
+        "GY",
+        "HK",
+        "HN",
+        "HT",
+        "ID",
+        "IL",
+        "IN",
+        "IQ",
+        "JM",
+        "JO",
+        "JP",
+        "KE",
+        "KG",
+        "KH",
+        "KI",
+        "KM",
+        "KN",
+        "KR",
+        "KW",
+        "KY",
+        "KZ",
+        "LA",
+        "LB",
+        "LC",
+        "LK",
+        "LR",
+        "LS",
+        "LY",
+        "MA",
+        "MG",
+        "ML",
+        "MM",
+        "MN",
+        "MO",
+        "MQ",
+        "MR",
+        "MS",
+        "MU",
+        "MV",
+        "MW",
+        "MX",
+        "MY",
+        "MZ",
+        "NA",
+        "NC",
+        "NE",
+        "NG",
+        "NI",
+        "NP",
+        "NR",
+        "NU",
+        "NZ",
+        "OM",
+        "PA",
+        "PE",
+        "PF",
+        "PG",
+        "PH",
+        "PK",
+        "PR",
+        "PY",
+        "QA",
+        "RE",
+        "RW",
+        "SA",
+        "SB",
+        "SC",
+        "SD",
+        "SG",
+        "SH",
+        "SL",
+        "SN",
+        "SR",
+        "SS",
+        "ST",
+        "SV",
+        "SX",
+        "SZ",
+        "TC",
+        "TD",
+        "TG",
+        "TH",
+        "TJ",
+        "TL",
+        "TM",
+        "TN",
+        "TO",
+        "TT",
+        "TV",
+        "TW",
+        "TZ",
+        "UG",
+        "US",
+        "UY",
+        "UZ",
+        "VC",
+        "VE",
+        "VG",
+        "VN",
+        "VU",
+        "WS",
+        "YE",
+        "YT",
+        "ZM",
+        "ZW"
+      ],
+      "custom_fields": [
+        {
+          "dropdown": {
+            "default_value": "sm1ml1",
+            "options": [
+              {
+                "label": "1 × S-M + 1 × M-L",
+                "value": "sm1ml1"
+              }
+            ]
+          },
+          "key": "sizes",
+          "label": {
+            "custom": "RROSE sizes — 2 skirts",
+            "type": "custom"
+          },
+          "optional": false,
+          "type": "dropdown"
+        }
+      ],
+      "items": [
+        {
+          "price": "price_1UaGziHv7Ryf9QPa2wcb62JL",
+          "currency": "eur",
+          "quantity": 2,
+          "amount_total": 32000
+        },
+        {
+          "price": "price_1UahlcHv7Ryf9QPaNbH4ThsZ",
+          "currency": "eur",
+          "quantity": 1,
+          "amount_total": 6000
+        }
+      ],
+      "total": 38000
+    },
+    {
+      "id": "plink_1UahoOHv7Ryf9QPaHr50K5pv",
+      "url": "https://buy.stripe.com/4gM00jdEXe5qgkR58P67S0p",
+      "zone": "WORLD",
+      "quantity": 2,
+      "sizes": {
+        "sm": 0,
+        "ml": 2
+      },
+      "countries": [
+        "AE",
+        "AG",
+        "AI",
+        "AM",
+        "AO",
+        "AR",
+        "AU",
+        "AW",
+        "AZ",
+        "BB",
+        "BD",
+        "BF",
+        "BH",
+        "BI",
+        "BJ",
+        "BL",
+        "BM",
+        "BN",
+        "BO",
+        "BQ",
+        "BR",
+        "BS",
+        "BT",
+        "BW",
+        "BZ",
+        "CA",
+        "CD",
+        "CF",
+        "CG",
+        "CI",
+        "CK",
+        "CL",
+        "CM",
+        "CN",
+        "CO",
+        "CR",
+        "CV",
+        "CW",
+        "DJ",
+        "DM",
+        "DO",
+        "DZ",
+        "EC",
+        "EG",
+        "ER",
+        "ET",
+        "FJ",
+        "FK",
+        "FO",
+        "GA",
+        "GD",
+        "GE",
+        "GF",
+        "GH",
+        "GM",
+        "GN",
+        "GP",
+        "GQ",
+        "GT",
+        "GU",
+        "GW",
+        "GY",
+        "HK",
+        "HN",
+        "HT",
+        "ID",
+        "IL",
+        "IN",
+        "IQ",
+        "JM",
+        "JO",
+        "JP",
+        "KE",
+        "KG",
+        "KH",
+        "KI",
+        "KM",
+        "KN",
+        "KR",
+        "KW",
+        "KY",
+        "KZ",
+        "LA",
+        "LB",
+        "LC",
+        "LK",
+        "LR",
+        "LS",
+        "LY",
+        "MA",
+        "MG",
+        "ML",
+        "MM",
+        "MN",
+        "MO",
+        "MQ",
+        "MR",
+        "MS",
+        "MU",
+        "MV",
+        "MW",
+        "MX",
+        "MY",
+        "MZ",
+        "NA",
+        "NC",
+        "NE",
+        "NG",
+        "NI",
+        "NP",
+        "NR",
+        "NU",
+        "NZ",
+        "OM",
+        "PA",
+        "PE",
+        "PF",
+        "PG",
+        "PH",
+        "PK",
+        "PR",
+        "PY",
+        "QA",
+        "RE",
+        "RW",
+        "SA",
+        "SB",
+        "SC",
+        "SD",
+        "SG",
+        "SH",
+        "SL",
+        "SN",
+        "SR",
+        "SS",
+        "ST",
+        "SV",
+        "SX",
+        "SZ",
+        "TC",
+        "TD",
+        "TG",
+        "TH",
+        "TJ",
+        "TL",
+        "TM",
+        "TN",
+        "TO",
+        "TT",
+        "TV",
+        "TW",
+        "TZ",
+        "UG",
+        "US",
+        "UY",
+        "UZ",
+        "VC",
+        "VE",
+        "VG",
+        "VN",
+        "VU",
+        "WS",
+        "YE",
+        "YT",
+        "ZM",
+        "ZW"
+      ],
+      "custom_fields": [
+        {
+          "dropdown": {
+            "default_value": "sm0ml2",
+            "options": [
+              {
+                "label": "2 × M-L",
+                "value": "sm0ml2"
+              }
+            ]
+          },
+          "key": "sizes",
+          "label": {
+            "custom": "RROSE sizes — 2 skirts",
+            "type": "custom"
+          },
+          "optional": false,
+          "type": "dropdown"
+        }
+      ],
+      "items": [
+        {
+          "price": "price_1UaGziHv7Ryf9QPa2wcb62JL",
+          "currency": "eur",
+          "quantity": 2,
+          "amount_total": 32000
+        },
+        {
+          "price": "price_1UahlcHv7Ryf9QPaNbH4ThsZ",
+          "currency": "eur",
+          "quantity": 1,
+          "amount_total": 6000
+        }
+      ],
+      "total": 38000
+    }
+  ]
+}
